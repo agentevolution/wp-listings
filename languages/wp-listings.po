@@ -1,0 +1,358 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-31 12:01-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugin.php:30
+#, php-format
+msgid ""
+"Sorry, you can't activate unless you have installed <a href=\"%s\">Genesis</"
+"a>"
+msgstr ""
+
+#: plugin.php:35
+#, php-format
+msgid ""
+"Sorry, you cannot activate without <a href=\"%s\">Genesis %s</a> or greater"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:12
+msgid "Display grid-style featured listings"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:14
+msgid "AgentEvolved - Featured Listings"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:55
+#: includes/class-listings.php:53 includes/class-listings.php:54
+msgid "View Listing"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:80
+#: includes/class-property-search-widget.php:69
+msgid "Title:"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:82
+msgid "How many results should be returned?"
+msgstr ""
+
+#: includes/class-listings.php:46
+msgid "Listings"
+msgstr ""
+
+#: includes/class-listings.php:47
+msgid "Listing"
+msgstr ""
+
+#: includes/class-listings.php:48
+msgid "Add New"
+msgstr ""
+
+#: includes/class-listings.php:49
+msgid "Add New Listing"
+msgstr ""
+
+#: includes/class-listings.php:50 includes/views/create-tax.php:50
+msgid "Edit"
+msgstr ""
+
+#: includes/class-listings.php:51
+msgid "Edit Listing"
+msgstr ""
+
+#: includes/class-listings.php:52
+msgid "New Listing"
+msgstr ""
+
+#: includes/class-listings.php:55
+msgid "Search Listings"
+msgstr ""
+
+#: includes/class-listings.php:56
+msgid "No listings found"
+msgstr ""
+
+#: includes/class-listings.php:57
+msgid "No listings found in Trash"
+msgstr ""
+
+#: includes/class-listings.php:73
+msgid "Property Details"
+msgstr ""
+
+#: includes/class-listings.php:123
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/class-listings.php:124
+msgid "Listing Title"
+msgstr ""
+
+#: includes/class-listings.php:125
+msgid "Details"
+msgstr ""
+
+#: includes/class-listings.php:126
+msgid "Features"
+msgstr ""
+
+#: includes/class-listings.php:127
+msgid "Categories"
+msgstr ""
+
+#: includes/class-listings.php:146 includes/class-listings.php:178
+#: includes/views/listing-details-metabox.php:15
+msgid "Price:"
+msgstr ""
+
+#: includes/class-listings.php:147 includes/class-listings.php:179
+#: includes/views/listing-details-metabox.php:16
+msgid "Address:"
+msgstr ""
+
+#: includes/class-listings.php:148 includes/class-listings.php:180
+#: includes/views/listing-details-metabox.php:17
+msgid "City:"
+msgstr ""
+
+#: includes/class-listings.php:149 includes/class-listings.php:181
+#: includes/views/listing-details-metabox.php:18
+msgid "State:"
+msgstr ""
+
+#: includes/class-listings.php:150 includes/class-listings.php:182
+#: includes/views/listing-details-metabox.php:19
+msgid "ZIP:"
+msgstr ""
+
+#: includes/class-listings.php:151 includes/class-listings.php:184
+#: includes/views/listing-details-metabox.php:26
+msgid "MLS #:"
+msgstr ""
+
+#: includes/class-listings.php:152 includes/class-listings.php:185
+#: includes/views/listing-details-metabox.php:27
+msgid "Square Feet:"
+msgstr ""
+
+#: includes/class-listings.php:153 includes/class-listings.php:186
+#: includes/views/listing-details-metabox.php:28
+msgid "Bedrooms:"
+msgstr ""
+
+#: includes/class-listings.php:154 includes/class-listings.php:187
+#: includes/views/listing-details-metabox.php:29
+msgid "Bathrooms:"
+msgstr ""
+
+#: includes/class-listings.php:155 includes/class-listings.php:188
+#: includes/views/listing-details-metabox.php:30
+msgid "Basement:"
+msgstr ""
+
+#: includes/class-listings.php:190
+msgid "Additional Features:"
+msgstr ""
+
+#: includes/class-property-search-widget.php:17
+msgid "Display property search dropdown"
+msgstr ""
+
+#: includes/class-property-search-widget.php:19
+msgid "AgentEvolved - Listing Search"
+msgstr ""
+
+#: includes/class-property-search-widget.php:71
+msgid "Include these taxonomies in the search widget"
+msgstr ""
+
+#: includes/class-taxonomies.php:39
+msgid "Register Taxonomies"
+msgstr ""
+
+#: includes/class-taxonomies.php:87 includes/class-taxonomies.php:89
+#: includes/class-taxonomies.php:91 includes/class-taxonomies.php:160
+#: includes/class-taxonomies.php:162 includes/class-taxonomies.php:164
+msgid "Please complete all required fields."
+msgstr ""
+
+#: includes/class-taxonomies.php:100 includes/class-taxonomies.php:173
+#: includes/class-taxonomies.php:244
+#, php-format
+msgid "Search %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:101 includes/class-taxonomies.php:174
+#: includes/class-taxonomies.php:245
+#, php-format
+msgid "Popular %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:102 includes/class-taxonomies.php:175
+#: includes/class-taxonomies.php:246
+#, php-format
+msgid "All %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:103 includes/class-taxonomies.php:176
+#: includes/class-taxonomies.php:247
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:104 includes/class-taxonomies.php:177
+#: includes/class-taxonomies.php:248
+#, php-format
+msgid "Update %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:105 includes/class-taxonomies.php:178
+#: includes/class-taxonomies.php:249
+#, php-format
+msgid "Add New %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:106 includes/class-taxonomies.php:179
+#: includes/class-taxonomies.php:250
+#, php-format
+msgid "New %s Name"
+msgstr ""
+
+#: includes/class-taxonomies.php:107 includes/class-taxonomies.php:180
+#: includes/class-taxonomies.php:251
+#, php-format
+msgid "Add or Remove %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:108 includes/class-taxonomies.php:181
+#: includes/class-taxonomies.php:252
+#, php-format
+msgid "Choose from the most used %s"
+msgstr ""
+
+#: includes/class-taxonomies.php:135 includes/class-taxonomies.php:143
+msgid ""
+"Nice try, partner. But that taxonomy doesn't exist. Click back and try again."
+msgstr ""
+
+#: includes/class-taxonomies.php:211
+msgid "New taxonomy successfully created!"
+msgstr ""
+
+#: includes/class-taxonomies.php:216
+msgid "Taxonomy successfully edited!"
+msgstr ""
+
+#: includes/class-taxonomies.php:221
+msgid "Taxonomy successfully deleted."
+msgstr ""
+
+#: includes/views/create-tax.php:2
+msgid "Listing Taxonomies"
+msgstr ""
+
+#: includes/views/create-tax.php:11
+msgid "Current Listing Taxonomies"
+msgstr ""
+
+#: includes/views/create-tax.php:15 includes/views/create-tax.php:23
+#: includes/views/create-tax.php:78 includes/views/edit-tax.php:19
+msgid "ID"
+msgstr ""
+
+#: includes/views/create-tax.php:16 includes/views/create-tax.php:24
+#: includes/views/create-tax.php:90 includes/views/edit-tax.php:33
+msgid "Singular Name"
+msgstr ""
+
+#: includes/views/create-tax.php:17 includes/views/create-tax.php:25
+#: includes/views/create-tax.php:84 includes/views/edit-tax.php:27
+msgid "Plural Name"
+msgstr ""
+
+#: includes/views/create-tax.php:51
+msgid "Delete"
+msgstr ""
+
+#: includes/views/create-tax.php:72
+msgid "Add New Listing Taxonomy"
+msgstr ""
+
+#: includes/views/create-tax.php:80
+msgid ""
+"The unique ID is used to register the taxonomy.<br />(no spaces, "
+"underscores, or special characters)"
+msgstr ""
+
+#: includes/views/create-tax.php:86 includes/views/edit-tax.php:29
+msgid "Example: \"Property Types\" or \"Locations\""
+msgstr ""
+
+#: includes/views/create-tax.php:92 includes/views/edit-tax.php:35
+msgid "Example: \"Property Type\" or \"Location\""
+msgstr ""
+
+#: includes/views/create-tax.php:95
+msgid "Add New Taxonomy"
+msgstr ""
+
+#: includes/views/edit-tax.php:7
+msgid ""
+"Nice try, partner. But that taxonomy doesn't exist or can't be edited. Click "
+"back and try again."
+msgstr ""
+
+#: includes/views/edit-tax.php:12
+msgid "Edit Taxonomy"
+msgstr ""
+
+#: includes/views/edit-tax.php:23
+msgid "The unique ID is used to register the taxonomy. (cannot be changed)"
+msgstr ""
+
+#: includes/views/edit-tax.php:40
+msgid "Update"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:6
+msgid "Custom Text: "
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:7
+msgid "Custom text shows on the featured listings widget image."
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:20
+#: includes/views/listing-details-metabox.php:38
+#: includes/views/listing-details-metabox.php:46
+msgid "Send to text editor"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:36
+#, php-format
+msgid ""
+"<p><label>Enter Map Embed Code:<br /><textarea name=\"ap[_listing_map]\" "
+"rows=\"5\" cols=\"18\" style=\"%s\">%s</textarea></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:44
+#, php-format
+msgid ""
+"<p><label>Enter Video Embed Code:<br /><textarea name=\"ap[_listing_video]\" "
+"rows=\"5\" cols=\"18\" style=\"%s\">%s</textarea></label></p>"
+msgstr ""

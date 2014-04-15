@@ -1,0 +1,242 @@
+/* =Agent Listings Evolved
+------------------------------------------------------------ */
+
+.listing-wrap {
+	float: left;
+	font-size: 12px;
+	margin: 0 0 30px;
+	position: relative;
+	width: 290px;
+	min-height: 270px;
+}
+
+.widget .listing-wrap {
+	margin: 0 15px 15px;
+}
+
+.listing-price {
+	background: #000;
+	clear: both;
+	color: #fff;
+	font-size: 14px;
+	font-family: arial, sans-serif;
+	font-weight: 300;
+	left: 5px;
+	padding: 10px;
+	position: absolute;
+	top: 5px;
+}
+
+.listing-text {
+	background: #6a9e28;
+	clear: both;
+	color: #fff;
+	font-size: 12px;
+	padding: 5px 10px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+
+.listing-address,
+.listing-city-state-zip {
+	display: block;
+	font-size: 14px;
+	line-height: 14px;
+	margin: 0 0 5px;
+	padding: 0;
+	text-align: center;
+}
+
+.listing-city-state-zip {
+/*	margin: 0 0 10px;*/
+}
+
+/* view listing image */
+.listing-wrap .more-link {
+/*	background: url(images/btn-view.png);
+	background: #000;
+	color: #fff;
+	width: 126px;
+	height: 34px;
+	text-indent: -9999px;
+	overflow: hidden;
+	display: block;
+	margin: 15px auto 0;
+	padding: 5px 0;
+	background-repeat: no-repeat;*/
+}
+
+/* view listing non image */
+.listing-wrap .more-link {
+	background: #666;
+	color: #fff;
+	display: block;
+	margin: 15px auto 0;
+	padding: 5px 8px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0px -2px 3px #333 inset;
+	-webkit-box-shadow: 0px -2px 3px #333 inset;
+	-khtml-box-shadow: 0px -2px 3px #333 inset;
+	box-shadow: 0px -2px 3px #333 inset;
+	text-shadow: -1px -1px #000;
+}
+
+.listing-wrap .more-link:hover {
+	background: #666;
+	-moz-box-shadow: 0px 0px 4px #333 inset;
+	-webkit-box-shadow: 0px 0px 4px #333 inset;
+	-khtml-box-shadow: 0px 0px 4px #333 inset;
+	box-shadow: 0px 0px 4px #333 inset;
+}
+
+.listing-archive-sidebar {
+	float: right;
+	width: 220px;
+	background: #DDD;
+	margin: 0px 5px 20px 0;
+	padding: 20px;
+	border: 5px solid #fff;
+	-moz-box-shadow: 0px 0px 4px #DDD;
+	-webkit-box-shadow: 0px 0px 4px #DDD;
+	-khtml-box-shadow: 0px 0px 4px #DDD;
+	box-shadow: 0px 0px 4px #DDD;
+}
+
+.listing-archive-sidebar .taxonomy-name {
+	text-shadow: 1px 1px #DDD;
+}
+
+.listing-archive-sidebar li a {
+	color: #000;
+}
+
+.listing-archive h1.entry-title {
+	margin: 10px 0 25px 0;
+}
+
+.listing-archive.full-width-content #content {
+	float: left;
+	width: 650px;
+	padding: 0 0 15px;
+}
+
+.listing-archive .listing.left { float: left; }
+.listing-archive .listing.right { float: right; }
+
+ul.term-list {
+	margin-bottom: 30px;
+}
+
+ul.term-list li {
+	margin-bottom: 5px;
+}
+
+/* =Single Listing Styles
+---------------------------------*/
+
+.listing-data {
+	padding-top: 30px;
+}
+
+.property-details h4,
+.additional-features h4 {
+	font-size: 28px;
+	margin-bottom: 25px;
+	text-shadow: 1px 1px #fff;
+}
+
+.single-listing-image {
+	max-width: 600px;
+	max-height: 400px;
+	margin-bottom: 40px;
+}
+
+.iframe-wrap iframe {
+	margin: 0 auto 40px;
+	display: block;
+	width: 100%;
+	min-height: 340px;
+}
+
+.single-listing .property-details {
+	padding: 15px;
+	background: #DDD;
+	border: 5px solid #fff;
+	-moz-box-shadow: 0px 0px 4px #DDD;
+	-webkit-box-shadow: 0px 0px 4px #DDD;
+	-khtml-box-shadow: 0px 0px 4px #DDD;
+	box-shadow: 0px 0px 4px #DDD;
+	width: 92%;
+	margin: 0 auto 60px;
+}
+
+.single-listing .property-details .left {
+	float: left;
+/*	width: 275px;*/
+	width: 50%;
+}
+
+.property-details .right {
+	float: right;
+/*	width: 275px;*/
+	width: 50%;
+}
+
+.listing-data .label,
+.listing-data .value {
+	float: left;
+}
+
+.listing-data .label {
+	clear: left;
+	font-weight: bold;
+}
+
+.property-details .value {
+	padding-left: 5px;
+}
+
+.single-listing .vid-tour-url {
+	clear: both;
+	padding-top: 25px;
+}
+
+.single-listing .tagged-features {
+	float: left;
+	clear: left;
+	margin-top: 15px;
+	padding-bottom: 0;
+}
+
+.single-listing .tagged-features p a {
+/*	font-weight: normal;*/
+}
+
+.additional-features p {
+	float: left;
+	clear: left;
+	padding-top: 5px;
+}
+
+.single-listing .gallery {
+/*	float: left;*/
+	clear: left;
+}
+
+.map-wrap {
+	margin: 0 auto 30px;
+	clear: left;
+	padding-top: 40px;
+}
+
+.map-wrap .mapp-canvas,
+.map-wrap .mapp-canvas-panel,
+.map-wrap iframe {
+	margin-bottom: 0px;
+	width: 100%;
+	height: 425px !important;
+}
