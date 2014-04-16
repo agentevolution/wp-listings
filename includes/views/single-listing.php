@@ -1,87 +1,123 @@
 <?php
-add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
-remove_action( 'genesis_before_post_content', 'genesis_post_info' );
-remove_action( 'genesis_after_post_content', 'genesis_post_meta' );
-remove_action( 'genesis_after_post', 'genesis_do_author_box_single' );
-remove_action( 'genesis_post_content' , 'genesis_do_post_content' );
-add_action( 'genesis_post_content' , 'genesis_do_listing_post_content' );
+/**
+ * The Template for displaying all single listing posts
+ *
+ * @package WP Listings
+ * @since 0.1.0
+ */
 
-function genesis_do_listing_post_content() { ?>
+get_header(); ?>
 
-	<?php echo genesis_get_image(array('attr' => array('class' => 'single-listing-image'))); ?>
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
 
-	<div class="iframe-wrap">
-		<?php echo genesis_get_custom_field('_listing_video'); ?>
-	</div>
+			<?php
+				// Start the Loop.
+				while ( have_posts() ) : the_post(); ?>
+				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+					<?php echo get_the_post_thumbnail( 'full', 'attr' => array('class' => 'single-listing-image')); ?>
 
-	<?php the_content(); ?>
+					<header class="entry-header">
+						<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
-	<?php
-	function ale_get_neighborhood() {
+						<div class="entry-meta">
+							<?php
+								if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
+							?>
+							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'wp_listings' ), __( '1 Comment', 'wp_listings' ), __( '% Comments', 'wp_listings' ) ); ?></span>
+							<?php
+								endif;
 
-		$neighborhoods = get_the_terms( get_the_ID(), 'locations' );
+								edit_post_link( __( 'Edit', 'wp_listings' ), '<span class="edit-link">', '</span>' );
+							?>
+						</div><!-- .entry-meta -->
+					</header><!-- .entry-header -->
 
-		if ( empty($neighborhoods) ) {
-			return;
-		}
+					
+					<div class="entry-content">
+						<div class="iframe-wrap">
+							<?php echo get_post_meta('_listing_video', true); ?>
+						</div>
 
-		foreach ($neighborhoods as $value) {
-			echo $value->name;
-		}
-	}
-	?>
+						<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
 
-	<div class="listing-data">
-		<div class="property-details">
-			<h4>Property Details</h4>
-			<div class="left">
-				<span class="label"><?php _e("Price:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_price'); ?></span>
-				<span class="label"><?php _e("Address:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_address'); ?></span>
-				<span class="label"><?php _e("City:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_city'); ?></span>
-				<span class="label"><?php _e("State:", 'ale'); ?></span><span class="value"><?php echo ale_get_state(); ?></span>
-				<span class="label"><?php _e("Zip Code:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_zip'); ?></span>
-				<span class="label"><?php _e("Neighborhood:", 'ale'); ?></span><span class="value"><?php ale_get_neighborhood(); ?></span>
-			</div><!-- .left -->
-			<div class="right">
-				<span class="label"><?php _e("MLS #:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_mls'); ?></span>
-				<span class="label"><?php _e("Square Feet:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_sqft'); ?></span>
-				<span class="label"><?php _e("Lot Square Feet:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_lot_sqft'); ?></span>
-				<span class="label"><?php _e("Bedrooms:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_bedrooms'); ?></span>
-				<span class="label"><?php _e("Bathrooms:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_listing_bathrooms'); ?></span>
-				<span class="label"><?php _e("Open House:", 'ale'); ?></span><span class="value"><?php echo genesis_get_custom_field('_open_house'); ?></span>
-			</div><!-- .right -->
-			<?php if (genesis_get_custom_field('_vtour_url') != '') { ?>
-			<p class="vid-tour-url"><span class="label"><?php _e("Video Tour URL:", 'ale'); ?></span><span class="value"><a href="<?php echo genesis_get_custom_field('_vtour_url'); ?>"><?php echo genesis_get_custom_field('_vtour_url'); ?></a></span></p>
-			<?php } ?>
-			<p class="tagged-features"><?php echo get_the_term_list( get_the_ID(), 'features', '<span class="label">Tagged Features:</span>&nbsp;', ', ', '' ) ?></p>
-		</div><!-- .property-details -->
+						<?php
+						function wp_listings_get_neighborhood() {
 
-		<?php if ( genesis_get_custom_field('_listing_home_sum') != '' || genesis_get_custom_field('_listing_kitchen_sum') != '' || genesis_get_custom_field('_listing_family_room') != '' || genesis_get_custom_field('_listing_living_room') != '' || genesis_get_custom_field('_listing_master_suite') != '') { ?>
-			<div class="additional-features">
-				<h4>Additional Features</h4>
-				<span class="label"><?php _e("Home Summary", 'ale'); ?></span>
-				<p class="value"><?php echo genesis_get_custom_field('_listing_home_sum'); ?></p>
-				<span class="label"><?php _e("Kitchen Summary", 'ale'); ?></span>
-				<p class="value"><?php echo genesis_get_custom_field('_listing_kitchen_sum'); ?></p>
-				<span class="label"><?php _e("Family Room", 'ale'); ?></span>
-				<p class="value"><?php echo genesis_get_custom_field('_listing_family_room'); ?></p>
-				<span class="label"><?php _e("Living Room", 'ale'); ?></span>
-				<p class="value"><?php echo genesis_get_custom_field('_listing_living_room'); ?></p>
-				<span class="label"><?php _e("Master Suite", 'ale'); ?></span>
-				<p class="value"><?php echo genesis_get_custom_field('_listing_master_suite'); ?></p>
-			</div><!-- .additional-features -->
-		<?php } ?>
+							$neighborhoods = get_the_terms( get_the_ID(), 'locations' );
 
-	</div><!-- .listing-data -->
+							if ( empty($neighborhoods) ) {
+								return;
+							}
 
-	<?php
+							foreach ($neighborhoods as $value) {
+								echo $value->name;
+							}
+						}
+						?>
 
-	echo do_shortcode('[gallery link="file"]');
+						<div class="listing-data">
+							<div class="property-details">
+								<h4>Property Details</h4>
+								<div class="left">
+									<span class="label"><?php _e("Price:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_price', true); ?></span>
+									<span class="label"><?php _e("Address:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_address', true); ?></span>
+									<span class="label"><?php _e("City:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_city', true); ?></span>
+									<span class="label"><?php _e("State:", 'ale'); ?></span><span class="value"><?php echo ale_get_state(); ?></span>
+									<span class="label"><?php _e("Zip Code:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_zip', true); ?></span>
+									<span class="label"><?php _e("Neighborhood:", 'ale'); ?></span><span class="value"><?php ale_get_neighborhood(); ?></span>
+								</div><!-- .left -->
+								<div class="right">
+									<span class="label"><?php _e("MLS #:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_mls', true); ?></span>
+									<span class="label"><?php _e("Square Feet:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_sqft', true); ?></span>
+									<span class="label"><?php _e("Lot Square Feet:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_lot_sqft', true); ?></span>
+									<span class="label"><?php _e("Bedrooms:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_bedrooms', true); ?></span>
+									<span class="label"><?php _e("Bathrooms:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_bathrooms', true); ?></span>
+									<span class="label"><?php _e("Open House:", 'ale'); ?></span><span class="value"><?php echo get_post_meta('_listing_open_house', true); ?></span>
+								</div><!-- .right -->
 
-	echo '<div class="map-wrap">';
-	ale_show_map();
-	echo '</div><!-- .map-wrap -->';
+								<?php if (get_post_meta('_listing_vtour_url', true) != '') { ?>
+								<p class="vid-tour-url"><span class="label"><?php _e("Virtual Tour:", 'ale'); ?></span><span class="value"><a href="<?php echo get_post_meta('_vtour_url', true); ?>">View Virtual Tour</a></span></p>
+								<?php } ?>
 
-}
+								<?php echo get_the_term_list( get_the_ID(), 'features', '<p class="tagged-features"><span class="label">Tagged Features:</span>&nbsp;', ', ', '</p><!-- .tagged-features -->' ) ?>
+							</div><!-- .property-details -->
 
-genesis();
+							<?php if ( get_post_meta('_listing_home_sum', true) != '' || get_post_meta('_listing_kitchen_sum', true) != '' || get_post_meta('_listing_family_room', true) != '' || get_post_meta('_listing_living_room', true) != '' || get_post_meta('_listing_master_suite', true) != '') { ?>
+								<div class="additional-features">
+									<h4>Additional Features</h4>
+									<span class="label"><?php _e("Home Summary", 'ale'); ?></span>
+									<p class="value"><?php echo get_post_meta('_listing_home_sum', true); ?></p>
+									<span class="label"><?php _e("Kitchen Summary", 'ale'); ?></span>
+									<p class="value"><?php echo get_post_meta('_listing_kitchen_sum', true); ?></p>
+									<span class="label"><?php _e("Family Room", 'ale'); ?></span>
+									<p class="value"><?php echo get_post_meta('_listing_family_room', true); ?></p>
+									<span class="label"><?php _e("Living Room", 'ale'); ?></span>
+									<p class="value"><?php echo get_post_meta('_listing_living_room', true); ?></p>
+									<span class="label"><?php _e("Master Suite", 'ale'); ?></span>
+									<p class="value"><?php echo get_post_meta('_listing_master_suite', true); ?></p>
+								</div><!-- .additional-features -->
+							<?php } ?>
+
+						</div><!-- .listing-data -->
+					</div><!-- .entry-content -->
+
+
+			<?php 
+			// Previous/next post navigation.
+					wp_listings_post_nav();
+
+					// If comments are open or we have at least one comment, load up the comment template.
+					if ( comments_open() || get_comments_number() ) {
+						comments_template();
+					}
+				endwhile;
+			?>
+
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<?php
+get_sidebar( 'content' );
+get_sidebar();
+get_footer();

@@ -36,6 +36,6 @@ echo '</div><br style="clear: both;" />';
 
 echo '<div style="width: 90%; float: left;">';
 
-	printf( __( '<p><label>Enter Virtual Tour URL:<br /><textarea name="wp_listings[_vtour_url]" rows="1" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_vtour_url', true) ) );
+	printf( __( '<p><label>Enter Virtual Tour URL:<br /><textarea name="wp_listings[_listing_vtour_url]" rows="1" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_vtour_url', true) ) );
 
 echo '</div><br style="clear: both;" />';

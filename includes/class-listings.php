@@ -30,7 +30,7 @@ class WP_Listings {
 			    __( 'City:', 'wp_listings' )					=> '_listing_city',
 			    __( 'State:', 'wp_listings' )					=> '_listing_state',
 			    __( 'ZIP:', 'wp_listings' )						=> '_listing_zip',
-				__( 'Open House Time & Date:', 'wp_listings' ) 	=> '_open_house'
+				__( 'Open House Time & Date:', 'wp_listings' ) 	=> '_listing_open_house'
 			),
 			'col2' => array(
 			    __( 'MLS #:', 'wp_listings' ) 					=> '_listing_mls',
