@@ -41,9 +41,11 @@ function wp_listings_template_include( $template ) {
 /**
  * Controls output of default state for the state custom field if there is one set
  */
-function wp_listings_get_state($post_id = null) {
+function wp_listings_get_state() {
 
-	$state = get_post_meta($post_id, '_listing_state', true);
+	global $post;
+
+	$state = get_post_meta($post->ID, '_listing_state', true);
 
 	$default_state = get_option('wp_listings_default_state');
 
@@ -61,9 +63,11 @@ function wp_listings_get_state($post_id = null) {
 /**
  * Controls output of city name
  */
-function wp_listings_get_city($post_id = null) {
+function wp_listings_get_city() {
 
-	$city = get_post_meta($post_id, '_listing_city', true);
+	global $post;
+
+	$city = get_post_meta($post->ID, '_listing_city', true);
 	
 	if ( '' == $city ) {
 		$city = 'Cityname';
@@ -77,7 +81,9 @@ function wp_listings_get_city($post_id = null) {
  */
 function wp_listings_get_address($post_id = null) {
 
-	$address = get_post_meta($post_id, '_listing_address', true);
+	global $post;
+
+	$address = get_post_meta($post->ID, '_listing_address', true);
 
 	if ( '' == $address ) {
 		$address = 'Address Unavailable';
@@ -115,6 +121,6 @@ function wp_listings_post_number( $query ) {
 		return;
 	}
 
-	$query->query_vars['posts_per_page'] = 30;
+	$query->query_vars['posts_per_page'] = 9;
 }
 add_action( 'pre_get_posts', 'wp_listings_post_number' );

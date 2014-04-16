@@ -167,7 +167,6 @@ class WP_Listings {
 
 	    }
 
-
 	}
 
 	/**
