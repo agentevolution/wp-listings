@@ -55,14 +55,14 @@ function wp_listings_post_nav() {
 
 	?>
 	<nav class="navigation post-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'wp_listings' ); ?></h1>
+		<h1 class="screen-reader-text"><?php _e( 'Listing navigation', 'wp_listings' ); ?></h1>
 		<div class="nav-links">
 			<?php
 			if ( is_attachment() ) :
 				previous_post_link( '%link', __( '<span class="meta-nav">Published In</span>%title', 'wp_listings' ) );
 			else :
-				previous_post_link( '%link', __( '<span class="meta-nav">Previous Post</span>%title', 'wp_listings' ) );
-				next_post_link( '%link', __( '<span class="meta-nav">Next Post</span>%title', 'wp_listings' ) );
+				previous_post_link( '%link', __( '<span class="meta-nav">Previous Listing</span>%title', 'wp_listings' ) );
+				next_post_link( '%link', __( '<span class="meta-nav">Listing Post</span>%title', 'wp_listings' ) );
 			endif;
 			?>
 		</div><!-- .nav-links -->
