@@ -42,46 +42,43 @@ get_header(); ?>
 
 						<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
 
-						<?php
-						function wp_listings_get_neighborhood() {
-
-							$neighborhoods = get_the_terms( get_the_ID(), 'locations' );
-
-							if ( empty($neighborhoods) ) {
-								return;
-							}
-
-							foreach ($neighborhoods as $value) {
-								echo $value->name;
-							}
-						}
-						?>
-
 						<div class="listing-data">
-							<div class="property-details">
-								<h4>Property Details - WP LISTINGS</h4>
-								<div class="left">
-									<span class="label"><?php _e("Price:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_price', true); ?></span>
-									<span class="label"><?php _e("Address:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_address', true); ?></span>
-									<span class="label"><?php _e("City:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_city', true); ?></span>
-									<span class="label"><?php _e("State:", 'wp_listings'); ?></span><span class="value"><?php echo wp_listings_get_state(); ?></span>
-									<span class="label"><?php _e("Zip Code:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_zip', true); ?></span>
-									<span class="label"><?php _e("Neighborhood:", 'wp_listings'); ?></span><span class="value"><?php wp_listings_get_neighborhood(); ?></span>
-								</div><!-- .left -->
-								<div class="right">
-									<span class="label"><?php _e("MLS #:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_mls', true); ?></span>
-									<span class="label"><?php _e("Square Feet:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_sqft', true); ?></span>
-									<span class="label"><?php _e("Lot Square Feet:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_lot_sqft', true); ?></span>
-									<span class="label"><?php _e("Bedrooms:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_bedrooms', true); ?></span>
-									<span class="label"><?php _e("Bathrooms:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_bathrooms', true); ?></span>
-									<span class="label"><?php _e("Open House:", 'wp_listings'); ?></span><span class="value"><?php echo get_post_meta( $post->ID, '_listing_open_house', true); ?></span>
-								</div><!-- .right -->
+							<div id="property-details">
+							<h4>Property Details - WP LISTINGS</h4>
+							<?php
+								$details_instance = new WP_Listings();
 
-								<?php if (get_post_meta( $post->ID, '_listing_vtour_url', true) != '') { ?>
+								$pattern = '<tr><td class="label">%s</td><td class="wp_listings[%s]">%s</td></tr>';
+
+								echo '<table class="listing-details one-half first">';
+
+								echo '<tbody>';
+								foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
+									$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+									if (! empty( $detail_value ) ) :
+										printf( $pattern, esc_html( $label ), $key, $detail_value );
+									endif;
+								}
+								echo '</tbody>';
+
+								echo '<tbody>';
+								foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
+									$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+									if (! empty( $detail_value ) ) :
+										printf( $pattern, esc_html( $label ), $key, $detail_value );
+									endif;
+								}
+								echo '</tbody>';
+
+								echo '</table>';
+							?>
+
+							<?php if (get_post_meta( $post->ID, '_listing_vtour_url', true) != '') { ?>
 								<p class="vid-tour-url"><span class="label"><?php _e("Virtual Tour:", 'wp_listings'); ?></span><span class="value"><a href="<?php echo get_post_meta( $post->ID, '_vtour_url', true); ?>">View Virtual Tour</a></span></p>
 								<?php } ?>
 
 								<?php echo get_the_term_list( get_the_ID(), 'features', '<p class="tagged-features"><span class="label">Tagged Features:</span>&nbsp;', ', ', '</p><!-- .tagged-features -->' ) ?>
+
 							</div><!-- .property-details -->
 
 							<?php if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_family_room', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
@@ -105,13 +102,13 @@ get_header(); ?>
 
 
 			<?php 
-			// Previous/next post navigation.
-					wp_listings_post_nav();
+				// Previous/next post navigation.
+				wp_listings_post_nav();
 
-					// If comments are open or we have at least one comment, load up the comment template.
-					if ( comments_open() || get_comments_number() ) {
-						comments_template();
-					}
+				// If comments are open or we have at least one comment, load up the comment template.
+				if ( comments_open() || get_comments_number() ) {
+					comments_template();
+				}
 				endwhile;
 			?>
 

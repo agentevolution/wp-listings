@@ -16,18 +16,16 @@ get_header(); ?>
 			<?php if ( have_posts() ) : ?>
 
 						<header class="page-header">
-							<h1 class="page-title">
 							<?php
 							$object = get_queried_object();
 
 							if ( !isset($object->label) ) {
-								$title = '<h1 class="entry-title">' . $object->name . '</h1>';
+								$title = '<h1 class="page-title">' . $object->name . '</h1>';
 							} else {
-								$title = '<h1 class="entry-title">' . get_bloginfo('name') . ' Listings</h1>';
+								$title = '<h1 class="page-title">' . get_bloginfo('name') . ' Listings</h1>';
 							}
 
 							echo $title; ?>
-							</h1>
 						</header><!-- .page-header -->
 
 						<?php

@@ -196,7 +196,7 @@ class WP_Listings {
 
 		switch( $column ) {
 			case "listing_thumbnail":
-				printf( '<p>%s</p>', the_post_thumbnail( 'post-thumbnail' ) );
+				printf( '<p>%s</p>', the_post_thumbnail( 'thumbnail' ) );
 				break;
 			case "listing_details":
 				foreach ( (array) $this->property_details['col1'] as $label => $key ) {
