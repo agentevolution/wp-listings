@@ -54,7 +54,7 @@ function wp_listings_post_nav() {
 	}
 
 	?>
-	<nav class="navigation post-navigation" role="navigation">
+	<nav class="navigation listing-navigation" role="navigation">
 		<h1 class="screen-reader-text"><?php _e( 'Listing navigation', 'wp_listings' ); ?></h1>
 		<div class="nav-links">
 			<?php
@@ -62,7 +62,7 @@ function wp_listings_post_nav() {
 				previous_post_link( '%link', __( '<span class="meta-nav">Published In</span>%title', 'wp_listings' ) );
 			else :
 				previous_post_link( '%link', __( '<span class="meta-nav">Previous Listing</span>%title', 'wp_listings' ) );
-				next_post_link( '%link', __( '<span class="meta-nav">Listing Post</span>%title', 'wp_listings' ) );
+				next_post_link( '%link', __( '<span class="meta-nav">Next Listing</span>%title', 'wp_listings' ) );
 			endif;
 			?>
 		</div><!-- .nav-links -->
@@ -112,8 +112,8 @@ function wp_listings_paging_nav() {
 	if ( $links ) :
 
 	?>
-	<nav class="navigation paging-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Posts navigation', 'wp_listings' ); ?></h1>
+	<nav class="navigation archive-listing-navigation" role="navigation">
+		<h1 class="screen-reader-text"><?php _e( 'Listings navigation', 'wp_listings' ); ?></h1>
 		<div class="pagination loop-pagination">
 			<?php echo $links; ?>
 		</div><!-- .pagination -->

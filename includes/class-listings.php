@@ -50,9 +50,8 @@ class WP_Listings {
 		add_action( 'admin_menu', array( $this, 'register_meta_boxes' ), 5 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
-		add_shortcode( 'property_details', array( $this, 'property_details_shortcode' ) );
-		add_shortcode( 'property_map', array( $this, 'property_map_shortcode' ) );
-		add_shortcode( 'property_video', array( $this, 'property_video_shortcode' ) );
+		//add_shortcode( 'property_map', array( $this, 'property_map_shortcode' ) );
+		//add_shortcode( 'property_video', array( $this, 'property_video_shortcode' ) );
 
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
 		add_action( 'admin_menu', array( &$this, 'settings_init' ), 15 );

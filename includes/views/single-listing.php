@@ -6,6 +6,19 @@
  * @since 0.1.0
  */
 
+if (function_exists('genesis_init')) {
+
+	remove_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );
+	remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
+	remove_action( 'genesis_after_entry', 'genesis_do_author_box_single' );
+
+	remove_action( 'genesis_entry_content' , 'genesis_do_post_content' );
+	add_action( 'genesis_entry_content' , 'single_listing_post_content' );
+
+	genesis();
+
+} else {
+
 get_header(); ?>
 
 	<div id="primary" class="content-area">
@@ -50,7 +63,7 @@ get_header(); ?>
 
 								$pattern = '<tr><td class="label">%s</td><td class="wp_listings[%s]">%s</td></tr>';
 
-								echo '<table class="listing-details one-half first">';
+								echo '<table class="listing-details">';
 
 								echo '<tbody>';
 								foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
@@ -119,3 +132,5 @@ get_header(); ?>
 get_sidebar( 'content' );
 get_sidebar();
 get_footer();
+
+}
