@@ -35,12 +35,12 @@ class WP_Listings {
 			),
 			'col2' => array(
 			    __( 'Year Built:', 'wp_listings' ) 				=> '_listing_year_built',
+			    __( 'Floors:', 'wp_listings' ) 					=> '_listing_floors',
 			    __( 'Square Feet:', 'wp_listings' )				=> '_listing_sqft',
 				__( 'Lot Square Feet:', 'wp_listings' )			=> '_listing_lot_sqft',
 			    __( 'Bedrooms:', 'wp_listings' )				=> '_listing_bedrooms',
 			    __( 'Bathrooms:', 'wp_listings' )				=> '_listing_bathrooms',
-			    __( 'Pool:', 'wp_listings' )					=> '_listing_pool',
-			    __( 'Basement:', 'wp_listings' )				=> '_listing_basement'
+			    __( 'Pool:', 'wp_listings' )					=> '_listing_pool'
 			),
 		) );
 
@@ -119,7 +119,7 @@ class WP_Listings {
 	function register_meta_boxes() {
 
 		add_meta_box( 'listing_details_metabox', __( 'Property Details', 'wp_listings' ), array( &$this, 'listing_details_metabox' ), 'listing', 'normal', 'high' );
-		add_meta_box( 'listing_features_metabox', __( 'Additional Features', 'wp_listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
+		add_meta_box( 'listing_features_metabox', __( 'Additional Details', 'wp_listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
 		add_meta_box( 'agentevo_metabox', __( 'Agent Evolution', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
 
 	}

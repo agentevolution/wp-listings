@@ -6,6 +6,14 @@
  * @since 0.1.0
  */
 
+//add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
+function add_wp_listings_scripts_single() {
+	wp_register_script( 'wp-listings-tabs', WP_LISTINGS_URL . '/includes/js/listing-tabs.js', array('jquery, jquery-ui-tabs'), true );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
+	wp_enqueue_script( 'wp-listings-tabs', array('jquery, jquery-ui-tabs') );
+}
+
 function single_listing_post_content() {
 
 	global $post;
@@ -16,69 +24,99 @@ function single_listing_post_content() {
 
 		<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class' => 'single-listing-image') ); ?>
 
-		<div class="iframe-wrap">
-			<?php echo get_post_meta( $post->ID, '_listing_video', true); ?>
-		</div>
+		<div id="listing-tabs" class="listing-data">
 
-		<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
+			<ul>
+				<li><a href="#listing-description">Description</a></li>
 
-		<div class="listing-data">
-			<div id="property-details">
-			<h4>Property Details</h4>
-			<?php
-				$details_instance = new WP_Listings();
+				<li><a href="#listing-details">Details</a></li>
 
-				$pattern = '<tr><td class="label">%s</td><td class="wp_listings[%s]">%s</td></tr>';
+				<li><a href="#listing-photos">Photos</a></li>
 
-				echo '<table class="listing-details">';
-
-				echo '<tbody>';
-				foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
-					$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
-					if (! empty( $detail_value ) ) :
-						printf( $pattern, esc_html( $label ), $key, $detail_value );
-					endif;
-				}
-				echo '</tbody>';
-
-				echo '<tbody>';
-				foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
-					$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
-					if (! empty( $detail_value ) ) :
-						printf( $pattern, esc_html( $label ), $key, $detail_value );
-					endif;
-				}
-				echo '</tbody>';
-
-				echo '</table>';
-			?>
-
-			<?php if (get_post_meta( $post->ID, '_listing_vtour_url', true) != '') { ?>
-				<p class="vid-tour-url"><span class="label"><?php _e("Virtual Tour:", 'wp_listings'); ?></span><span class="value"><a href="<?php echo get_post_meta( $post->ID, '_vtour_url', true); ?>">View Virtual Tour</a></span></p>
+				<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
+					<li><a href="#listing-video">Video Virtual Tour</a></li>
 				<?php } ?>
 
-				<?php echo get_the_term_list( get_the_ID(), 'features', '<p class="tagged-features"><span class="label">Tagged Features:</span>&nbsp;', ', ', '</p><!-- .tagged-features -->' ) ?>
+				<?php if (get_post_meta( $post->ID, '_listing_school_neighborhood', true) != '') { ?>
+				<li><a href="#listing-school-neighborhood">Schools &amp; Neighborhood</a></li>
+				<?php } ?>
+			</ul>
 
-			</div><!-- .property-details -->
+			<div id="listing-description">
+				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
+			</div><!-- #listing-description -->
 
-			<?php if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_family_room', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
-				<div class="additional-features">
-					<h4>Additional Features</h4>
-					<span class="label"><?php _e("Home Summary", 'wp_listings'); ?></span>
-					<p class="value"><?php echo get_post_meta( $post->ID, '_listing_home_sum', true); ?></p>
-					<span class="label"><?php _e("Kitchen Summary", 'wp_listings'); ?></span>
-					<p class="value"><?php echo get_post_meta( $post->ID, '_listing_kitchen_sum', true); ?></p>
-					<span class="label"><?php _e("Living Room", 'wp_listings'); ?></span>
-					<p class="value"><?php echo get_post_meta( $post->ID, '_listing_living_room', true); ?></p>
-					<span class="label"><?php _e("Master Suite", 'wp_listings'); ?></span>
-					<p class="value"><?php echo get_post_meta( $post->ID, '_listing_master_suite', true); ?></p>
-				</div><!-- .additional-features -->
+			<div id="listing-details">
+				<?php
+					$details_instance = new WP_Listings();
+
+					$pattern = '<tr><td class="label">%s</td><td class="wp_listings[%s]">%s</td></tr>';
+
+					echo '<table class="listing-details">';
+
+					echo '<tbody>';
+					foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
+						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+						if (! empty( $detail_value ) ) :
+							printf( $pattern, esc_html( $label ), $key, $detail_value );
+						endif;
+					}
+					echo '</tbody>';
+
+					echo '<tbody>';
+					foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
+						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+						if (! empty( $detail_value ) ) :
+							printf( $pattern, esc_html( $label ), $key, $detail_value );
+						endif;
+					}
+					echo '</tbody>';
+
+					echo '</table>';
+
+				if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
+					<div class="additional-features">
+						<h4>Additional Features</h4>
+						<h6 class="label"><?php _e("Home Summary", 'wp_listings'); ?></h6>
+						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_home_sum', true); ?></p>
+						<h6 class="label"><?php _e("Kitchen Summary", 'wp_listings'); ?></h6>
+						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_kitchen_sum', true); ?></p>
+						<h6 class="label"><?php _e("Living Room", 'wp_listings'); ?></h6>
+						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_living_room', true); ?></p>
+						<h6 class="label"><?php _e("Master Suite", 'wp_listings'); ?></h6>
+						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_master_suite', true); ?></p>
+					</div><!-- .additional-features -->
+				<?php
+				}
+
+				echo '<h5>Tagged Features</h5><ul class="tagged-features">';
+				echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
+				echo '</ul><!-- .tagged-features -->'; ?>
+
+			</div><!-- #listing-details -->
+
+
+			<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
+			<div id="listing-video">
+				<div class="iframe-wrap">
+				<?php echo get_post_meta( $post->ID, '_listing_video', true); ?>
+				</div>
+			</div><!-- #listing-video -->
+			<?php } ?>
+
+			<?php if (get_post_meta( $post->ID, '_listing_school_neighborhood', true) != '') { ?>
+			<div id="listing-school-neighborhood">
+				<p>
+				<?php echo get_post_meta( $post->ID, '_listing_school_neighborhood', true); ?>
+				</p>
+			</div><!-- #listing-video -->
 			<?php } ?>
 
 		</div><!-- .listing-data -->
 	</div><!-- .entry-content -->
 
-<?php }
+<?php
+}
 
 if (function_exists('genesis_init')) {
 

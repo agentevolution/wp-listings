@@ -57,9 +57,18 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
 
-	/** Enqueus style file if it exists */
-	add_action('wp_enqueue_scripts', 'add_wp_listings_css');
-	function add_wp_listings_css() {
+	/** Enqueues scripts for single listings */
+	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
+	function add_wp_listings_scripts() {
+		wp_register_script( 'wp-listings-tabs', WP_LISTINGS_URL . 'includes/js/listing-tabs.js' );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
+		wp_enqueue_script( 'wp-listings-tabs', array('jquery, jquery-ui-tabs'), true );
+    }
+
+	/** Enqueues style file if it exists */
+	add_action('wp_enqueue_scripts', 'add_wp_listings_styles');
+	function add_wp_listings_styles() {
 
 		if ('1' == get_option('wp_listings_stylesheet_load')) {
 			return;
