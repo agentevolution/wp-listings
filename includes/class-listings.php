@@ -30,14 +30,16 @@ class WP_Listings {
 			    __( 'City:', 'wp_listings' )					=> '_listing_city',
 			    __( 'State:', 'wp_listings' )					=> '_listing_state',
 			    __( 'ZIP:', 'wp_listings' )						=> '_listing_zip',
+			    __( 'MLS #:', 'wp_listings' ) 					=> '_listing_mls',
 				__( 'Open House Time & Date:', 'wp_listings' ) 	=> '_listing_open_house'
 			),
 			'col2' => array(
-			    __( 'MLS #:', 'wp_listings' ) 					=> '_listing_mls',
+			    __( 'Year Built:', 'wp_listings' ) 				=> '_listing_year_built',
 			    __( 'Square Feet:', 'wp_listings' )				=> '_listing_sqft',
 				__( 'Lot Square Feet:', 'wp_listings' )			=> '_listing_lot_sqft',
 			    __( 'Bedrooms:', 'wp_listings' )				=> '_listing_bedrooms',
 			    __( 'Bathrooms:', 'wp_listings' )				=> '_listing_bathrooms',
+			    __( 'Pool:', 'wp_listings' )					=> '_listing_pool',
 			    __( 'Basement:', 'wp_listings' )				=> '_listing_basement'
 			),
 		) );

@@ -90,30 +90,39 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 				$first_class = ( 1 == $count && 1 == $instance['use_columns'] ) ? ' first' : '';
 
-				$loop = sprintf( '<a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
+				$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
+
+				if ( '' != wp_listings_get_status() ) {
+					$loop .= sprintf( '<span class="listing-status %s">%s</span>', wp_listings_get_status(), wp_listings_get_status() );
+				}
+
+				$loop .= sprintf( '<div class="listing-thumb-meta">' );
 
 				if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
 					$loop .= sprintf( '<span class="listing-price">%s</span>', get_post_meta( $post->ID, '_listing_price', true ) );
 				}
 
-				if ( '' != wp_listings_get_status() ) {
-					$loop .= sprintf( '<span class="listing-status">%s</span>', wp_listings_get_status() );
+				if ( '' != wp_listings_get_property_types() ) {
+					$loop .= sprintf( '<span class="listing-property-type">%s</span>', wp_listings_get_property_types() );
 				}
 
-				$loop .= sprintf( '<h3 class="listing-title"><a href="%s">%s</a></h3>', get_permalink(), get_the_title() );
-				$loop .= sprintf( '<span class="listing-address">%s</span>', wp_listings_get_address() );
-				$loop .= sprintf( '<span class="listing-city-state-zip">%s, %s %s</span>', wp_listings_get_city(), wp_listings_get_state(), get_post_meta( $post->ID, '_listing_zip', true ) );
-
-				$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul>', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
+				$loop .= sprintf( '</div><!-- .listing-thumb-meta --></div><!-- .listing-widget-thumb -->' );
 
 				if ( '' != get_post_meta( $post->ID, '_listing_open_house', true ) ) {
 					$loop .= sprintf( '<span class="listing-open-house">Open House: %s</span>', get_post_meta( $post->ID, '_listing_open_house', true ) );
 				}
 
+				$loop .= sprintf( '<div class="listing-widget-details"><h3 class="listing-title"><a href="%s">%s</a></h3>', get_permalink(), get_the_title() );
+				$loop .= sprintf( '<span class="listing-address">%s</span>', wp_listings_get_address() );
+				$loop .= sprintf( '<span class="listing-city-state-zip">%s, %s %s</span>', wp_listings_get_city(), wp_listings_get_state(), get_post_meta( $post->ID, '_listing_zip', true ) );
+
+				$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul></div><!-- .listing-widget-details -->', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
+
+
 				$loop .= sprintf( '<a href="%s" class="btn btn-primary">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
 
 				/** wrap in div with possible column class, and output **/
-				printf( '<div class="%s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );
+				printf( '<div class="listing %s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );
 
 			endwhile; endif;
 			wp_reset_postdata();

@@ -2,22 +2,22 @@
 /**
  * This widget creates a search form which uses listings' taxonomy for search fields.
  *
+ * @package WP Listings
  * @since 0.1.0
- * @author agentevolution
  */
 class WP_Listings_Search_Widget extends WP_Widget {
 
 	function WP_Listings_Search_Widget() {
-		$widget_ops = array( 'classname' => 'property-search', 'description' => __( 'Display property search dropdown', 'wp_listings' ) );
-		$control_ops = array( 'width' => 200, 'height' => 250, 'id_base' => 'property-search' );
-		$this->WP_Widget( 'property-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
+		$widget_ops = array( 'classname' => 'listings-search', 'description' => __( 'Display listings search dropdown', 'wp_listings' ) );
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
+		$this->WP_Widget( 'listings-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
 
 		$instance = wp_parse_args( (array) $instance, array(
 			'title'			=> '',
-			'button_text'	=> __( 'Search Properties', 'wp_listings' )
+			'button_text'	=> __( 'Search Listings', 'wp_listings' )
 		) );
 
 		global $_wp_listings_taxonomies;

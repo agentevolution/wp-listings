@@ -115,9 +115,30 @@ function wp_listings_get_status($post_id = null) {
 	}
 }
 
+/**
+ * Displays the property type (residential, condo, comemrcial, etc) of a listing
+ */
+function wp_listings_get_property_types($post_id = null) {
+
+	if ( null == $post_id ) {
+		global $post;
+		$post_id = $post->ID;
+	}
+
+	$listing_property_types = wp_get_object_terms($post_id, 'property-types');
+
+	if ( empty($listing_property_types) || is_wp_error($listing_property_types) ) {
+		return;
+	}
+
+	foreach($listing_property_types as $type) {
+		return $type->name;
+	}
+}
+
 function wp_listings_post_number( $query ) {
 
-	if ( !is_main_query() || is_admin() || !is_post_type_archive('listing') ) {
+	if ( !$query->is_main_query() || is_admin() || !is_post_type_archive('listing') ) {
 		return;
 	}
 

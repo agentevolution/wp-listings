@@ -54,8 +54,8 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
-	require_once( dirname( __FILE__ ) . '/includes/class-property-search-widget.php' );
 
 	/** Enqueus style file if it exists */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_css');
@@ -86,7 +86,7 @@ function wp_listings_init() {
  */
 function wp_listings_register_widgets() {
 
-	$widgets = array( 'WP_Listings_Featured_Listings_Widget' );
+	$widgets = array( 'WP_Listings_Featured_Listings_Widget', 'WP_Listings_Search_Widget' );
 
 	foreach ( (array) $widgets as $widget ) {
 		register_widget( $widget );

@@ -43,9 +43,6 @@
 ------------------------------------------------------------ */
 
 .archive .listing-wrap {
-	float: left;
-	margin: 0 1.6% 3%;
-	width: 30%;
 }
 
 
@@ -102,55 +99,55 @@
 /* =Column classes (for widget only)
 ------------------------------------------------------------ */
 
-.featured-listings .five-sixths,
-.featured-listings .four-sixths,
-.featured-listings .one-fourth,
-.featured-listings .one-half,
-.featured-listings .one-sixth,
-.featured-listings .one-third,
-.featured-listings .three-fourths,
-.featured-listings .three-sixths,
-.featured-listings .two-fourths,
-.featured-listings .two-sixths,
-.featured-listings .two-thirds {
+.listing.five-sixths,
+.listing.four-sixths,
+.listing.one-fourth,
+.listing.one-half,
+.listing.one-sixth,
+.listing.one-third,
+.listing.three-fourths,
+.listing.three-sixths,
+.listing.two-fourths,
+.listing.two-sixths,
+.listing.two-thirds {
 	float: left;
 	margin-left: 2.564102564102564%;
 	margin-bottom: 15px;
 }
 
-.featured-listings .one-half,
-.featured-listings .three-sixths,
-.featured-listings .two-fourths {
+.listing.one-half,
+.listing.three-sixths,
+.listing.two-fourths {
 	width: 48.717948717948715%;
 }
 
-.featured-listings .one-third,
-.featured-listings .two-sixths {
+.listing.one-third,
+.listing.two-sixths {
 	width: 31.623931623931625%;
 }
 
-.featured-listings .four-sixths,
-.featured-listings .two-thirds {
+.listing.four-sixths,
+.listing.two-thirds {
 	width: 65.81196581196582%;
 }
 
-.featured-listings .one-fourth {
+.listing.one-fourth {
 	width: 23.076923076923077%;
 }
 
-.featured-listings .three-fourths {
+.listing.three-fourths {
 	width: 74.35897435897436%;
 }
 
-.featured-listings .one-sixth {
+.listing.one-sixth {
 	width: 14.52991452991453%;
 }
 
-.featured-listings .five-sixths {
+.listing.five-sixths {
 	width: 82.90598290598291%;
 }
 
-.featured-listings .first {
+.listing.first {
 	clear: both;
 	margin-left: 0;
 }
@@ -204,6 +201,11 @@
 
 /* Paging Navigation */
 
+.pagination,
+.archive-listing-navigation {
+	clear: both;
+}
+
 .archive-listing-navigation {
 	border-top: 5px solid #000;
 	margin: 48px 0;
@@ -242,17 +244,17 @@
 ------------------------------------------------------------ */
 /* Landscape phone to portrait tablet */
 @media (max-width: 768px) {
-	.one-half,
-	.one-third,
-	.two-thirds,
-	.one-fourth,
-	.three-fourths,
-	.one-fifth,
-	.two-fifths,
-	.three-fifths,
-	.four-fifths,
-	.one-sixth,
-	.five-sixths {
+	.listing.one-half,
+	.listing.one-third,
+	.listing.two-thirds,
+	.listing.one-fourth,
+	.listing.three-fourths,
+	.listing.one-fifth,
+	.listing.two-fifths,
+	.listing.three-fifths,
+	.listing.four-fifths,
+	.listing.one-sixth,
+	.listing.five-sixths {
 		float: none;
 		width: 100%;
 		padding: 0;
