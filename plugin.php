@@ -23,9 +23,10 @@ function wp_listings_activation() {
 		/** Flush rewrite rules */
 		if ( ! post_type_exists( 'listing' ) ) {
 			wp_listings_init();
-			global $_wp_listings, $_wp_listings_taxonomies;
+			global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 			$_wp_listings->create_post_type();
 			$_wp_listings_taxonomies->register_taxonomies();
+			//$_wp_listings_templates->wplistings_add_metabox();
 		}
 		flush_rewrite_rules();
 
@@ -41,7 +42,7 @@ add_action( 'after_setup_theme', 'wp_listings_init' );
  */
 function wp_listings_init() {
 
-	global $_wp_listings, $_wp_listings_taxonomies;
+	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WP_LISTINGS_VERSION', '0.1.0' );
@@ -84,6 +85,7 @@ function wp_listings_init() {
 	/** Instantiate */
 	$_wp_listings = new WP_Listings;
 	$_wp_listings_taxonomies = new WP_Listings_Taxonomies;
+	$_wp_listings_templates = new Single_Listing_Template;
 
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
 

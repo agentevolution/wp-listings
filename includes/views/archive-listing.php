@@ -99,7 +99,7 @@ get_header(); ?>
 					}
 
 					echo $title; ?>
-				</header><!-- .page-header -->
+				</header><!-- .archive-header -->
 
 			<?php
 

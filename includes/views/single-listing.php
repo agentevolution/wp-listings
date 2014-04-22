@@ -21,6 +21,7 @@ function single_listing_post_content() {
 	?>
 
 	<div class="entry-content">
+		<?php echo get_post_meta( $post->ID, '_wp_post_template', true ); ?>
 
 		<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class' => 'single-listing-image') ); ?>
 

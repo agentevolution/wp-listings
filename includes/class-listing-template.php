@@ -17,7 +17,8 @@ class Single_Listing_Template {
 
 	function __construct() {
 
-		add_action( 'admin_menu', array( $this, 'add_metabox' ) );
+		add_action( 'admin_menu', array( $this, 'wplistings_add_metabox' ) );
+		//add_action( 'add_meta_boxes', 'wplistings_add_metabox', 10, 2 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
 		add_filter( 'single_template', array( $this, 'get_listing_template' ) );
@@ -61,7 +62,7 @@ class Single_Listing_Template {
 
 		}
 
-		return $post_templates;
+		return $listing_templates;
 
 	}
 
@@ -80,24 +81,24 @@ class Single_Listing_Template {
 
 	}
 
-	function add_metabox() {
-
+	function wplistings_add_metabox( $post ) {
+		// add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wp_listings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 		if ( $this->get_listing_templates() )
-			add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'genesis' ), array( $this, 'metabox' ), 'post', 'side', 'high' );
+			add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wplistings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 
 	}
 
-	function metabox( $post ) {
+	function listing_template_metabox( $post ) {
 
 		?>
 		<input type="hidden" name="wplistings_noncename" id="wplistings_noncename" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
 
-		<label class="hidden" for="listing_template"><?php  _e( 'Post Template', 'genesis' ); ?></label><br />
+		<label class="hidden" for="listing_template"><?php  _e( 'Listing Template', 'wp_listings' ); ?></label><br />
 		<select name="_wp_post_template" id="listing_template" class="dropdown">
-			<option value=""><?php _e( 'Default', 'genesis' ); ?></option>
-			<?php $this->post_templates_dropdown(); ?>
+			<option value=""><?php _e( 'Default', 'wp_listings' ); ?></option>
+			<?php $this->listing_templates_dropdown(); ?>
 		</select><br /><br />
-		<p><?php _e( 'You can use custom templates for single listings that might have additional features or custom layouts by adding them to your theme directory. If so, you will see them above.', 'genesis' ); ?></p>
+		<p><?php _e( 'You can use custom templates for single listings that might have additional features or custom layouts by adding them to your theme directory. If so, you will see them above.', 'wp_listings' ); ?></p>
 		<?php
 
 	}
@@ -112,10 +113,10 @@ class Single_Listing_Template {
 			return $post->ID;
 
 		/** Is the user allowed to edit the post or page? */
-		//if ( 'listing' == $_POST['post_type'] )
-		//	if ( ! current_user_can( 'edit_page', $post->ID ) )
-		//		return $post->ID;
-		//else
+		if ( 'listing' == $_POST['post_type'] )
+			if ( ! current_user_can( 'edit_page', $post->ID ) )
+				return $post->ID;
+		else
 			if ( ! current_user_can( 'edit_post', $post->ID ) )
 				return $post->ID;
 
@@ -148,10 +149,10 @@ class Single_Listing_Template {
 
 }
 
-add_action( 'after_setup_theme', 'listing_templates_plugin_init' );
+// add_action( 'after_setup_theme', 'listing_templates_plugin_init' );
 /**
  * Instantiate the class after theme has been set up.
  */
-function listings_templates_plugin_init() {
-	new Single_Listing_Template;
-}
+// function listings_templates_plugin_init() {
+// 	new Single_Listing_Template;
+// }
