@@ -52,9 +52,6 @@ class WP_Listings {
 		add_action( 'admin_menu', array( $this, 'register_meta_boxes' ), 5 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
-		//add_shortcode( 'property_map', array( $this, 'property_map_shortcode' ) );
-		//add_shortcode( 'property_video', array( $this, 'property_video_shortcode' ) );
-
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
 		add_action( 'admin_menu', array( &$this, 'settings_init' ), 15 );
 	}
@@ -120,7 +117,6 @@ class WP_Listings {
 
 		add_meta_box( 'listing_details_metabox', __( 'Property Details', 'wp_listings' ), array( &$this, 'listing_details_metabox' ), 'listing', 'normal', 'high' );
 		add_meta_box( 'listing_features_metabox', __( 'Additional Details', 'wp_listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
-		//add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wp_listings' ), array( &$this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 		add_meta_box( 'agentevo_metabox', __( 'Agent Evolution', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
 
 	}
@@ -132,10 +128,6 @@ class WP_Listings {
 	function listing_features_metabox() {
 		include( dirname( __FILE__ ) . '/views/listing-features-metabox.php' );
 	}
-
-	// function listing_template_metabox() {
-	// 	include( dirname( __FILE__ ) . '/class-listing-template.php' );
-	// }
 
 	function agentevo_metabox() {
 		include( dirname( __FILE__ ) . '/views/agentevo-metabox.php' );

@@ -18,31 +18,7 @@ class Single_Listing_Template {
 	function __construct() {
 
 		add_action( 'admin_menu', array( $this, 'wplistings_add_metabox' ) );
-		//add_action( 'add_meta_boxes', 'wplistings_add_metabox', 10, 2 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
-
-		add_filter( 'single_template', array( $this, 'get_listing_template' ) );
-
-	}
-
-	function get_listing_template( $template ) {
-
-		global $post;
-
-		$custom_field = get_post_meta( $post->ID, '_wp_post_template', true );
-
-		if( ! $custom_field )
-			return $template;
-
-		/** Prevent directory traversal */
-		$custom_field = str_replace( '..', '', $custom_field );
-
-		if( file_exists( get_stylesheet_directory() . "/{$custom_field}" ) )
-			$template = get_stylesheet_directory() . "/{$custom_field}";
-		elseif( file_exists( get_template_directory() . "/{$custom_field}" ) )
-			$template = get_template_directory() . "/{$custom_field}";
-
-		return $template;
 
 	}
 
@@ -82,7 +58,6 @@ class Single_Listing_Template {
 	}
 
 	function wplistings_add_metabox( $post ) {
-		// add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wp_listings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 		if ( $this->get_listing_templates() )
 			add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wplistings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 
@@ -148,11 +123,3 @@ class Single_Listing_Template {
 	}
 
 }
-
-// add_action( 'after_setup_theme', 'listing_templates_plugin_init' );
-/**
- * Instantiate the class after theme has been set up.
- */
-// function listings_templates_plugin_init() {
-// 	new Single_Listing_Template;
-// }

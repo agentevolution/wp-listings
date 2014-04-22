@@ -5,8 +5,8 @@
  */
 
 add_image_size( 'listings', 560, 380, TRUE );
-add_filter( 'template_include', 'wp_listings_template_include' );
 
+add_filter( 'template_include', 'wp_listings_template_include' );
 function wp_listings_template_include( $template ) {
 
 	$post_type = 'listing';
@@ -28,11 +28,26 @@ function wp_listings_template_include( $template ) {
 	}
 
 	if ( $post_type == get_post_type() ) {
-		if ( file_exists(get_stylesheet_directory() . '/single-' . $post_type . '.php') ) {
+
+		global $post;
+
+		$custom_template = get_post_meta( $post->ID, '_wp_post_template', true );
+
+		if( ! $custom_template )
 			return $template;
-		} else {
+
+		/** Prevent directory traversal */
+		$custom_template = str_replace( '..', '', $custom_template );
+
+		if( file_exists( get_stylesheet_directory() . "/{$custom_template}" ) )
+			$template = get_stylesheet_directory() . "/{$custom_template}";
+		elseif( file_exists( get_template_directory() . "/{$custom_template}" ) )
+			$template = get_template_directory() . "/{$custom_template}";
+		elseif( file_exists(get_stylesheet_directory() . '/single-' . $post_type . '.php') )
+			return $template;
+		else
 			return dirname( __FILE__ ) . '/views/single-' . $post_type . '.php';
-		}
+
 	}
 
 	return $template;
