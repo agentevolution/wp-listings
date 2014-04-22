@@ -54,6 +54,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
 

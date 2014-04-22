@@ -10,7 +10,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 	function WP_Listings_Featured_Listings_Widget() {
 		$widget_ops  = array( 'classname' => 'featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp_listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350 );
-		$this->WP_Widget( 'featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
+		$this->WP_Widget( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
 	}
 
 	/**
@@ -121,7 +121,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				$loop .= sprintf( '<a href="%s" class="btn btn-primary">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
 
 				/** wrap in div with possible column class, and output **/
-				printf( '<div class="listing %s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );
+				printf( '<div class="listing %s post-%s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, $post->ID, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );
 
 			endwhile; endif;
 			wp_reset_postdata();

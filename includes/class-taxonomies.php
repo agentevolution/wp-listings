@@ -12,6 +12,7 @@ class WP_Listings_Taxonomies {
 
 	var $settings_field = 'wp_listings_taxonomies';
 	var $menu_page = 'register-taxonomies';
+	var $reorder_page = 'reorder-taxonomies';
 
 	/**
 	 * Construct Method.
@@ -22,6 +23,7 @@ class WP_Listings_Taxonomies {
 		add_action( 'admin_menu', array( &$this, 'settings_init' ), 15 );
 		add_action( 'admin_init', array( &$this, 'actions' ) );
 		add_action( 'admin_notices', array( &$this, 'notices' ) );
+		add_action( 'admin_enqueue_scripts', array( &$this, 'tax_reorder_enqueue' ) );
 
 		add_action( 'init', array( &$this, 'register_taxonomies' ), 15 );
 		add_action( 'init', array( $this, 'create_terms' ), 16 );
@@ -38,6 +40,7 @@ class WP_Listings_Taxonomies {
 	function settings_init() {
 
 		add_submenu_page( 'edit.php?post_type=listing', __( 'Register Taxonomies', 'wp_listings' ), __( 'Register Taxonomies', 'wp_listings' ), 'manage_options', $this->menu_page, array( &$this, 'admin' ) );
+		add_submenu_page( 'edit.php?post_type=listing', __( 'Reorder Taxonomies', 'wp_listings' ), __( 'Reorder Taxonomies', 'wp_listings' ), 'manage_options', $this->reorder_page, array( &$this, 'tax_reorder' ) );
 
 	}
 
@@ -62,6 +65,10 @@ class WP_Listings_Taxonomies {
 			$this->edit_taxonomy( $_POST['wp_listings_taxonomy'] );
 		}
 
+	}
+
+	function tax_reorder_enqueue() {
+		wp_enqueue_script('jquery-ui-sortable');
 	}
 
 	function admin() {
@@ -224,39 +231,6 @@ class WP_Listings_Taxonomies {
 	}
 
 	/**
-	 * Register the property features taxonomy, manually.
-	 */
-	function property_features_taxonomy() {
-
-		$name = 'Features';
-		$singular_name = 'Feature';
-
-		return array(
-			'features' => array(
-				'labels' => array(
-					'name'					=> strip_tags( $name ),
-					'singular_name' 		=> strip_tags( $singular_name ),
-					'menu_name'				=> strip_tags( $name ),
-
-					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
-				),
-				'hierarchical' => 0,
-				'rewrite' => array( 'features' ),
-				'editable' => 0
-			)
-		);
-
-	}
-
-	/**
 	 * Register the status taxonomy, manually.
 	 */
 	function listing_status_taxonomy() {
@@ -356,6 +330,39 @@ class WP_Listings_Taxonomies {
 	}
 
 	/**
+	 * Register the property features taxonomy, manually.
+	 */
+	function property_features_taxonomy() {
+
+		$name = 'Features';
+		$singular_name = 'Feature';
+
+		return array(
+			'features' => array(
+				'labels' => array(
+					'name'					=> strip_tags( $name ),
+					'singular_name' 		=> strip_tags( $singular_name ),
+					'menu_name'				=> strip_tags( $name ),
+
+					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
+					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
+					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
+					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
+					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
+					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
+					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
+					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+				),
+				'hierarchical' => 0,
+				'rewrite' => array( 'features' ),
+				'editable' => 0
+			)
+		);
+
+	}
+
+	/**
 	 * Create the taxonomies.
 	 */
 	function register_taxonomies() {
@@ -371,7 +378,7 @@ class WP_Listings_Taxonomies {
 	 */
 	function get_taxonomies() {
 
-		return array_merge( $this->property_features_taxonomy(), $this->listing_status_taxonomy(), $this->listing_location_taxonomy(), $this->property_type_taxonomy(), (array) get_option( $this->settings_field ) );
+		return array_merge( $this->listing_status_taxonomy(), $this->listing_location_taxonomy(), $this->property_type_taxonomy(), $this->property_features_taxonomy(), (array) get_option( $this->settings_field ) );
 
 	}
 
@@ -398,6 +405,79 @@ class WP_Listings_Taxonomies {
 			wp_insert_term($term,'property-types', array('slug' => $slug));
 		}
 
+	}
+
+	/**
+	 * Reorder taxonomies
+	 */
+	function tax_reorder() {
+		$wp_listings_taxes = get_option('wp_listings_taxonomies');
+
+		if($_POST) {
+			$new_order = $_POST['wp_listings_taxonomy'];
+			$wp_listings_taxes_reordered = array();
+			foreach( $new_order as $tax ) {
+				if($wp_listings_taxes[$tax])
+					$wp_listings_taxes_reordered[$tax] = $wp_listings_taxes[$tax];	
+			}
+			$wp_listings_taxes = $wp_listings_taxes_reordered;
+			update_option('wp_listings_taxonomies', $wp_listings_taxes_reordered);
+			
+		}?>
+	<h2><?php _e( 'Reorder Taxonomies', 'wp_listings' ); ?></h2>
+	<div id="col-container">
+		<div class="updated">Note: This will only allow you to reorder user-created taxonomies. Default taxonomies cannot be reordered (Status, Locations, Property Types, Features).</div>
+		<style>
+		#sortable { list-style-type: none; margin: 10px 0 ; padding: 0; }
+		#sortable li .item { 
+			-moz-border-radius: 6px 6px 6px 6px;
+			border: 1px solid #E6E6E6;
+			font-weight: bold;
+			height: auto;
+			line-height: 35px;
+			overflow: hidden;
+			padding-left: 10px;
+			position: relative;
+			text-shadow: 0 1px 0 white;
+			width: auto;
+			word-wrap: break-word;
+			cursor: move;
+			background: none repeat-x scroll left top #DFDFDF;
+			-moz-box-shadow: 2px 2px 3px #888;
+			-webkit-box-shadow: 2px 2px 3px #888;
+			box-shadow: 2px 2px 3px #888;
+		}
+		#sortable li span { position: absolute; margin-left: -1.3em; }
+		.ui-state-highlight { background: #E6E6E6; border: 1px #666 dashed; }
+		.wplistings-submit { padding: 5px 10px; }
+		.wplistings-submit:hover { background: #eaf2fa; font-weight: bold;}
+		</style>
+		<script>
+		jQuery(function($) {
+			$( "#sortable" ).sortable({ placeholder: 'ui-state-highlight', forcePlaceholderSize: true});
+			$( "#sortable" ).disableSelection();
+		});
+		</script>
+		<div id="col-left">
+		<div class="col-wrap">
+	    <p>Drag and Drop to reorder</p>
+		<form method="post">
+		<ul id="sortable">
+	    	<?php foreach($wp_listings_taxes as $wp_listings_tax_key => $wp_listings_tax_value) { ?>
+	        	<li class="ui-state-default">
+	            	<div class="item">
+						<?php echo $wp_listings_tax_value['labels']['name']; ?><input type="hidden" id="wp_listings_taxonomy[]" name="wp_listings_taxonomy[]" value="<?php echo $wp_listings_tax_key; ?>" />
+	                </div>
+	            </li>
+	        <?php } ?>
+		</ul>
+	    <input class="wplistings-submit" type="submit" value="Save" />
+		</form>
+		</div>
+		</div><!-- /col-left -->
+
+	</div><!-- /col-container -->
+	<?php
 	}
 
 }
