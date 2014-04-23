@@ -24,7 +24,7 @@ echo '</div><br style="clear: both;" /><br /><br />';
 
 echo '<div style="width: 90%; float: left;">';
 
-	printf( __( '<p><label>Enter Map Embed Code:<br /><textarea name="wp_listings[_listing_map]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_map', true) ) );
+	printf( __( '<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a href="https://wordpress.org/plugins/simple-google-maps-short-code/">Simple Google Maps Short Code</a>):<br /><em>Recommend size: 660x300 (use your theme\'s content width as needed)</em><br /><textarea name="wp_listings[_listing_map]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_map', true) ) );
 
 echo '</div>';
 

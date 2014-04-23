@@ -151,12 +151,17 @@ function single_listing_post_content() {
 
 		</div><!-- #listing-tabs.listing-data -->
 
-
-		<div id="listing-map">
-		</div><!-- .listing-map -->
+		<?php
+			if (get_post_meta( $post->ID, '_listing_map', true) != '') {
+			echo '<div id="listing-map"><h3>Location Map</h3>';
+			echo do_shortcode(get_post_meta( $post->ID, '_listing_map', true) );
+			echo '</div><!-- .listing-map -->';
+			}
+		?>
 
 		<div id="listing-agent">
-			<?php if (function_exists('_p2p_init') ) {
+			<?php
+			if (function_exists('_p2p_init') && function_exists('agentpress_listings_init') || function_exists('_p2p_init') && function_exists('genesis_init') ) {
 				echo'
 				<div class="connected-agents">';
 				aeprofiles_connected_agents_markup();
@@ -215,7 +220,6 @@ get_header(); ?>
 			<?php
 
 				single_listing_post_content();
-
 
 				// Previous/next post navigation.
 				wp_listings_post_nav();
