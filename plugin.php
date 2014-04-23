@@ -92,9 +92,8 @@ function wp_listings_init() {
 
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
 
-	add_action('genesis_entry_header', 'echo_template_name');
-
-	/** For troubleshooting the loaded template */
+	// /** For troubleshooting the loaded template */
+	// add_action('genesis_entry_header', 'echo_template_name');
 	// add_action('genesis_after_post_title', 'echo_template_name');
 	// function echo_template_name() {
 	// 	global $post, $template;
