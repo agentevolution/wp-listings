@@ -71,12 +71,16 @@ function wp_listings_init() {
 	add_action('wp_enqueue_scripts', 'add_wp_listings_styles');
 	function add_wp_listings_styles() {
 
+		/** Font Awesome icons */
+		wp_register_style('font-awesome-more', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
+		wp_enqueue_style('font-awesome-more');
+
 		if ('1' == get_option('wp_listings_stylesheet_load')) {
 			return;
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/wp-listings.css') ) {
-            wp_register_style('wp_listings', WP_LISTINGS_URL . '/wp-listings.css');
+        	wp_register_style('wp_listings', WP_LISTINGS_URL . '/wp-listings.css');
             wp_enqueue_style('wp_listings');
         }
     }
