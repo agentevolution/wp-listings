@@ -116,7 +116,9 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				$loop .= sprintf( '<span class="listing-address">%s</span>', wp_listings_get_address() );
 				$loop .= sprintf( '<span class="listing-city-state-zip">%s, %s %s</span>', wp_listings_get_city(), wp_listings_get_state(), get_post_meta( $post->ID, '_listing_zip', true ) );
 
-				$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul></div><!-- .listing-widget-details -->', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
+				if ( '' != get_post_meta( $post->ID, '_listing_bedrooms', true ) || '' != get_post_meta( $post->ID, '_listing_bathrooms', true ) || '' != get_post_meta( $post->ID, '_listing_sqft', true )) {
+					$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul></div><!-- .listing-widget-details -->', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
+				}
 
 				$loop .= sprintf( '<a href="%s" class="btn btn-primary">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
 
