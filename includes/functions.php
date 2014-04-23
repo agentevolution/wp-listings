@@ -157,6 +157,13 @@ function wp_listings_post_number( $query ) {
 		return;
 	}
 
-	$query->query_vars['posts_per_page'] = 9;
+	$archive_posts_num = get_option('wp_listings_archive_posts_num');
+
+	if ( empty($archive_posts_num) ) {
+		$archive_posts_num = '9';
+	}
+
+	$query->query_vars['posts_per_page'] = $archive_posts_num;
+
 }
 add_action( 'pre_get_posts', 'wp_listings_post_number' );

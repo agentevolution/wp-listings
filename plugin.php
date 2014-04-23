@@ -26,7 +26,6 @@ function wp_listings_activation() {
 			global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 			$_wp_listings->create_post_type();
 			$_wp_listings_taxonomies->register_taxonomies();
-			//$_wp_listings_templates->wplistings_add_metabox();
 		}
 		flush_rewrite_rules();
 

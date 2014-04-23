@@ -62,6 +62,7 @@ class WP_Listings {
 	function register_settings() {
 		register_setting( 'wp_listings_options', 'wp_listings_stylesheet_load' );
 		register_setting( 'wp_listings_options', 'wp_listings_default_state' );
+		register_setting( 'wp_listings_options', 'wp_listings_archive_posts_num' );
 	}
 
 	/**

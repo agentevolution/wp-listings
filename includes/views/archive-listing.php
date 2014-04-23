@@ -10,6 +10,8 @@
 
 function archive_listing_loop() {
 
+		global $post;
+
 		$count = 0; // start counter at 0
 
 		// Start the Loop.
