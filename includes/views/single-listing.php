@@ -13,7 +13,7 @@ function single_listing_post_content() {
 	?>
 
 	<div class="entry-content">
-		
+
 		<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class' => 'single-listing-image') ); ?>
 
 		<div id="listing-tabs" class="listing-data">
@@ -105,6 +105,23 @@ function single_listing_post_content() {
 			<?php } ?>
 
 		</div><!-- #listing-tabs.listing-data -->
+
+
+		<div id="listing-map">
+		</div><!-- .listing-map -->
+
+		<div id="listing-agent">
+			<?php if (function_exists('_p2p_init') ) {
+				echo'
+				<div class="connected-agents">';
+				aeprofiles_connected_agents_markup();
+				echo '</div>';
+			} ?>
+		</div><!-- .listing-agent -->
+
+		<div id="listing-contact">
+		</div><!-- .listing-contact -->
+
 	</div><!-- .entry-content -->
 
 <?php
