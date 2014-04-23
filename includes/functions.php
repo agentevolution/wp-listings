@@ -42,7 +42,6 @@ function wp_listings_template_include( $template ) {
 				return $template;
 			else
 				return dirname( __FILE__ ) . '/views/single-' . $post_type . '.php';
-				//return 'http://themetester.ae-labs.com/wp-content/plugins/wp-listings/includes/views/single-' . $post_type . '.php';
 		else
 			if( file_exists( get_stylesheet_directory() . "/{$custom_template}" ) )
 				$template = get_stylesheet_directory() . "/{$custom_template}";
