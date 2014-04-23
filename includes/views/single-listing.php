@@ -14,7 +14,7 @@ function single_listing_post_content() {
 
 	<div class="entry-content">
 
-		<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class' => 'single-listing-image') ); ?>
+		<?php echo get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image') ); ?>
 
 		<div id="listing-tabs" class="listing-data">
 

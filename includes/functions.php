@@ -4,7 +4,8 @@
  *
  */
 
-add_image_size( 'listings', 560, 380, TRUE );
+add_image_size( 'listings-full', 1060, 9999, false );
+add_image_size( 'listings', 560, 380, false );
 
 add_filter( 'template_include', 'wp_listings_template_include' );
 function wp_listings_template_include( $template ) {

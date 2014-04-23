@@ -105,7 +105,7 @@ class WP_Listings {
 				'menu_position'	=> 5,
 				'menu_icon'		=> 'dashicons-admin-home',
 				'has_archive'	=> true,
-				'supports'		=> array( 'title', 'editor', 'author', 'comments', 'excerpt', 'thumbnail', 'revisions'),
+				'supports'		=> array( 'title', 'editor', 'author', 'comments', 'excerpt', 'thumbnail', 'revisions', 'genesis-seo', 'genesis-layouts', 'genesis-simple-sidebars'),
 				'rewrite'		=> array( 'slug' => 'listings', 'feeds' => true ),
 			)
 		);
