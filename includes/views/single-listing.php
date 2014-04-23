@@ -12,9 +12,54 @@ function single_listing_post_content() {
 
 	?>
 
-	<div class="entry-content">
+	<div class="entry-content single-listing">
 
-		<?php echo get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image') ); ?>
+		<div class="listing-image-wrap">
+			<?php echo get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image') );
+			if ( '' != wp_listings_get_status() ) {
+				printf( '<span class="listing-status %s">%s</span>', strtolower(wp_listings_get_status()), wp_listings_get_status() );
+			}
+			if ( '' != get_post_meta( $post->ID, '_listing_open_house', true ) ) {
+				printf( '<span class="listing-open-house">Open House: %s</span>', get_post_meta( $post->ID, '_listing_open_house', true ) );
+			} ?>
+		</div><!-- .listing-image-wrap -->
+
+		<?php
+		$listing_meta = sprintf( '<ul class="listing-meta">');
+
+		if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price', true ) );
+		}
+
+		if ( '' != wp_listings_get_property_types() ) {
+			$listing_meta .= sprintf( '<li class="listing-property-type"><span class="label">Property Type: </span>%s</li>', get_the_term_list( get_the_ID(), 'property-types', '', ', ', '' ) );
+		}
+
+		if ( '' != wp_listings_get_locations() ) {
+			$listing_meta .= sprintf( '<li class="listing-location"><span class="label">Location: </span>%s</li>', get_the_term_list( get_the_ID(), 'locations', '', ', ', '' ) );
+		}
+
+		if ( '' != get_post_meta( $post->ID, '_listing_bedrooms', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-bedrooms"><span class="label">Beds: </span>%s</li>', get_post_meta( $post->ID, '_listing_bedrooms', true ) );
+		}
+
+		if ( '' != get_post_meta( $post->ID, '_listing_bathrooms', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-bathrooms"><span class="label">Baths: </span>%s</li>', get_post_meta( $post->ID, '_listing_bathrooms', true ) );
+		}
+
+		if ( '' != get_post_meta( $post->ID, '_listing_sqft', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-sqft"><span class="label">Sq Ft: </span>%s</li>', get_post_meta( $post->ID, '_listing_sqft', true ) );
+		}
+
+		if ( '' != get_post_meta( $post->ID, '_listing_lot_sqft', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-lot-sqft"><span class="label">Lot Sq Ft: </span>%s</li>', get_post_meta( $post->ID, '_listing_lot_sqft', true ) );
+		}
+
+		$listing_meta .= sprintf( '</ul>');
+
+		echo $listing_meta;
+
+		?>
 
 		<div id="listing-tabs" class="listing-data">
 

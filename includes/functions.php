@@ -151,6 +151,27 @@ function wp_listings_get_property_types($post_id = null) {
 	}
 }
 
+/**
+ * Displays the location term of a listing
+ */
+function wp_listings_get_locations($post_id = null) {
+
+	if ( null == $post_id ) {
+		global $post;
+		$post_id = $post->ID;
+	}
+
+	$listing_locations = wp_get_object_terms($post_id, 'locations');
+
+	if ( empty($listing_locations) || is_wp_error($listing_locations) ) {
+		return;
+	}
+
+	foreach($listing_locations as $location) {
+		return $location->name;
+	}
+}
+
 function wp_listings_post_number( $query ) {
 
 	if ( !$query->is_main_query() || is_admin() || !is_post_type_archive('listing') ) {
