@@ -58,9 +58,7 @@ class Single_Listing_Template {
 	}
 
 	function wplistings_add_metabox( $post ) {
-		if ( $this->get_listing_templates() )
-			add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wplistings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
-
+		add_meta_box( 'wplistings_listing_templates', __( 'Single Listing Template', 'wplistings' ), array( $this, 'listing_template_metabox' ), 'listing', 'side', 'high' );
 	}
 
 	function listing_template_metabox( $post ) {

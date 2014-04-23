@@ -33,20 +33,19 @@ function wp_listings_template_include( $template ) {
 
 		$custom_template = get_post_meta( $post->ID, '_wp_post_template', true );
 
-		if( ! $custom_template )
-			return $template;
-
 		/** Prevent directory traversal */
 		$custom_template = str_replace( '..', '', $custom_template );
 
-		if( file_exists( get_stylesheet_directory() . "/{$custom_template}" ) )
-			$template = get_stylesheet_directory() . "/{$custom_template}";
-		elseif( file_exists( get_template_directory() . "/{$custom_template}" ) )
-			$template = get_template_directory() . "/{$custom_template}";
-		elseif( file_exists(get_stylesheet_directory() . '/single-' . $post_type . '.php') )
-			return $template;
+		if( ! $custom_template )
+			if( file_exists(get_stylesheet_directory() . '/single-' . $post_type . '.php') )
+				return $template;
+			else
+				return dirname( __FILE__ ) . '/views/single-' . $post_type . '.php';
 		else
-			return dirname( __FILE__ ) . '/views/single-' . $post_type . '.php';
+			if( file_exists( get_stylesheet_directory() . "/{$custom_template}" ) )
+				$template = get_stylesheet_directory() . "/{$custom_template}";
+			elseif( file_exists( get_template_directory() . "/{$custom_template}" ) )
+				$template = get_template_directory() . "/{$custom_template}";
 
 	}
 

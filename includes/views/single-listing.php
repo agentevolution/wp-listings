@@ -6,14 +6,6 @@
  * @since 0.1.0
  */
 
-//add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
-function add_wp_listings_scripts_single() {
-	wp_register_script( 'wp-listings-tabs', WP_LISTINGS_URL . '/includes/js/listing-tabs.js', array('jquery, jquery-ui-tabs'), true );
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
-	wp_enqueue_script( 'wp-listings-tabs', array('jquery, jquery-ui-tabs') );
-}
-
 function single_listing_post_content() {
 
 	global $post;
@@ -21,7 +13,7 @@ function single_listing_post_content() {
 	?>
 
 	<div class="entry-content">
-
+		
 		<?php echo get_the_post_thumbnail( $post->ID, 'full', array('class' => 'single-listing-image') ); ?>
 
 		<div id="listing-tabs" class="listing-data">
@@ -112,7 +104,7 @@ function single_listing_post_content() {
 			</div><!-- #listing-video -->
 			<?php } ?>
 
-		</div><!-- .listing-data -->
+		</div><!-- #listing-tabs.listing-data -->
 	</div><!-- .entry-content -->
 
 <?php
