@@ -11,6 +11,10 @@
 }
 /* end reset some theme defaults */
 
+.wplistings-single-listing {
+	overflow: hidden;
+}
+
 .wplistings-single-listing .iframe-wrap {
 	width: 100%;
 	height: auto;
@@ -122,7 +126,7 @@
 	line-height: 18px;
 	border: 1px solid #efefef;
 	border-top: none;
-	border-radius: 0 0 3px 3px;
+	border-radius: 0 0 5px 5px;
 }
 
 .listing-widget-details h3.listing-title {
@@ -372,6 +376,16 @@
 #listing-contact {
 	float: left;
 	width: 48%;
+	background: #f5f5f5;
+	padding: 15px;
+}
+
+#listing-agent {
+	margin-right: 3.8%;
+}
+
+.wplistings-single-listing .connected-agents {
+	padding: 0;
 }
 
 #listing-agent .attachment-agent-profile-photo {
@@ -384,10 +398,8 @@
 }
 
 #listing-contact { /** sample styles **/
-	float: right;
-	background: #f5f5f5;
+	float: left;
 	height: 300px;
-	padding: 10px;
 }
 
 /* Genesis styles */

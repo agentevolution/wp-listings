@@ -159,18 +159,28 @@ function single_listing_post_content() {
 			}
 		?>
 
-		<div id="listing-agent">
-			<?php
+		<?php
 			if (function_exists('_p2p_init') && function_exists('agentpress_listings_init') || function_exists('_p2p_init') && function_exists('genesis_init') ) {
-				echo'
+				echo'<div id="listing-agent">
 				<div class="connected-agents">';
 				aeprofiles_connected_agents_markup();
-				echo '</div>';
-			} ?>
-		</div><!-- .listing-agent -->
+				echo '</div></div><!-- .listing-agent -->';
+			}
+		?>
 
 		<div id="listing-contact">
-			<h4>Inquiry Form</h4>
+			<?php 
+			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
+
+				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
+
+			} else {
+
+				//include_once( WP_LISTINGS_URL . '/includes/listing-inquiry.php' );
+
+			}
+
+			?>
 		</div><!-- .listing-contact -->
 
 	</div><!-- .entry-content -->

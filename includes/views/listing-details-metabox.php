@@ -42,3 +42,10 @@ echo '<div style="width: 90%; float: left;">';
 	printf( __( '<textarea name="wp_listings[_listing_video]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_video', true) ) );
 
 echo '</div><br style="clear: both;" />';
+
+echo '<div style="width: 90%; float: left;">';
+	
+	_e('<p><label>If you use a Contact Form plugin, you may enter the Contact Form shortcode here. Otherwise, the single listing template will use a default contact form:<br />', 'wp_listings');
+	printf( __( '<textarea name="wp_listings[_listing_contact_form]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_contact_form', true) ) );
+
+echo '</div><br style="clear: both;" />';
