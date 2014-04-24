@@ -12,7 +12,7 @@ function single_listing_post_content() {
 
 	?>
 
-	<div class="entry-content single-listing">
+	<div class="entry-content wplistings-single-listing">
 
 		<div class="listing-image-wrap">
 			<?php echo get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image') );
@@ -91,7 +91,7 @@ function single_listing_post_content() {
 
 					echo '<table class="listing-details">';
 
-					echo '<tbody>';
+					echo '<tbody class="left">';
 					foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
 						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
 						if (! empty( $detail_value ) ) :
@@ -100,7 +100,7 @@ function single_listing_post_content() {
 					}
 					echo '</tbody>';
 
-					echo '<tbody>';
+					echo '<tbody class="right">';
 					foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
 						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
 						if (! empty( $detail_value ) ) :
