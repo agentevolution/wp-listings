@@ -64,7 +64,7 @@ class Single_Listing_Template {
 	function listing_template_metabox( $post ) {
 
 		?>
-		<input type="hidden" name="wplistings_noncename" id="wplistings_noncename" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
+		<input type="hidden" name="wp_listings_metabox_nonce" id="wp_listings_metabox_nonce" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
 
 		<label class="hidden" for="listing_template"><?php  _e( 'Listing Template', 'wp_listings' ); ?></label><br />
 		<select name="_wp_post_template" id="listing_template" class="dropdown">
@@ -82,7 +82,7 @@ class Single_Listing_Template {
 		 * Verify this came from our screen and with proper authorization,
 		 * because save_post can be triggered at other times
 		 */
-		if ( ! wp_verify_nonce( $_POST['wplistings_noncename'], plugin_basename( __FILE__ ) ) )
+		if ( !isset( $_POST['wp_listings_metabox_nonce'] ) || ! wp_verify_nonce( $_POST['wp_listings_metabox_nonce'], plugin_basename( __FILE__ ) ) )
 			return $post->ID;
 
 		/** Is the user allowed to edit the post or page? */

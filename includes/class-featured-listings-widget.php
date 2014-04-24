@@ -8,7 +8,7 @@
 class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 	function WP_Listings_Featured_Listings_Widget() {
-		$widget_ops  = array( 'classname' => 'featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp_listings' ) );
+		$widget_ops  = array( 'classname' => 'wplistings-featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp_listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350 );
 		$this->WP_Widget( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
 	}
@@ -98,12 +98,14 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 				$loop .= sprintf( '<div class="listing-thumb-meta">' );
 
-				if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
-					$loop .= sprintf( '<span class="listing-price">%s</span>', get_post_meta( $post->ID, '_listing_price', true ) );
+				if ( '' != get_post_meta( $post->ID, '_listing_text', true ) ) {
+					$loop .= sprintf( '<span class="listing-text">%s</span>', get_post_meta( $post->ID, '_listing_text', true ) );
+				} elseif ( '' != wp_listings_get_property_types() ) {
+					$loop .= sprintf( '<span class="listing-property-type">%s</span>', wp_listings_get_property_types() );
 				}
 
-				if ( '' != wp_listings_get_property_types() ) {
-					$loop .= sprintf( '<span class="listing-property-type">%s</span>', wp_listings_get_property_types() );
+				if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
+					$loop .= sprintf( '<span class="listing-price">%s</span>', get_post_meta( $post->ID, '_listing_price', true ) );
 				}
 
 				$loop .= sprintf( '</div><!-- .listing-thumb-meta --></div><!-- .listing-widget-thumb -->' );
@@ -113,14 +115,16 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				}
 
 				$loop .= sprintf( '<div class="listing-widget-details"><h3 class="listing-title"><a href="%s">%s</a></h3>', get_permalink(), get_the_title() );
-				$loop .= sprintf( '<span class="listing-address">%s</span>', wp_listings_get_address() );
-				$loop .= sprintf( '<span class="listing-city-state-zip">%s, %s %s</span>', wp_listings_get_city(), wp_listings_get_state(), get_post_meta( $post->ID, '_listing_zip', true ) );
+				$loop .= sprintf( '<p class="listing-address"><span class="listing-address">%s</span><br />', wp_listings_get_address() );
+				$loop .= sprintf( '<span class="listing-city-state-zip">%s, %s %s</span></p>', wp_listings_get_city(), wp_listings_get_state(), get_post_meta( $post->ID, '_listing_zip', true ) );
 
 				if ( '' != get_post_meta( $post->ID, '_listing_bedrooms', true ) || '' != get_post_meta( $post->ID, '_listing_bathrooms', true ) || '' != get_post_meta( $post->ID, '_listing_sqft', true )) {
-					$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul></div><!-- .listing-widget-details -->', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
+					$loop .= sprintf( '<ul class="listing-beds-baths-sqft"><li class="beds">%s<span>Beds</span></li> <li class="baths">%s<span>Baths</span></li> <li class="sqft">%s<span>Sq ft</span></li></ul>', get_post_meta( $post->ID, '_listing_bedrooms', true ), get_post_meta( $post->ID, '_listing_bathrooms', true ), get_post_meta( $post->ID, '_listing_sqft', true ) );
 				}
 
-				$loop .= sprintf( '<a href="%s" class="btn btn-primary">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
+				$loop .= sprintf('</div><!-- .listing-widget-details -->');
+
+				$loop .= sprintf( '<a href="%s" class="button btn-primary more-link">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
 
 				/** wrap in div with possible column class, and output **/
 				printf( '<div class="listing %s post-%s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, $post->ID, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );

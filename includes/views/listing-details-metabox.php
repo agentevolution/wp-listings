@@ -21,10 +21,17 @@ echo '<div style="width: 45%; float: left;">';
 
 echo '</div><br style="clear: both;" /><br /><br />';
 
+echo '<div style="width: 45%; float: left;">';
+
+	_e('<p><label>Custom Listing Text (custom text to display as overlay on featured listing widget)<br />', 'wp_listings');
+	printf( __( '<input type="text" name="wp_listings[_listing_text]" value="%s" /></label></p>', 'wp_listings' ), htmlentities( get_post_meta( $post->ID, '_listing_text', true) ) );
+
+echo '</div><br style="clear: both;" /><br /><br />';
+
 
 echo '<div style="width: 90%; float: left;">';
 	
-	_e('<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a href="https://wordpress.org/plugins/simple-google-maps-short-code/">Simple Google Maps Short Code</a>):<br /><em>Recommend size: 660x300 (If possible, use 100% width, or your themes content width)</em><br />', 'wp_listings');
+	_e('<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a href="https://wordpress.org/plugins/simple-google-maps-short-code/">Simple Google Maps Short Code</a>) or <a href="https://wordpress.org/plugins/mappress-google-maps-for-wordpress/">MapPress</a>:<br /><em>Recommend size: 660x300 (If possible, use 100% width, or your themes content width)</em><br />', 'wp_listings');
 	printf( __( '<textarea name="wp_listings[_listing_map]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_map', true) ) );
 
 echo '</div>';

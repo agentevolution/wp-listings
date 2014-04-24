@@ -87,7 +87,7 @@ function single_listing_post_content() {
 				<?php
 					$details_instance = new WP_Listings();
 
-					$pattern = '<tr><td class="label">%s</td><td class="wp_listings[%s]">%s</td></tr>';
+					$pattern = '<tr class="wp_listings%s"><td class="label">%s</td><td>%s</td></tr>';
 
 					echo '<table class="listing-details">';
 
@@ -95,7 +95,7 @@ function single_listing_post_content() {
 					foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
 						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
 						if (! empty( $detail_value ) ) :
-							printf( $pattern, esc_html( $label ), $key, $detail_value );
+							printf( $pattern, $key, esc_html( $label ), $detail_value );
 						endif;
 					}
 					echo '</tbody>';
@@ -104,7 +104,7 @@ function single_listing_post_content() {
 					foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
 						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
 						if (! empty( $detail_value ) ) :
-							printf( $pattern, esc_html( $label ), $key, $detail_value );
+							printf( $pattern, $key, esc_html( $label ), $detail_value );
 						endif;
 					}
 					echo '</tbody>';
@@ -115,13 +115,13 @@ function single_listing_post_content() {
 					<div class="additional-features">
 						<h4>Additional Features</h4>
 						<h6 class="label"><?php _e("Home Summary", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_home_sum', true); ?></p>
+						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_home_sum', true)); ?></p>
 						<h6 class="label"><?php _e("Kitchen Summary", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_kitchen_sum', true); ?></p>
+						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_kitchen_sum', true)); ?></p>
 						<h6 class="label"><?php _e("Living Room", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_living_room', true); ?></p>
+						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_living_room', true)); ?></p>
 						<h6 class="label"><?php _e("Master Suite", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo get_post_meta( $post->ID, '_listing_master_suite', true); ?></p>
+						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_master_suite', true)); ?></p>
 					</div><!-- .additional-features -->
 				<?php
 				}
@@ -144,7 +144,7 @@ function single_listing_post_content() {
 			<?php if (get_post_meta( $post->ID, '_listing_school_neighborhood', true) != '') { ?>
 			<div id="listing-school-neighborhood">
 				<p>
-				<?php echo get_post_meta( $post->ID, '_listing_school_neighborhood', true); ?>
+				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_school_neighborhood', true)); ?>
 				</p>
 			</div><!-- #listing-video -->
 			<?php } ?>
@@ -170,6 +170,7 @@ function single_listing_post_content() {
 		</div><!-- .listing-agent -->
 
 		<div id="listing-contact">
+			<h4>Inquiry Form</h4>
 		</div><!-- .listing-contact -->
 
 	</div><!-- .entry-content -->
