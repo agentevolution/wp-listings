@@ -1,0 +1,257 @@
+/* =Featured Listing Widget
+------------------------------------------------------------ */
+
+.widget .listing-wrap {
+	margin-bottom: 25px;
+}
+
+.widget .listing-wrap {
+}
+
+.widget .listing-widget-thumb {
+	position: relative;
+	overflow: hidden;
+	line-height: 0px;
+}
+
+.widget .listing-widget-thumb img {
+	margin: 0;
+	padding: 0;
+}
+
+.widget .listing-widget-thumb a {
+	border-bottom: none;
+	text-decoration: none;
+}
+
+.widget .listing-wrap span.listing-status,
+.widget .listing-wrap .listing-thumb-meta {
+	position: absolute;
+}
+
+.widget .listing-wrap span.listing-status {
+	width: 120px;
+	padding: 5px;
+	top: 18px;
+	right: -27px;
+	font-size: 12px;
+	line-height: 18px;
+	-moz-transform: scale(1) rotate(45deg) translate(0px);
+	-webkit-transform: scale(1) rotate(45deg) translate(0px);
+	-o-transform: scale(1) rotate(45deg) translate(0px);
+	transform: scale(1) rotate(45deg) translate(0px);
+}
+
+.widget .listing-wrap .listing-thumb-meta {
+	left: 0;
+	bottom: 0;
+}
+
+.widget .listing-wrap .listing-thumb-meta span {
+	padding: 5px 10px;
+	color: #111;
+	background: #fff;
+	background: rgba(255,255,255,0.80);
+	font-size: 14px;
+	line-height: 14px;
+	display: table;
+}
+
+.widget .listing-wrap .listing-thumb-meta span.listing-price {
+	padding: 8px 10px;
+	color: #fff;
+	font-size: 18px;
+	line-height: 18px;
+	font-weight: 700;
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+}
+
+.widget .listing-wrap span.listing-open-house {
+	display: block;
+	padding: 5px 10px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	background: #be1d2c;
+}
+
+.widget .listing-widget-details {
+	color: #999;
+	text-align: left;
+	line-height: 18px;
+	border: 1px solid #efefef;
+	border-top: none;
+	border-radius: 0 0 5px 5px;
+}
+
+.widget .listing-widget-details h3.listing-title {
+	padding: 15px 15px 10px;
+	margin: 0;
+	line-height: 1;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+.widget .listing-widget-details h3.listing-title a {
+	color: #666;
+	font-size: 18px;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+.widget .listing-widget-details p.listing-address {
+	padding: 0 0 15px;
+	margin: 0;
+}
+
+.widget .listing-widget-details span.listing-address,
+.widget .listing-widget-details span.listing-city-state-zip {
+	padding: 0 15px;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.widget .listing-widget-details .listing-beds-baths-sqft {
+	width: 100%;
+	padding: 15px 0;
+	margin: 0;
+	border-top: 1px solid #efefef;
+}
+
+.widget .listing-widget-details .listing-beds-baths-sqft li {
+	display: inline-block;
+	width: 32%;
+	color: #666;
+	text-align: center;
+}
+
+.widget .listing-widget-details .listing-beds-baths-sqft li span {
+	display: block;
+	color: #999;
+	margin: 5px 0 0 0;
+}
+
+.widget .listing-wrap .more-link {
+	display: none;
+}
+
+
+/* =Listing Search Widget
+------------------------------------------------------------ */
+
+
+
+/* =Listing overlays
+------------------------------------------------------------ */
+
+.widget .listing-wrap span.listing-status {
+	color: #fff;
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+	font-weight: 700;
+	text-align: center;
+	text-transform: uppercase;
+	box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.widget .listing-wrap span.listing-status.active {
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+}
+.widget .listing-wrap span.listing-status.sold {
+	background: #be1d2c;
+	background: rgba(190, 29, 44, 0.80);
+}
+.widget .listing-wrap span.listing-status.pending {
+	background: #db8323;
+	background: rgba(219, 131, 35, 0.80);
+}
+.widget .listing-wrap span.listing-status.new,
+.widget .listing-wrap span.listing-status.reduced,
+.widget .listing-wrap span.listing-status.for-rent {
+	background: #24a4ea;
+	background: rgba(36, 164, 234, 0.80);
+}
+
+
+/* =Column classes (for widget only)
+------------------------------------------------------------ */
+
+.widget .listing.five-sixths,
+.widget .listing.four-sixths,
+.widget .listing.one-fourth,
+.widget .listing.one-half,
+.widget .listing.one-sixth,
+.widget .listing.one-third,
+.widget .listing.three-fourths,
+.widget .listing.three-sixths,
+.widget .listing.two-fourths,
+.widget .listing.two-sixths,
+.widget .listing.two-thirds {
+	float: left;
+	margin-left: 2.564102564102564%;
+	margin-bottom: 15px;
+	padding: 0;
+}
+
+.widget .listing.one-half,
+.widget .listing.three-sixths,
+.widget .listing.two-fourths {
+	width: 48.717948717948715%;
+}
+
+.widget .listing.one-third,
+.widget .listing.two-sixths {
+	width: 31.623931623931625%;
+}
+
+.widget .listing.four-sixths,
+.widget .listing.two-thirds {
+	width: 65.81196581196582%;
+}
+
+.widget .listing.one-fourth {
+	width: 23.076923076923077%;
+}
+
+.widget .listing.three-fourths {
+	width: 74.35897435897436%;
+}
+
+.widget .listing.one-sixth {
+	width: 14.52991452991453%;
+}
+
+.widget .listing.five-sixths {
+	width: 82.90598290598291%;
+}
+
+.widget .listing.first {
+	clear: both;
+	margin-left: 0;
+}
+
+
+/* =Responsive
+------------------------------------------------------------ */
+
+@media (max-width: 767px) {
+	.widget .listing.one-half,
+	.widget .listing.one-third,
+	.widget .listing.two-thirds,
+	.widget .listing.one-fourth,
+	.widget .listing.three-fourths,
+	.widget .listing.one-fifth,
+	.widget .listing.two-fifths,
+	.widget .listing.three-fifths,
+	.widget .listing.four-fifths,
+	.widget .listing.one-sixth,
+	.widget .listing.five-sixths {
+		float: none;
+		width: 100%;
+		padding: 0;
+		margin: 0 0 20px;
+	}
+}

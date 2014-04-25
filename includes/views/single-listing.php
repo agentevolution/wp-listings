@@ -77,7 +77,7 @@ function single_listing_post_content() {
 				<li><a href="#listing-photos">Photos</a></li>
 
 				<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
-					<li><a href="#listing-video">Video Virtual Tour</a></li>
+					<li><a href="#listing-video">Video / Virtual Tour</a></li>
 				<?php } ?>
 
 				<?php if (get_post_meta( $post->ID, '_listing_school_neighborhood', true) != '') { ?>
@@ -138,6 +138,11 @@ function single_listing_post_content() {
 
 			</div><!-- #listing-details -->
 
+			<?php if (get_post_meta( $post->ID, '_listing_photos', true) != '') { ?>
+			<div id="listing-photos">
+				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_photos', true)); ?>
+			</div><!-- #listing-video -->
+			<?php } ?>
 
 			<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
 			<div id="listing-video">
@@ -174,7 +179,7 @@ function single_listing_post_content() {
 			}
 		?>
 
-		<div id="listing-contact">
+		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
 			<h4>Listing Inquiry</h4>
 			<?php 
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {

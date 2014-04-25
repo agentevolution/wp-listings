@@ -4,7 +4,16 @@
 /* reset some theme defaults */
 .full-width.singular .site-content article.hentry.has-post-thumbnail,
 .full-width .site-content .has-post-thumbnail header.entry-header {
-	margin-top: 0; /* reset some theme defaults */
+	margin-top: 0;
+}
+.single-listing.full-width .hentry {
+	width: 672px;
+}
+.single-listing .site-content .entry-header,
+.single-listing .site-content .entry-meta,
+.single-listing .site-content .entry-content {
+	width: 100%;
+	max-width: 100%;
 }
 .site-content .has-post-thumbnail .entry-header {
 	padding-top: 0
@@ -37,6 +46,8 @@
 	margin-bottom: 30px;
 }
 
+.listing,
+.listing-wrap,
 #listing-agent,
 #listing-contact {
 	-webkit-box-sizing: border-box;
@@ -45,34 +56,34 @@
 }
 
 
-/* =Archive Listing template (most styles shared with featured widget)
+/* =Archive Listing template
 ------------------------------------------------------------ */
 
-.listing-wrap {
+.archive .listing-wrap {
 }
 
-.listing-widget-thumb {
+.archive .listing-widget-thumb {
 	position: relative;
 	overflow: hidden;
 	line-height: 0px;
 }
 
-.listing-widget-thumb img {
+.archive .listing-widget-thumb img {
 	margin: 0;
 	padding: 0;
 }
 
-.listing-widget-thumb a {
+.archive .listing-widget-thumb a {
 	border-bottom: none;
 	text-decoration: none;
 }
 
-.listing-wrap span.listing-status,
-.listing-wrap .listing-thumb-meta {
+.archive .listing-wrap span.listing-status,
+.archive .listing-wrap .listing-thumb-meta {
 	position: absolute;
 }
 
-.listing-wrap span.listing-status {
+.archive .listing-wrap span.listing-status {
 	width: 120px;
 	padding: 5px;
 	top: 18px;
@@ -85,12 +96,12 @@
 	transform: scale(1) rotate(45deg) translate(0px);
 }
 
-.listing-wrap .listing-thumb-meta {
+.archive .listing-wrap .listing-thumb-meta {
 	left: 0;
 	bottom: 0;
 }
 
-.listing-wrap .listing-thumb-meta span {
+.archive .listing-wrap .listing-thumb-meta span {
 	padding: 5px 10px;
 	color: #111;
 	background: #fff;
@@ -100,7 +111,7 @@
 	display: table;
 }
 
-.listing-wrap .listing-thumb-meta span.listing-price {
+.archive .listing-wrap .listing-thumb-meta span.listing-price {
 	padding: 8px 10px;
 	color: #fff;
 	font-size: 18px;
@@ -110,7 +121,7 @@
 	background: rgba(83, 195, 49, 0.80);
 }
 
-.listing-wrap span.listing-open-house {
+.archive .listing-wrap span.listing-open-house {
 	display: block;
 	padding: 5px 10px;
 	color: #fff;
@@ -120,7 +131,7 @@
 	background: #be1d2c;
 }
 
-.listing-widget-details {
+.archive .listing-widget-details {
 	color: #999;
 	text-align: left;
 	line-height: 18px;
@@ -129,7 +140,7 @@
 	border-radius: 0 0 5px 5px;
 }
 
-.listing-widget-details h3.listing-title {
+.archive .listing-widget-details h3.listing-title {
 	padding: 15px 15px 10px;
 	margin: 0;
 	line-height: 1;
@@ -137,46 +148,46 @@
 	border-bottom: none;
 }
 
-.listing-widget-details h3.listing-title a {
+.archive .listing-widget-details h3.listing-title a {
 	color: #666;
 	font-size: 18px;
 	text-decoration: none;
 	border-bottom: none;
 }
 
-.listing-widget-details p.listing-address {
+.archive .listing-widget-details p.listing-address {
 	padding: 0 0 15px;
 	margin: 0;
 }
 
-.listing-widget-details span.listing-address,
-.listing-widget-details span.listing-city-state-zip {
+.archive .listing-widget-details span.listing-address,
+.archive .listing-widget-details span.listing-city-state-zip {
 	padding: 0 15px;
 	font-size: 14px;
 	line-height: 18px;
 }
 
-.listing-widget-details .listing-beds-baths-sqft {
+.archive .listing-widget-details .listing-beds-baths-sqft {
 	width: 100%;
 	padding: 15px 0;
 	margin: 0;
 	border-top: 1px solid #efefef;
 }
 
-.listing-widget-details .listing-beds-baths-sqft li {
+.archive .listing-widget-details .listing-beds-baths-sqft li {
 	display: inline-block;
 	width: 32%;
 	color: #666;
 	text-align: center;
 }
 
-.listing-widget-details .listing-beds-baths-sqft li span {
+.archive .listing-widget-details .listing-beds-baths-sqft li span {
 	display: block;
 	color: #999;
 	margin: 5px 0 0 0;
 }
 
-.listing-wrap .more-link {
+.archive .listing-wrap .more-link {
 	display: none;
 }
 
@@ -257,6 +268,7 @@
 	font-size: 16px;
 	padding-right: 25px;
 	background: #53c331;
+	border-radius: 0;
 }
 
 .wplistings-single-listing .ui-tabs {
@@ -309,6 +321,7 @@
 
 .wplistings-single-listing .ui-tabs .ui-tabs-nav li a,
 .wplistings-single-listing .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+	text-decoration: none;
 	cursor: pointer;
 }
 
@@ -331,8 +344,12 @@
 .wplistings-single-listing tbody {
 	display: inline-table;
 	width: 48%;
-	margin-right: 1%;
+	margin-right: 2%;
 	vertical-align: top;
+}
+
+.wplistings-single-listing tbody.right {
+	margin-right: 0;
 }
 
 .wplistings-single-listing td {
@@ -453,9 +470,7 @@
 	box-shadow: 1px 1px 3px #eee inset;
 	color: #999;
 	font-size: 14px;
-	font-size: 1.4rem;
 	padding: 16px;
-	padding: 1.6rem;
 	margin: 0;
 	width: 100%;
 }
@@ -493,20 +508,15 @@
 	font-size: 12px;
 }
 
-/* =Featured Listing Widget
------------------------------------------------------------- */
-
-.widget .listing-wrap {
-	margin-bottom: 25px;
-}
-
 
 /* =Listing overlays
 ------------------------------------------------------------ */
 
 .wplistings-single-listing .listing-image-wrap span.listing-status,
-.listing-wrap span.listing-status {
+.archive .listing-wrap span.listing-status {
 	color: #fff;
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
 	font-weight: 700;
 	text-align: center;
 	text-transform: uppercase;
@@ -514,80 +524,40 @@
 }
 
 .wplistings-single-listing .listing-image-wrap span.listing-status.active,
-.listing-wrap span.listing-status.active {
+.archive .listing-wrap span.listing-status.active {
 	background: #53c331;
 	background: rgba(83, 195, 49, 0.80);
 }
 .wplistings-single-listing .listing-image-wrap span.listing-status.sold,
-.listing-wrap span.listing-status.sold {
+.archive .listing-wrap span.listing-status.sold {
 	background: #be1d2c;
 	background: rgba(190, 29, 44, 0.80);
 }
 .wplistings-single-listing .listing-image-wrap span.listing-status.pending,
-.listing-wrap span.listing-status.pending {
+.archive .listing-wrap span.listing-status.pending {
 	background: #db8323;
 	background: rgba(219, 131, 35, 0.80);
 }
 .wplistings-single-listing .listing-image-wrap span.listing-status.new,
 .wplistings-single-listing .listing-image-wrap span.listing-status.reduced,
 .wplistings-single-listing .listing-image-wrap span.listing-status.for-rent,
-.listing-wrap span.listing-status.new,
-.listing-wrap span.listing-status.reduced,
-.listing-wrap span.listing-status.for-rent {
+.archive .listing-wrap span.listing-status.new,
+.archive .listing-wrap span.listing-status.reduced,
+.archive .listing-wrap span.listing-status.for-rent {
 	background: #24a4ea;
 	background: rgba(36, 164, 234, 0.80);
 }
 
 
-/* =Column classes (for widget only)
+/* =Column classes (one-third - for archive page)
 ------------------------------------------------------------ */
 
-.listing.five-sixths,
-.listing.four-sixths,
-.listing.one-fourth,
-.listing.one-half,
-.listing.one-sixth,
-.listing.one-third,
-.listing.three-fourths,
-.listing.three-sixths,
-.listing.two-fourths,
-.listing.two-sixths,
-.listing.two-thirds {
+.listing.one-third {
 	float: left;
 	margin-left: 2.564102564102564%;
 	margin-bottom: 15px;
-}
-
-.listing.one-half,
-.listing.three-sixths,
-.listing.two-fourths {
-	width: 48.717948717948715%;
-}
-
-.listing.one-third,
-.listing.two-sixths {
+	padding: 0;
 	width: 31.623931623931625%;
-}
-
-.listing.four-sixths,
-.listing.two-thirds {
-	width: 65.81196581196582%;
-}
-
-.listing.one-fourth {
-	width: 23.076923076923077%;
-}
-
-.listing.three-fourths {
-	width: 74.35897435897436%;
-}
-
-.listing.one-sixth {
-	width: 14.52991452991453%;
-}
-
-.listing.five-sixths {
-	width: 82.90598290598291%;
 }
 
 .listing.first {
@@ -771,17 +741,7 @@
 		width: 100%;
 	}
 
-	.listing.one-half,
-	.listing.one-third,
-	.listing.two-thirds,
-	.listing.one-fourth,
-	.listing.three-fourths,
-	.listing.one-fifth,
-	.listing.two-fifths,
-	.listing.three-fifths,
-	.listing.four-fifths,
-	.listing.one-sixth,
-	.listing.five-sixths {
+	.listing.one-third {
 		float: none;
 		width: 100%;
 		padding: 0;
