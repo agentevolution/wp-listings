@@ -61,10 +61,10 @@ function wp_listings_init() {
 	/** Enqueues scripts for single listings */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
 	function add_wp_listings_scripts() {
-		wp_register_script( 'wp-listings-tabs', WP_LISTINGS_URL . 'includes/js/listing-tabs.js' );
+		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.js' );
+		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
-		wp_enqueue_script( 'wp-listings-tabs', array('jquery, jquery-ui-tabs'), true );
     }
 
 	/** Enqueues style file if it exists */

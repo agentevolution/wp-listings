@@ -239,6 +239,7 @@
 	float: left;
 	display: inline-block;
 	padding: 8px 0 8px 25px;
+	margin: 0;
 	font-size: 13px;
 	font-weight: 700;
 	line-height: 35px;
@@ -249,6 +250,9 @@
 }
 
 .wplistings-single-listing .listing-meta li.listing-price {
+	position: relative;
+	top: 0;
+	left: 0;
 	color: #fff;
 	font-size: 16px;
 	padding-right: 25px;
@@ -320,11 +324,21 @@
 	display: none;
 }
 
+.wplistings-single-listing table {
+	width: 100%;
+}
+
 .wplistings-single-listing tbody {
 	display: inline-table;
 	width: 48%;
 	margin-right: 1%;
 	vertical-align: top;
+}
+
+.wplistings-single-listing td {
+	border-top: 1px solid #ddd;
+	padding: 6px 0;
+	padding: 0.6rem 0;
 }
 
 .wplistings-single-listing table tr.wp_listings_listing_open_house {
@@ -377,11 +391,15 @@
 	float: left;
 	width: 48%;
 	background: #f5f5f5;
-	padding: 15px;
+	padding: 25px;
 }
 
 #listing-agent {
 	margin-right: 3.8%;
+}
+
+#listing-agent p {
+	padding: 0;
 }
 
 .wplistings-single-listing .connected-agents {
@@ -392,14 +410,67 @@
 	width: 80px;
 }
 
+#listing-agent h5 {
+	font-size: 20px;
+}
+
 #listing-agent .agent-social-profiles a {
 	border-bottom: 0;
 	font-size: 14px;
 }
 
-#listing-contact { /** sample styles **/
+#listing-contact {
+}
+
+#listing-contact ul {
+	margin: 0;
+	padding: 0;
+}
+
+#listing-contact li {
+	list-style-type: none;
+	margin: 0 0 20px;
+	padding: 0;
+	width: 100%;
+}
+
+#listing-contact li.contactEmail,
+#listing-contact li.contactPhone {
+	width: 48.9%;
 	float: left;
-	height: 300px;
+}
+
+#listing-contact li.contactPhone {
+	margin-left: 2%;
+}
+
+#listing-contact input[type="text"],
+#listing-contact textarea {
+	box-sizing: border-box;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	box-shadow: 1px 1px 3px #eee inset;
+	color: #999;
+	font-size: 14px;
+	font-size: 1.4rem;
+	padding: 16px;
+	padding: 1.6rem;
+	margin: 0;
+	width: 100%;
+}
+
+#listing-contact label.error,
+#listing-contact label span.required {
+	font-size: 12px;
+	font-weight: 700;
+	color: red;
+	vertical-align: top;
+}
+
+#listing-contact .thanks {
+	padding: 80px 0;
+	font-size: 18px;
 }
 
 /* Genesis styles */
@@ -729,5 +800,12 @@
 		width: 100%;
 		padding: 0 15px;
 		height: 100%;
+	}
+
+	#listing-contact li.contactEmail,
+	#listing-contact li.contactPhone {
+		width: 100%;
+		float: none;
+		margin-left: 0;
 	}
 }
