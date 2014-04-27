@@ -22,13 +22,14 @@ function wp_listings_template_include( $template ) {
 
 	if ( is_post_type_archive( $post_type ) ) {
 		if ( file_exists(get_stylesheet_directory() . '/archive-' . $post_type . '.php') ) {
+			$template = get_stylesheet_directory() . '/archive-' . $post_type . '.php';
 			return $template;
 		} else {
 			return dirname( __FILE__ ) . '/views/archive-' . $post_type . '.php';
 		}
 	}
 
-	if ( $post_type == get_post_type() ) {
+	if ( is_single() && $post_type == get_post_type() ) {
 
 		global $post;
 
