@@ -76,7 +76,10 @@ function single_listing_post_content() {
 
 				<li><a href="#listing-details">Details</a></li>
 
-				<li><a href="#listing-photos">Photos</a></li>
+
+				<?php if (get_post_meta( $post->ID, '_listing_gallery', true) != '') { ?>
+					<li><a href="#listing-gallery">Photos</a></li>
+				<?php } ?>
 
 				<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
 					<li><a href="#listing-video">Video / Virtual Tour</a></li>
@@ -140,10 +143,10 @@ function single_listing_post_content() {
 
 			</div><!-- #listing-details -->
 
-			<?php if (get_post_meta( $post->ID, '_listing_photos', true) != '') { ?>
-			<div id="listing-photos">
-				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_photos', true)); ?>
-			</div><!-- #listing-video -->
+			<?php if (get_post_meta( $post->ID, '_listing_gallery', true) != '') { ?>
+			<div id="listing-gallery">
+				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_gallery', true)); ?>
+			</div><!-- #listing-gallery -->
 			<?php } ?>
 
 			<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>

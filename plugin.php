@@ -3,7 +3,7 @@
 	Plugin Name: WP Listings
 	Plugin URI: http://agentevolution.com
 	Description: WP Listings is a WordPress listings plugin that adds a directory of real estate listings that is searchable and can be displayed through widgets.
-	Author: agentevolution
+	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
 	Version: 0.1.0
