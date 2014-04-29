@@ -1,11 +1,11 @@
 === WP Listings ===
 Contributors: agentevolution, davebonds, chadajohnson
-Tags: real estate, listings, property, properties, listing search, idx, genesis, agentpress
+Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.2
 Tested up to: 3.9
 Stable tag: 1.0
 
-The WP Listings plugin lets you create a listing management system for your WordPress site. Designed to work with any WordPress theme, the plugin includes custom templates for displaying single listings and an archive of listings.
+Creates a portable listing management system for your WordPress site. Designed to work with any theme using built-in templates.
 
 == Description ==
 
