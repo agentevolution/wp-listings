@@ -124,7 +124,7 @@ function single_listing_post_content() {
 
 				echo '<h5>Tagged Features</h5><ul class="tagged-features">';
 				echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
-				echo '</ul><!-- .tagged-features -->'; ?>
+				echo '</ul><!-- .tagged-features -->';
 
 				if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
 					<div class="additional-features">
