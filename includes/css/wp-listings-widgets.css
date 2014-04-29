@@ -2,10 +2,7 @@
 ------------------------------------------------------------ */
 
 .widget .listing-wrap {
-	margin-bottom: 25px;
-}
-
-.widget .listing-wrap {
+	margin: 0 0 25px;
 	width: auto;
 }
 
