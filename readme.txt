@@ -53,6 +53,8 @@ Single listings include a contact form for visitors to inquire about a property,
 
 Allows for any number of custom single listing templates to be created and displayed on a per listing basis.
 
+View a demo of the plugin in action: [WP Listings demo](http://demo.wp-listings.com/)
+
 == Installation ==
 
 1. Upload the entire `wp-listings` folder to the `/wp-content/plugins/` directory
