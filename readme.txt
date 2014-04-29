@@ -3,7 +3,7 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, genesis, agentpress
 Requires at least: 3.2
 Tested up to: 3.9
-Stable tag: 0.1.0
+Stable tag: 1.0
 
 The WP Listings plugin lets you create a listing management system for your WordPress site. Designed to work with any WordPress theme, the plugin includes custom templates for displaying single listings and an archive of listings.
 
@@ -45,7 +45,7 @@ Custom data fields include:
 * Master Suite
 * School and Neighborhood Info
 
-Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it display on the page.
+Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it will display on the page.
 
 Intergrates with the [Genesis Agent Profiles](http://wordpress.org/plugins/genesis-agent-profiles/) plugin to display the listing agent(s).
 
@@ -74,20 +74,35 @@ Some themes may already have a `single-listing.php` (and archive.php for listing
 Name your template file `single-listing-CUSTOM-NAME.php` (replace CUSTOM NAME with your own descriptive name). You can use the single-listing.php within the plugins /includes/views/ folder for a guide on how to display the post type data. You'll need to include the following block of text at the top of your custom template:
 `/*
 Single Listing Template: Test Template
-Description: This part is a test template
+Description: Give it a description to help identify
 */`
 
 == Screenshots ==
 
+1. Listings Admin screen
+
+2. Single Listing Edit screen
+
+3. Register taxonomy screen
+
+4. Featured Listing Widget settings
+
+5. Featured Listing Widget display
+
+6. Listing Search Widget display
+
+7. Single Listing template display
+
+8. Listing archive template display
 
 == Changelog ==
 
-= 0.1.0 =
-* Initial beta release
+= 1.0 =
+* Initial public release
 
 == Credits ==
 
 Uses code from the following plugins:
-Single Post Template by Nathan Rice
-AgentPress Listings by StudioPress
-AgentPress Listings Taxonomy Reorder by Robert Iseley
+[Single Post Template](http://wordpress.org/plugins/single-post-template/) by Nathan Rice
+[AgentPress Listings](http://wordpress.org/plugins/agentpress-listings/) by StudioPress
+[AgentPress Listings Taxonomy Reorder](http://wordpress.org/plugins/agentpress-listings-taxonomy-reorder/) by Robert Iseley

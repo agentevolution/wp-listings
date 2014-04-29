@@ -146,6 +146,9 @@
 /* =Listing Search Widget
 ------------------------------------------------------------ */
 
+.widget .listings-search select {
+	margin-bottom: 10px;
+}
 
 
 /* =Listing overlays
