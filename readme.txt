@@ -14,6 +14,7 @@ WP Listings uses custom post types, custom taxonomies, and widgets to create a l
 You can use the taxonomy creation tool to create your own way of classifying listings (i.e. bedrooms, bathrooms, locations, price ranges) and use those taxonomies to allow users to search for listings. Also includes ability to reorder the taxonomies as needed.
 
 Default taxonomies (and terms):
+
 * Status (Active, Sold, Pending, For Rent, Reduced, New)
 * Property Types (Residential, Condo, Townhome, Commercial)
 * Location
