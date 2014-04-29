@@ -77,6 +77,8 @@ Single Listing Template: Test Template
 Description: Give it a description to help identify
 */`
 
+For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-listings/)
+
 == Screenshots ==
 
 1. Listings Admin screen
