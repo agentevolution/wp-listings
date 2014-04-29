@@ -17,6 +17,7 @@
 .widget .listing-widget-thumb img {
 	margin: 0;
 	padding: 0;
+	height: auto;
 }
 
 .widget .listing-widget-thumb a {
@@ -30,10 +31,10 @@
 }
 
 .widget .listing-wrap span.listing-status {
-	width: 120px;
+	width: 130px;
 	padding: 5px;
-	top: 18px;
-	right: -27px;
+	top: 24px;
+	right: -30px;
 	font-size: 12px;
 	line-height: 18px;
 	-moz-transform: scale(1) rotate(45deg) translate(0px);
@@ -104,6 +105,7 @@
 .widget .listing-widget-details p.listing-address {
 	padding: 0 0 15px;
 	margin: 0;
+	text-align: left;
 }
 
 .widget .listing-widget-details span.listing-address,
@@ -111,6 +113,8 @@
 	padding: 0 15px;
 	font-size: 14px;
 	line-height: 18px;
+	text-align: left;
+	display: inline;
 }
 
 .widget .listing-widget-details .listing-beds-baths-sqft {

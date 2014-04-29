@@ -32,6 +32,8 @@
 ------------------------------------------------------------ */
 
 .archive .listing-wrap {
+	width: 100%;
+	margin: 0;
 }
 
 .archive .listing-widget-thumb {
@@ -40,15 +42,18 @@
 	line-height: 0px;
 }
 
-.archive .listing-widget-thumb img {
+.archive .listing-widget-thumb a img {
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	height: auto;
+	border: none;
 }
 
 .archive .listing-widget-thumb a {
-	border-bottom: none;
+	padding: 0;
+	margin: 0;
+	border: none;
 	text-decoration: none;
 }
 
@@ -58,10 +63,10 @@
 }
 
 .archive .listing-wrap span.listing-status {
-	width: 120px;
+	width: 130px;
 	padding: 5px;
-	top: 18px;
-	right: -27px;
+	top: 20px;
+	right: -30px;
 	font-size: 12px;
 	line-height: 18px;
 	-moz-transform: scale(1) rotate(45deg) translate(0px);
@@ -76,13 +81,18 @@
 }
 
 .archive .listing-wrap .listing-thumb-meta span {
+	position: relative;
 	padding: 5px 10px;
 	color: #111;
 	background: #fff;
 	background: rgba(255,255,255,0.80);
 	font-size: 14px;
 	line-height: 14px;
+	font-weight: normal;
 	display: table;
+	top: inherit;
+	left: inherit;
+	border-radius: 0;
 }
 
 .archive .listing-wrap .listing-thumb-meta span.listing-price {
@@ -123,15 +133,20 @@
 }
 
 .archive .listing-widget-details h3.listing-title a {
+	padding: 0;
+	margin: 0;
 	color: #666;
+	background: none;
 	font-size: 18px;
 	text-decoration: none;
-	border-bottom: none;
+	border: none;
 }
 
 .archive .listing-widget-details p.listing-address {
 	padding: 0 0 15px;
 	margin: 0;
+	display: block;
+	text-align: left;
 }
 
 .archive .listing-widget-details span.listing-address,
@@ -139,6 +154,8 @@
 	padding: 0 15px;
 	font-size: 14px;
 	line-height: 18px;
+	text-align: left;
+	display: inline;
 }
 
 .archive .listing-widget-details .listing-beds-baths-sqft {
@@ -307,7 +324,13 @@
 ------------------------------------------------------------ */
 
 @media only screen and (max-width: 1139px) {
+	.archive .listing-widget-thumb a img {
+		max-width: 100%;
+	}
+}
 
+@media only screen and (max-width: 979px) {
+	
 }
 
 @media (max-width: 767px) {
