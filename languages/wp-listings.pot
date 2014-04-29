@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Listings\n"
-"POT-Creation-Date: 2014-04-25 08:35-0600\n"
-"PO-Revision-Date: 2014-04-25 08:35-0600\n"
+"POT-Creation-Date: 2014-04-29 09:36-0600\n"
+"PO-Revision-Date: 2014-04-29 09:36-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -27,7 +27,7 @@ msgid "WP Listings - Featured Listings"
 msgstr ""
 
 #: includes/class-featured-listings-widget.php:127
-#: includes/class-listings.php:97 includes/class-listings.php:98
+#: includes/class-listings.php:98 includes/class-listings.php:99
 #: includes/views/archive-listing.php:58
 msgid "View Listing"
 msgstr ""
@@ -73,7 +73,8 @@ msgid "WP Listings - Search"
 msgstr ""
 
 #: includes/class-listings-search-widget.php:20
-#: includes/class-listings-search-widget.php:68 includes/class-listings.php:99
+#: includes/class-listings-search-widget.php:68
+#: includes/class-listings.php:100
 msgid "Search Listings"
 msgstr ""
 
@@ -141,76 +142,76 @@ msgstr ""
 msgid "Pool:"
 msgstr ""
 
-#: includes/class-listings.php:72
+#: includes/class-listings.php:73
 msgid "Settings"
 msgstr ""
 
-#: includes/class-listings.php:90
+#: includes/class-listings.php:91
 msgid "Listings"
 msgstr ""
 
-#: includes/class-listings.php:91
+#: includes/class-listings.php:92
 msgid "Listing"
 msgstr ""
 
-#: includes/class-listings.php:92
+#: includes/class-listings.php:93
 msgid "Add New"
 msgstr ""
 
-#: includes/class-listings.php:93
+#: includes/class-listings.php:94
 msgid "Add New Listing"
 msgstr ""
 
-#: includes/class-listings.php:94 includes/views/create-tax.php:48
-#: includes/views/single-listing.php:326
+#: includes/class-listings.php:95 includes/views/create-tax.php:48
+#: includes/views/single-listing.php:336
 msgid "Edit"
 msgstr ""
 
-#: includes/class-listings.php:95
+#: includes/class-listings.php:96
 msgid "Edit Listing"
 msgstr ""
 
-#: includes/class-listings.php:96
+#: includes/class-listings.php:97
 msgid "New Listing"
 msgstr ""
 
-#: includes/class-listings.php:100
+#: includes/class-listings.php:101
 msgid "No listings found"
 msgstr ""
 
-#: includes/class-listings.php:101
+#: includes/class-listings.php:102
 msgid "No listings found in Trash"
 msgstr ""
 
-#: includes/class-listings.php:119
+#: includes/class-listings.php:120
 msgid "Property Details"
 msgstr ""
 
-#: includes/class-listings.php:120
+#: includes/class-listings.php:121
 msgid "Additional Details"
 msgstr ""
 
-#: includes/class-listings.php:121
+#: includes/class-listings.php:122
 msgid "Agent Evolution"
 msgstr ""
 
-#: includes/class-listings.php:178
+#: includes/class-listings.php:179
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/class-listings.php:179
+#: includes/class-listings.php:180
 msgid "Listing Title"
 msgstr ""
 
-#: includes/class-listings.php:180
+#: includes/class-listings.php:181
 msgid "Details"
 msgstr ""
 
-#: includes/class-listings.php:181
+#: includes/class-listings.php:182
 msgid "Tags"
 msgstr ""
 
-#: includes/class-listings.php:182
+#: includes/class-listings.php:183
 msgid "Categories"
 msgstr ""
 
@@ -410,65 +411,58 @@ msgid "Update"
 msgstr ""
 
 #: includes/views/listing-details-metabox.php:26
-msgid "<p><label>Photo Gallery Shortcodes:<br />"
-msgstr ""
-
-#: includes/views/listing-details-metabox.php:27
-#, php-format
-msgid ""
-"<textarea name=\"wp_listings[_listing_photos]\" rows=\"1\" cols=\"18\" style="
-"\"%s\">%s</textarea></label></p>"
-msgstr ""
-
-#: includes/views/listing-details-metabox.php:33
 msgid ""
 "<p><label>Custom Listing Text (custom text to display as overlay on featured "
 "listing widget)<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:34
+#: includes/views/listing-details-metabox.php:27
 #, php-format
 msgid ""
 "<input type=\"text\" name=\"wp_listings[_listing_text]\" value=\"%s\" /></"
 "label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:40
+#: includes/views/listing-details-metabox.php:36
+msgid "<p><label>Photo Gallery (use Add Media button to insert Gallery):<br />"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:57
 msgid "<p><label>Enter Video or Virtual Tour Embed Code:<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:41
+#: includes/views/listing-details-metabox.php:58
 #, php-format
 msgid ""
 "<textarea name=\"wp_listings[_listing_video]\" rows=\"5\" cols=\"18\" style="
 "\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:47
+#: includes/views/listing-details-metabox.php:64
 msgid ""
 "<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a href="
 "\"https://wordpress.org/plugins/simple-google-maps-short-code/\">Simple "
-"Google Maps Short Code</a>) or <a href=\"https://wordpress.org/plugins/"
-"mappress-google-maps-for-wordpress/\">MapPress</a>:<br /><em>Recommend size: "
-"660x300 (If possible, use 100% width, or your themes content width)</em><br /"
-">"
+"Google Maps Short Code</a> or <a href=\"https://wordpress.org/plugins/"
+"mappress-google-maps-for-wordpress/\">MapPress</a>):<br /><em>Recommend "
+"size: 660x300 (If possible, use 100% width, or your themes content width)</"
+"em><br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:48
+#: includes/views/listing-details-metabox.php:65
 #, php-format
 msgid ""
 "<textarea name=\"wp_listings[_listing_map]\" rows=\"5\" cols=\"18\" style="
 "\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:54
+#: includes/views/listing-details-metabox.php:71
 msgid ""
 "<p><label>If you use a Contact Form plugin, you may enter the Contact Form "
 "shortcode here. Otherwise, the single listing template will use a default "
 "contact form:<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:55
+#: includes/views/listing-details-metabox.php:72
 #, php-format
 msgid ""
 "<textarea name=\"wp_listings[_listing_contact_form]\" rows=\"1\" cols=\"18\" "
@@ -515,53 +509,52 @@ msgid ""
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/single-listing.php:89
+#: includes/views/single-listing.php:94
 msgid "View more <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: includes/views/single-listing.php:123
+#: includes/views/single-listing.php:128
 msgid "Home Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:125
+#: includes/views/single-listing.php:130
 msgid "Kitchen Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:127
+#: includes/views/single-listing.php:132
 msgid "Living Room"
 msgstr ""
 
-#: includes/views/single-listing.php:129
+#: includes/views/single-listing.php:134
 msgid "Master Suite"
 msgstr ""
 
-#: includes/views/single-listing.php:322
+#: includes/views/single-listing.php:332
 msgid "Leave a comment"
 msgstr ""
 
-#: includes/views/single-listing.php:322
+#: includes/views/single-listing.php:332
 msgid "1 Comment"
 msgstr ""
 
-#: includes/views/single-listing.php:322
+#: includes/views/single-listing.php:332
 msgid "% Comments"
-msgstr ""
-
-#: includes/views/wp-listings-settings.php:22
-msgid ""
-"<p>You may enter a default state that will automatically be output on "
-"template pages that show the state the listing is located in. When you are "
-"creating a listing post and you leave the state option of the property "
-"details metabox empty the default will be shown on template pages. You can "
-"override the default by simpling giving the state field any value at all. "
-"Leave it blank to keep the default.</p>"
 msgstr ""
 
 #: includes/views/wp-listings-settings.php:27
 msgid ""
-"<p>The default number of posts displayed on a listing archive page is 9. "
-"Here you can set a custom number. Enter <span style='color: #f00;font-"
-"weight: 700;'>-1</span> to display all listing posts. <em>If you have more "
-"than 20-30 posts, it's not recommended to show all or your page will load "
-"slow.</em></p>"
+"<h2>Default State</h2><p>You can enter a default state that will "
+"automatically be output on template pages and widgets that show the state. "
+"When you are create a listing and leave the state field empty, the default "
+"entered below will be shown. You can override the default on each listing by "
+"entering a value into the state field.</p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:32
+msgid ""
+"<h2>Default Number of Posts</h2><p>The default number of posts displayed on "
+"a listing archive page is 9. Here you can set a custom number. Enter <span "
+"style='color: #f00;font-weight: 700;'>-1</span> to display all listing posts."
+"<br /><em>If you have more than 20-30 posts, it's not recommended to show "
+"all or your page will load slow.</em></p>"
 msgstr ""
