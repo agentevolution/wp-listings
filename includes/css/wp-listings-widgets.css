@@ -18,12 +18,18 @@
 .widget .listing-widget-thumb img {
 	margin: 0;
 	padding: 0;
+	width: 100%;
 	height: auto;
 }
 
 .widget .listing-widget-thumb a {
 	border-bottom: none;
 	text-decoration: none;
+}
+
+.widget .listing-widget-thumb a img {
+	max-width: 100%;
+	max-height: none;
 }
 
 .widget .listing-wrap span.listing-status,
