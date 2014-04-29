@@ -45,7 +45,7 @@ Custom data fields include:
 * Master Suite
 * School and Neighborhood Info
 
-Single listings display the custom data automatically with no need to insert shortcodes or images within your content.
+Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it display on the page.
 
 Intergrates with the [Genesis Agent Profiles](http://wordpress.org/plugins/genesis-agent-profiles/) plugin to display the listing agent(s).
 
@@ -63,11 +63,11 @@ Allows for any number of custom single listing templates to be created and displ
 
 = I already use the AgentPress Listings plugin, can I use this plugin? =
 
-Yes. This plugin can be used instead of the AgentPress Listings plugin. It uses the same post type name and custom field names (along with several new fields), so the posts you've added using AgentPress, along with the associated meta data, will remain attached to the listing post. Just be sure to deactive AgentPress before activating WP Listings.
+Yes. This plugin can be used instead of the AgentPress Listings plugin. It uses the same post type name and custom field names (along with several new fields), so the posts you've added using AgentPress, along with the associated meta data, will remain attached to the listing post. Just be sure to deactivate AgentPress before activating WP Listings.
 
 = My theme already has a single listing template. How do I use the one provided with the plugin? =
 
-Some themes may already have a `single-listing.php` (and archive.php for listing archives) to display listings with the same post type name of 'listings'. Templates placed within your theme folder have precedence. To use the template(s) provided with the plugin, delete the template(s) within your theme's folder (recommended to make a backup).
+Some themes may already have a `single-listing.php` (and archive.php for listing archives) to display listings with the same post type name of 'listings'. Templates placed within your theme folder have precedence. To use the template(s) provided with the plugin, delete the `single-listing.php` and/or the `archive-listing.php` templates within your theme's folder (recommended to make a backup).
 
 = How can I create a custom single listing template? =
 
