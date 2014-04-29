@@ -206,8 +206,7 @@
 .widget .listing.two-sixths,
 .widget .listing.two-thirds {
 	float: left;
-	margin-left: 2.564102564102564%;
-	margin-bottom: 15px;
+	margin-left: 0 0 15px 2.564102564102564%;
 	padding: 0;
 }
 
