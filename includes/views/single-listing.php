@@ -339,10 +339,11 @@ get_header(); ?>
 					</header><!-- .entry-header -->
 
 					
-			<?php
+			<?php single_listing_post_content(); ?>
 
-				single_listing_post_content();
+				</article><!-- #post-ID -->
 
+			<?php 
 				// Previous/next post navigation.
 				wp_listings_post_nav();
 
