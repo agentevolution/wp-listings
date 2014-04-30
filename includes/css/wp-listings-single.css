@@ -20,6 +20,9 @@
 	display: block;
 	width: 100%;
 	max-width: 100%;
+}
+
+.wplistings-single-listing .listing-image-wrap img {
 	height: auto;
 }
 
