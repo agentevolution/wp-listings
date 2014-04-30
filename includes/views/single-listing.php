@@ -162,7 +162,7 @@ function single_listing_post_content() {
 				<p>
 				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_school_neighborhood', true)); ?>
 				</p>
-			</div><!-- #listing-video -->
+			</div><!-- #listing-school-neighborhood -->
 			<?php } ?>
 
 		</div><!-- #listing-tabs.listing-data -->
