@@ -3,13 +3,15 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.2
 Tested up to: 3.9
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Creates a portable listing management system for your WordPress site. Designed to work with any theme using built-in templates.
 
 == Description ==
 
 WP Listings uses custom post types, custom taxonomies, and widgets to create a listing management system for WordPress. It includes custom templates and widgets for front end display.
+
+View a demo of the plugin in action: [WP Listings demo](http://demo.wp-listings.com/)
 
 You can use the taxonomy creation tool to create your own way of classifying listings (i.e. bedrooms, bathrooms, locations, price ranges) and use those taxonomies to allow users to search for listings. Also includes ability to reorder the taxonomies as needed.
 
@@ -52,9 +54,9 @@ Intergrates with the [Genesis Agent Profiles](http://wordpress.org/plugins/genes
 
 Single listings include a contact form for visitors to inquire about a property, or the form can be replaced with your own form plugin shortcode.
 
-Allows for any number of custom single listing templates to be created and displayed on a per listing basis.
+Allows for any number of custom single listing templates to be created and displayed on a per listing basis. 
 
-View a demo of the plugin in action: [WP Listings demo](http://demo.wp-listings.com/)
+Premium Single Listing Templates available at [agentevolution.com](http://www.agentevolution.com/product-category/listing-templates/).
 
 == Installation ==
 
@@ -102,12 +104,18 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 == Changelog ==
 
+= 1.0.1 =
+* Added ability to select an image size in the Featured Listing widget. This allows you to set a custom image size in your theme.
+
 = 1.0 =
 * Initial public release
 
 == Credits ==
 
 Uses code from the following plugins:
+
 [Single Post Template](http://wordpress.org/plugins/single-post-template/) by Nathan Rice
+
 [AgentPress Listings](http://wordpress.org/plugins/agentpress-listings/) by StudioPress
+
 [AgentPress Listings Taxonomy Reorder](http://wordpress.org/plugins/agentpress-listings-taxonomy-reorder/) by Robert Iseley
