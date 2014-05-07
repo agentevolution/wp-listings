@@ -90,7 +90,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 				$first_class = ( 1 == $count && 1 == $instance['use_columns'] ) ? ' first' : '';
 
-				$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
+				$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, $instance['image_size'] ) );
 
 				if ( '' != wp_listings_get_status() ) {
 					$loop .= sprintf( '<span class="listing-status %s">%s</span>', strtolower(wp_listings_get_status()), wp_listings_get_status() );
@@ -149,6 +149,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		$instance = array();
 		$instance['title']          = strip_tags( $new_instance['title'] );
 		$instance['posts_per_page'] = (int) $new_instance['posts_per_page'];
+		$instance['image_size'] 	= strip_tags($new_instance['image_size'] );	
 		$instance['use_columns']    = (int) $new_instance['use_columns'];
 		$instance['number_columns'] = (int) $new_instance['number_columns'];
 		$instance['posts_term']     = strip_tags( $new_instance['posts_term'] );
@@ -161,6 +162,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		$instance = wp_parse_args( $instance, array(
 			'title'				=> '',
 			'posts_per_page'	=> 3,
+			'image_size'		=> 'listings',
 			'use_columns'       => 0,
 			'number_columns'    => 3,
 			'posts_term'        => ''
@@ -174,8 +176,21 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 			$this->get_field_name('title'),
 			esc_attr( $instance['title'] ),
 			'width: 95%;'
-		);
+		); ?>
 
+		<p>
+			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size', 'wp_listings' ); ?>:</label>
+			<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" class="wp-listings-image-size-selector" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
+				<option value="thumbnail">thumbnail (<?php echo absint( get_option( 'thumbnail_size_w' ) ); ?>x<?php echo absint( get_option( 'thumbnail_size_h' ) ); ?>)</option>
+				<?php
+				$sizes = wp_listings_get_additional_image_sizes();
+				foreach ( (array) $sizes as $name => $size )
+					echo '<option value="' . esc_attr( $name ) . '" ' . selected( $name, $instance['image_size'], FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . 'x' . absint( $size['height'] ) . ')</option>';
+				?>
+			</select>
+		</p>
+
+		<?php
 		printf(
 			'<p>%s <input type="text" name="%s" value="%s" size="3" /></p>',
 			__( 'How many results should be returned?', 'wp_listings' ),

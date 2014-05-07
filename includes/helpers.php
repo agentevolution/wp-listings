@@ -121,3 +121,25 @@ function wp_listings_paging_nav() {
 	<?php
 	endif;
 }
+
+/**
+ * Return registered image sizes.
+ *
+ * Return a two-dimensional array of just the additionally registered image sizes, with width, height and crop sub-keys.
+ *
+ * @since 1.0.1
+ *
+ * @global array $_wp_additional_image_sizes Additionally registered image sizes.
+ *
+ * @return array Two-dimensional, with width, height and crop sub-keys.
+ */
+function wp_listings_get_additional_image_sizes() {
+
+	global $_wp_additional_image_sizes;
+
+	if ( $_wp_additional_image_sizes )
+		return $_wp_additional_image_sizes;
+
+	return array();
+
+}
