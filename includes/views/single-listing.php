@@ -176,7 +176,7 @@ function single_listing_post_content() {
 		?>
 
 		<?php
-			if (function_exists('_p2p_init') && function_exists('agentpress_listings_init') || function_exists('_p2p_init') && function_exists('genesis_init') ) {
+			if (function_exists('_p2p_init') && function_exists('agent_profiles_init') ) {
 				echo'<div id="listing-agent">
 				<div class="connected-agents">';
 				aeprofiles_connected_agents_markup();
