@@ -87,7 +87,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings.css') ) {
-        	wp_register_style('wp_listings', WP_LISTINGS_URL . '/includes/css/wp-listings.css');
+        	wp_register_style('wp_listings', WP_LISTINGS_URL . 'includes/css/wp-listings.css');
             wp_enqueue_style('wp_listings');
         }
     }
@@ -101,7 +101,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings-widgets.css') ) {
-        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . '/includes/css/wp-listings-widgets.css');
+        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . 'includes/css/wp-listings-widgets.css');
             wp_enqueue_style('wp_listings_widgets');
         }
     }
