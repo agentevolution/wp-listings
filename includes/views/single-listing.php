@@ -315,7 +315,7 @@ if (function_exists('genesis_init')) {
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
+	<div id="primary" class="content-area container inner">
 		<div id="content" class="site-content" role="main">
 
 			<?php
@@ -339,7 +339,7 @@ get_header(); ?>
 					</header><!-- .entry-header -->
 
 					
-			<?php single_listing_post_content(); ?>
+				<?php single_listing_post_content(); ?>
 
 				</article><!-- #post-ID -->
 

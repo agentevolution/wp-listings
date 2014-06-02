@@ -90,7 +90,7 @@ if (function_exists('genesis_init')) {
 
 get_header(); ?>
 
-	<section id="primary" class="content-area">
+	<section id="primary" class="content-area container inner">
 			<div id="content" class="site-content" role="main">
 
 			<?php if ( have_posts() ) : ?>

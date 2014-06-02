@@ -18,6 +18,9 @@
 .site-content .has-post-thumbnail .entry-header {
 	padding-top: 0
 }
+section.content-area {
+	overflow: hidden;
+}
 /* end reset some theme defaults */
 
 .listing,
