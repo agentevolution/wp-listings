@@ -302,7 +302,7 @@ if (function_exists('genesis_init')) {
 	remove_action( 'genesis_before_post_content', 'genesis_post_info' ); // XHTML
 	remove_action( 'genesis_entry_footer', 'genesis_post_meta' ); // HTML5
 	remove_action( 'genesis_after_post_content', 'genesis_post_meta' ); // XHTML
-	remove_action( 'genesis_after_entry', 'genesis_do_author_box_single' ); // HTML5
+	remove_action( 'genesis_after_entry', 'genesis_do_author_box_single', 8 ); // HTML5
 	remove_action( 'genesis_after_post', 'genesis_do_author_box_single' ); // XHTML
 
 	remove_action( 'genesis_entry_content' , 'genesis_do_post_content' ); // HTML5
