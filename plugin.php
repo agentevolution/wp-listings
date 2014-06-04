@@ -63,11 +63,12 @@ function wp_listings_init() {
 		add_theme_support( 'post-thumbnails' );
 	}
 
-	/** Enqueues scripts for single listings */
+	/** Registers and enqueues scripts for single listings */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
 	function add_wp_listings_scripts() {
-		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.js' );
-		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' );
+		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.js' ); // enqueued only on single listings
+		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' ); // enqueued only on single listings
+		wp_register_script( 'fitvids', '//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.js', array('jquery'), true, true ); // enqueued only on single listings
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
     }
@@ -80,7 +81,7 @@ function wp_listings_init() {
 		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css');
 
 		/** Register Font Awesome icons but don't enqueue them */
-		wp_register_style('font-awesome-more', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
+		wp_register_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
 		
 		if ('1' == get_option('wp_listings_stylesheet_load')) {
 			return;

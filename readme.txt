@@ -107,6 +107,7 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 = 1.0.5 =
 * Updated class output for listing status overlay to remove spaces and replace with hyphens
 * Remove unused Categories column from admin page
+* Remove faulty responsive video CSS. Use fitvids.js instead for videos on single listings
 
 = 1.0.4 =
 * Add HTML classes for CSS layout compatibility with a number of various themes
