@@ -179,8 +179,7 @@ class WP_Listings {
 			'listing_thumbnail'		=> __( 'Thumbnail', 'wp_listings' ),
 			'title'					=> __( 'Listing Title', 'wp_listings' ),
 			'listing_details'		=> __( 'Details', 'wp_listings' ),
-			'listing_tags'			=> __( 'Tags', 'wp_listings' ),
-			'listing_categories'	=> __( 'Categories', 'wp_listings' )
+			'listing_tags'			=> __( 'Tags', 'wp_listings' )
 		);
 
 		return $columns;
@@ -211,11 +210,6 @@ class WP_Listings {
 				echo '<b>Property Type:</b> ' . get_the_term_list( $post->ID, 'property-types', '', ', ', '' ) . '<br /><br />';
 				echo '<b>Location:</b> ' . get_the_term_list( $post->ID, 'locations', '', ', ', '' ) . '<br /><br />';
 				echo '<b>Features</b><br />' . get_the_term_list( $post->ID, 'features', '', ', ', '' );
-				break;
-			case "listing_categories":
-				foreach ( (array) get_option( $this->settings_field ) as $key => $data ) {
-					printf( '<b>%s:</b> %s<br />', esc_html( $data['labels']['singular_name'] ), get_the_term_list( $post->ID, $key, '', ', ', '' ) );
-				}
 				break;
 		}
 
