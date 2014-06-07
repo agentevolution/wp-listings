@@ -8,7 +8,7 @@
 class WP_Listings_Search_Widget extends WP_Widget {
 
 	function WP_Listings_Search_Widget() {
-		$widget_ops = array( 'classname' => 'listings-search', 'description' => __( 'Display listings search dropdown', 'wp_listings' ) );
+		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp_listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
 		$this->WP_Widget( 'listings-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
 	}
@@ -49,7 +49,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 			echo '</select>';
 		}
 
-		echo '<input type="submit" id="searchsubmit" class="searchsubmit" value="'. esc_attr( $instance['button_text'] ) .'" />
+		echo '<div class="btn-search"><input type="submit" id="searchsubmit" class="searchsubmit" value="'. esc_attr( $instance['button_text'] ) .'" /></div>
 		<div class="clear"></div>
 		</form>';
 
