@@ -255,7 +255,7 @@ class WP_Listings_Taxonomies {
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
-				'hierarchical' => false,
+				'hierarchical' => true,
 				'rewrite' => array( 'status' ),
 				'editable' => 0
 			)
@@ -288,7 +288,7 @@ class WP_Listings_Taxonomies {
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
-				'hierarchical' => false,
+				'hierarchical' => true,
 				'rewrite' => array( 'property-types' ),
 				'editable' => 0
 			)
@@ -321,7 +321,7 @@ class WP_Listings_Taxonomies {
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
-				'hierarchical' => false,
+				'hierarchical' => true,
 				'rewrite' => array( 'locations' ),
 				'editable' => 0
 			)

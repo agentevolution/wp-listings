@@ -108,6 +108,7 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 * Add classes to search widget output for additional styling
 * Add priority to author box removal action on Genesis HTML5 themes
 * Update Font Awesome version number and use minified version
+* Change default taxonomies to be hierarchical (except features)
 
 = 1.0.5 =
 * Updated class output for listing status overlay to remove spaces and replace with hyphens
