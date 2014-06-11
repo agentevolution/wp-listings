@@ -2,7 +2,7 @@
 /*
 	Plugin Name: WP Listings
 	Plugin URI: http://agentevolution.com
-	Description: Creates a portable listing management system for your WordPress site. Designed to work with any theme using built-in templates.
+	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
