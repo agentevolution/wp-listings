@@ -175,6 +175,8 @@ div.content-area {
 	width: 32%;
 	color: #666;
 	text-align: center;
+	margin: 0;
+	padding: 0;
 }
 
 .archive .listing-widget-details .listing-beds-baths-sqft li span {
