@@ -3,7 +3,7 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.2
 Tested up to: 3.9
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -103,6 +103,10 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 8. Listing archive template display
 
 == Changelog ==
+
+= 1.0.7 =
+* Add Genesis CPT archive settings support
+* Remove widget list item margins affecting some themes
 
 = 1.0.6 =
 * Add classes to search widget output for additional styling
