@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.0.7
+	Version: 1.0.8
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -28,7 +28,17 @@ function wp_listings_activation() {
 			$_wp_listings_taxonomies->register_taxonomies();
 		}
 		flush_rewrite_rules();
+}
 
+register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
+/**
+ * This function runs on plugin deactivation. It flushes the rewrite rules to get rid of remnants
+ *
+ * @since 1.0.8
+ */
+function wp_listings_deactivation() {
+
+		flush_rewrite_rules();
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
