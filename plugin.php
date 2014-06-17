@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.0.8
+	Version: 1.1
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -54,7 +54,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.0' );
+	define( 'WP_LISTINGS_VERSION', '1.1' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -88,6 +88,8 @@ function wp_listings_init() {
 	add_action('wp_enqueue_scripts', 'add_wp_listings_main_styles');
 	function add_wp_listings_main_styles() {
 
+		$options = get_option('plugin_wp_listings_settings');
+
 		/** Register single styles but don't enqueue them **/
 		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css');
 
@@ -97,7 +99,11 @@ function wp_listings_init() {
 		/** Register Properticons but don't enqueue them */
 		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css');
 		
-		if ('1' == get_option('wp_listings_stylesheet_load')) {
+		if ( !isset($options['wp_listings_stylesheet_load']) ) {
+			$options['wp_listings_stylesheet_load'] = 0;
+		}
+
+		if ('1' == $options['wp_listings_stylesheet_load'] ) {
 			return;
 		}
 
@@ -111,7 +117,13 @@ function wp_listings_init() {
 	add_action('wp_enqueue_scripts', 'add_wp_listings_widgets_styles');
 	function add_wp_listings_widgets_styles() {
 
-		if ('1' == get_option('wp_listings_widgets_stylesheet_load')) {
+		$options = get_option('plugin_wp_listings_settings');
+
+		if ( !isset($options['wp_listings_widgets_stylesheet_load']) ) {
+			$options['wp_listings_widgets_stylesheet_load'] = 0;
+		}
+
+		if ('1' == $options['wp_listings_widgets_stylesheet_load'] ) {
 			return;
 		}
 

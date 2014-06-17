@@ -58,12 +58,14 @@ function wp_listings_template_include( $template ) {
  * Controls output of default state for the state custom field if there is one set
  */
 function wp_listings_get_state() {
+	
+	$options = get_option('plugin_wp_listings_settings');
 
 	global $post;
 
 	$state = get_post_meta($post->ID, '_listing_state', true);
 
-	$default_state = get_option('wp_listings_default_state');
+	$default_state = $options['wp_listings_default_state'];
 
 	if ( empty($default_state) ) {
 		$default_state = 'ST';
@@ -179,7 +181,9 @@ function wp_listings_post_number( $query ) {
 		return;
 	}
 
-	$archive_posts_num = get_option('wp_listings_archive_posts_num');
+	$options = get_option('plugin_wp_listings_settings');
+
+	$archive_posts_num = $options['wp_listings_archive_posts_num'];
 
 	if ( empty($archive_posts_num) ) {
 		$archive_posts_num = '9';

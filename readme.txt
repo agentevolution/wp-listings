@@ -1,9 +1,9 @@
 === WP Listings ===
 Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
-Requires at least: 3.2
+Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.8
+Stable tag: 1.1
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -64,6 +64,26 @@ Premium Single Listing Templates available at [agentevolution.com](http://www.ag
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Begin creating listings and listing taxonomies
 
+= How to use the listings shortcode =
+
+= Basic usage =
+Just enter the following shortcode on any post or page
+
+`[listings]`
+
+= Advanced usage =
+The shortcode accepts the following parameters:
+
+`id` = listing post id (accepts one or more id's), exclusive, cannot be combined with other parameters, except for columns
+`limit` = limit the number of posts to show, defaults to all
+`columns` = display output in columns, accepts values 2-6, default is 1 column
+`taxonomy` = taxonomy to display (must be used with the term parameter)
+`term` = term to display (must be used with the taxonomy parameter)
+
+Example advanced usage:
+`[listings taxonomy="status" term="active" limit="10" columns="3"]`
+This will display all listings in the "Status" taxonomy, assigned to the "Active" term, limited to 10 listings, in 3 columns
+
 == Frequently Asked Questions ==
 
 = I already use the AgentPress Listings plugin, can I use this plugin? =
@@ -103,6 +123,11 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 8. Listing archive template display
 
 == Changelog ==
+
+= 1.1 =
+* Add `[listings]` shortcode to output listings on any post or page
+* Add ability to change permalink slug to prevent conflicts
+* Rewrite backend settings fields options to simplify
 
 = 1.0.8 =
 * Add function to flush rewrite rules on plugin deactivation

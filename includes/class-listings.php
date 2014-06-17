@@ -10,8 +10,11 @@
  */
 class WP_Listings {
 
+	var $settings_page = 'wp-listings-settings';
 	var $settings_field = 'wp_listings_taxonomies';
 	var $menu_page = 'register-taxonomies';
+
+	var $options;
 
 	/**
 	 * Property details array.
@@ -22,6 +25,8 @@ class WP_Listings {
 	 * Construct Method.
 	 */
 	function __construct() {
+
+		$this->options = get_option('plugin_wp_listings_settings');
 
 		$this->property_details = apply_filters( 'wp_listings_property_details', array(
 			'col1' => array(
@@ -53,6 +58,7 @@ class WP_Listings {
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
+		add_action( 'admin_init', array( &$this, 'add_options' ) );
 		add_action( 'admin_menu', array( &$this, 'settings_init' ), 15 );
 	}
 
@@ -60,32 +66,29 @@ class WP_Listings {
 	 * Registers the option to load the stylesheet
 	 */
 	function register_settings() {
-		register_setting( 'wp_listings_options', 'wp_listings_stylesheet_load' );
-		register_setting( 'wp_listings_options', 'wp_listings_widgets_stylesheet_load' );
-		register_setting( 'wp_listings_options', 'wp_listings_default_state' );
-		register_setting( 'wp_listings_options', 'wp_listings_archive_posts_num' );
-		register_setting( 'wp_listings_options', 'wp_listings_slug' );
+		register_setting( 'wp_listings_options', 'plugin_wp_listings_settings' );
 	}
 
 	/**
 	 * Sets default slug in options
 	 */
-	// function add_options() {
+	function add_options() {
 
-	// 	$new_options = array(
-	// 		'wp_listings_slug' => 'listings'
-	// 	);
+		$new_options = array(
+			'wp_listings_archive_posts_num' => 9,
+			'wp_listings_slug' => 'listings'
+		);
 
-	// 	if ( empty(get_option('wp_listings_slug')) )  {
-	// 		add_option( 'wp_listings_options', $new_options );
-	// 	}
-	// }
+		if ( empty($this->options['wp_listings_slug']) && empty($this->options['wp_listings_archive_posts_num']) )  {
+			add_option( 'plugin_wp_listings_settings', $new_options );
+		}
+	}
 
 	/**
 	 * Adds settings page in admin menu
 	 */
 	function settings_init() {
-		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', 'wp-listings-settings', array( &$this, 'settings_page' ) );
+		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
 	}
 
 	/**
@@ -122,7 +125,7 @@ class WP_Listings {
 				'menu_icon'		=> 'dashicons-admin-home',
 				'has_archive'	=> true,
 				'supports'		=> array( 'title', 'editor', 'author', 'comments', 'excerpt', 'thumbnail', 'revisions', 'genesis-seo', 'genesis-layouts', 'genesis-simple-sidebars', 'genesis-cpt-archives-settings'),
-				'rewrite'		=> array( 'slug' => 'listings', 'feeds' => true ),
+				'rewrite'		=> array( 'slug' => $this->options['wp_listings_slug'], 'feeds' => true ),
 			)
 		);
 
