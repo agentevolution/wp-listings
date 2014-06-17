@@ -62,6 +62,7 @@ function wp_listings_init() {
 	/** Includes */
 	require_once( dirname( __FILE__ ) . '/includes/helpers.php' );
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
+	require_once( dirname( __FILE__ ) . '/includes/shortcodes.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );

@@ -64,7 +64,22 @@ class WP_Listings {
 		register_setting( 'wp_listings_options', 'wp_listings_widgets_stylesheet_load' );
 		register_setting( 'wp_listings_options', 'wp_listings_default_state' );
 		register_setting( 'wp_listings_options', 'wp_listings_archive_posts_num' );
+		register_setting( 'wp_listings_options', 'wp_listings_slug' );
 	}
+
+	/**
+	 * Sets default slug in options
+	 */
+	// function add_options() {
+
+	// 	$new_options = array(
+	// 		'wp_listings_slug' => 'listings'
+	// 	);
+
+	// 	if ( empty(get_option('wp_listings_slug')) )  {
+	// 		add_option( 'wp_listings_options', $new_options );
+	// 	}
+	// }
 
 	/**
 	 * Adds settings page in admin menu

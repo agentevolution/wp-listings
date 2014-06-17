@@ -9,6 +9,7 @@
 
         <div id="post-body">
             <div id="post-body-content" class="has-sidebar-content">
+
             	<h2>Include CSS?</h2>
 				<p>Here you can deregister the WP Listings CSS files and move to your theme's css file for ease of customization</p>
 				<?php
@@ -33,6 +34,9 @@
 				    echo '<h4>Number of posts on listing archive page: <input name="wp_listings_archive_posts_num" id="wp_listings_archive_posts_num" type="text" value="' . get_option('wp_listings_archive_posts_num') . '" size="1" /></h4>';
 					?>
 					<br />
+
+					<?php echo '<h4>Listings post type slug (leave as default or change as needed): <input type="text" name="wp_listings_slug" value="' . get_option('wp_listings_slug') . '" /></h4>'; ?>
+					<p>Don't forget to <a href="../wp-admin/options-permalink.php">reset your permalinks</a> if you change the slug.</p>
 					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" />
 				</form>
             </div>

@@ -143,3 +143,39 @@ function wp_listings_get_additional_image_sizes() {
 	return array();
 
 }
+
+
+/*
+ * function to set column classes based on parameter
+ */
+function get_column_class($columns) {
+    $column_class = '';
+
+    // Max of six columns
+    $columns = ( $columns > 6 ) ? 6 : (int)$columns;
+
+    // column class
+    switch ($columns) {
+        case 0:
+        case 1:
+            $column_class = '';
+            break;
+        case 2:
+            $column_class = 'one-half';
+            break;
+        case 3:
+            $column_class = 'one-third';
+            break;
+        case 4:
+            $column_class = 'one-fourth';
+            break;
+        case 5:
+            $column_class = 'one-fifth';
+            break;
+        case 6:
+            $column_class = 'one-sixth';
+            break;
+    }
+
+    return $column_class;
+}

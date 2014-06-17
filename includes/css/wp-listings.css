@@ -32,21 +32,24 @@ div.content-area {
 }
 
 
-/* =Archive Listing template
+/* =Archive Listing template & shortcode
 ------------------------------------------------------------ */
 
-.archive .listing-wrap {
+.archive .listing-wrap,
+.wp-listings-shortcode .listing-wrap {
 	width: 100%;
 	margin: 0;
 }
 
-.archive .listing-widget-thumb {
+.archive .listing-widget-thumb,
+.wp-listings-shortcode .listing-widget-thumb {
 	position: relative;
 	overflow: hidden;
 	line-height: 0px;
 }
 
-.archive .listing-widget-thumb a img {
+.archive .listing-widget-thumb a img,
+.wp-listings-shortcode .listing-widget-thumb a img {
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -54,7 +57,8 @@ div.content-area {
 	border: none;
 }
 
-.archive .listing-widget-thumb a {
+.archive .listing-widget-thumb a,
+.wp-listings-shortcode .listing-widget-thumb a {
 	padding: 0;
 	margin: 0;
 	border: none;
@@ -62,11 +66,14 @@ div.content-area {
 }
 
 .archive .listing-wrap span.listing-status,
-.archive .listing-wrap .listing-thumb-meta {
+.archive .listing-wrap .listing-thumb-meta,
+.wp-listings-shortcode .listing-wrap span.listing-status,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta {
 	position: absolute;
 }
 
-.archive .listing-wrap span.listing-status {
+.archive .listing-wrap span.listing-status.
+.wp-listings-shortcode .listing-wrap span.listing-status {
 	width: 130px;
 	padding: 5px;
 	top: 20px;
@@ -79,12 +86,14 @@ div.content-area {
 	transform: scale(1) rotate(45deg) translate(0px);
 }
 
-.archive .listing-wrap .listing-thumb-meta {
+.archive .listing-wrap .listing-thumb-meta,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta {
 	left: 0;
 	bottom: 0;
 }
 
-.archive .listing-wrap .listing-thumb-meta span {
+.archive .listing-wrap .listing-thumb-meta span,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta span {
 	position: relative;
 	padding: 5px 10px;
 	color: #111;
@@ -99,7 +108,8 @@ div.content-area {
 	border-radius: 0;
 }
 
-.archive .listing-wrap .listing-thumb-meta span.listing-price {
+.archive .listing-wrap .listing-thumb-meta span.listing-price,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta span.listing-price {
 	padding: 8px 10px;
 	color: #fff;
 	font-size: 18px;
@@ -109,7 +119,8 @@ div.content-area {
 	background: rgba(83, 195, 49, 0.80);
 }
 
-.archive .listing-wrap span.listing-open-house {
+.archive .listing-wrap span.listing-open-house,
+.wp-listings-shortcode .listing-wrap span.listing-open-house {
 	display: block;
 	padding: 5px 10px;
 	color: #fff;
@@ -119,7 +130,8 @@ div.content-area {
 	background: #be1d2c;
 }
 
-.archive .listing-widget-details {
+.archive .listing-widget-details,
+.wp-listings-shortcode .listing-widget-details {
 	color: #999;
 	text-align: left;
 	line-height: 18px;
@@ -129,7 +141,8 @@ div.content-area {
 	border-radius: 0 0 5px 5px;
 }
 
-.archive .listing-widget-details h3.listing-title {
+.archive .listing-widget-details h3.listing-title,
+.wp-listings-shortcode .listing-widget-details h3.listing-title {
 	padding: 15px 15px 10px;
 	margin: 0;
 	line-height: 1;
@@ -137,7 +150,8 @@ div.content-area {
 	border-bottom: none;
 }
 
-.archive .listing-widget-details h3.listing-title a {
+.archive .listing-widget-details h3.listing-title a,
+.wp-listings-shortcode .listing-widget-details h3.listing-title a {
 	padding: 0;
 	margin: 0;
 	color: #666;
@@ -147,7 +161,8 @@ div.content-area {
 	border: none;
 }
 
-.archive .listing-widget-details p.listing-address {
+.archive .listing-widget-details p.listing-address,
+.wp-listings-shortcode .listing-widget-details p.listing-address {
 	padding: 0 0 15px;
 	margin: 0;
 	display: block;
@@ -155,7 +170,9 @@ div.content-area {
 }
 
 .archive .listing-widget-details span.listing-address,
-.archive .listing-widget-details span.listing-city-state-zip {
+.archive .listing-widget-details span.listing-city-state-zip,
+.wp-listings-shortcode .listing-widget-details span.listing-address,
+.wp-listings-shortcode .listing-widget-details span.listing-city-state-zip {
 	padding: 0 15px;
 	font-size: 14px;
 	line-height: 18px;
@@ -163,14 +180,16 @@ div.content-area {
 	display: inline;
 }
 
-.archive .listing-widget-details .listing-beds-baths-sqft {
+.archive .listing-widget-details .listing-beds-baths-sqft,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft {
 	width: 100%;
 	padding: 15px 0;
 	margin: 0;
 	border-top: 1px solid #efefef;
 }
 
-.archive .listing-widget-details .listing-beds-baths-sqft li {
+.archive .listing-widget-details .listing-beds-baths-sqft li,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft li {
 	display: inline-block;
 	width: 32%;
 	color: #666;
@@ -179,7 +198,8 @@ div.content-area {
 	padding: 0;
 }
 
-.archive .listing-widget-details .listing-beds-baths-sqft li span {
+.archive .listing-widget-details .listing-beds-baths-sqft li span,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft li span {
 	display: block;
 	color: #999;
 	margin: 5px 0 0 0;
@@ -189,11 +209,20 @@ div.content-area {
 	display: none;
 }
 
+.wp-listings-shortcode {
+	overflow: hidden;
+}
+
+.wp-listings-shortcode .listing-wrap {
+	margin-bottom: 25px;
+}
+
 
 /* =Listing overlays
 ------------------------------------------------------------ */
 
-.archive .listing-wrap span.listing-status {
+.archive .listing-wrap span.listing-status,
+.wp-listings-shortcode .listing-wrap span.listing-status {
 	color: #fff;
 	background: #53c331;
 	background: rgba(83, 195, 49, 0.80);
@@ -203,21 +232,27 @@ div.content-area {
 	box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.2);
 }
 
-.archive .listing-wrap span.listing-status.active {
+.archive .listing-wrap span.listing-status.active,
+.wp-listings-shortcode .listing-wrap span.listing-status.active {
 	background: #53c331;
 	background: rgba(83, 195, 49, 0.80);
 }
-.archive .listing-wrap span.listing-status.sold {
+.archive .listing-wrap span.listing-status.sold,
+.wp-listings-shortcode .listing-wrap span.listing-status.sold {
 	background: #be1d2c;
 	background: rgba(190, 29, 44, 0.80);
 }
-.archive .listing-wrap span.listing-status.pending {
+.archive .listing-wrap span.listing-status.pending,
+.wp-listings-shortcode .listing-wrap span.listing-status.pending {
 	background: #db8323;
 	background: rgba(219, 131, 35, 0.80);
 }
 .archive .listing-wrap span.listing-status.new,
 .archive .listing-wrap span.listing-status.reduced,
-.archive .listing-wrap span.listing-status.for-rent {
+.archive .listing-wrap span.listing-status.for-rent,
+.wp-listings-shortcode .listing-wrap span.listing-status.new,
+.wp-listings-shortcode .listing-wrap span.listing-status.reduced,
+.wp-listings-shortcode .listing-wrap span.listing-status.for-rent {
 	background: #24a4ea;
 	background: rgba(36, 164, 234, 0.80);
 }
@@ -226,7 +261,7 @@ div.content-area {
 /* =Column classes (one-third - for archive page)
 ------------------------------------------------------------ */
 
-.listing.one-third {
+.archive .listing.one-third {
 	float: left;
 	margin-left: 2.564102564102564%;
 	margin-bottom: 15px;
@@ -234,7 +269,46 @@ div.content-area {
 	width: 31.623931623931625%;
 }
 
-.listing.first {
+.archive .listing.first {
+	clear: both;
+	margin-left: 0;
+}
+
+
+/* =Column classes (for shortcode only)
+------------------------------------------------------------ */
+
+.wp-listings-shortcode .listing-wrap.one-half,
+.wp-listings-shortcode .listing-wrap.one-third,
+.wp-listings-shortcode .listing-wrap.one-fourth,
+.wp-listings-shortcode .listing-wrap.one-fifth,
+.wp-listings-shortcode .listing-wrap.one-sixth {
+	float: left;
+	margin: 0 0 15px 2.564102564102564%;
+	padding: 0;
+}
+
+.wp-listings-shortcode .listing-wrap.one-half {
+	width: 48.717948717948715%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-third {
+	width: 31.623931623931625%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-fourth {
+	width: 23.076923076923077%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-fifth {
+	width: 17.948717948717948%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-sixth {
+	width: 14.52991452991453%;
+}
+
+.wp-listings-shortcode .listing-wrap.first {
 	clear: both;
 	margin-left: 0;
 }
@@ -331,7 +405,8 @@ div.content-area {
 ------------------------------------------------------------ */
 
 @media only screen and (max-width: 1139px) {
-	.archive .listing-widget-thumb a img {
+	.archive .listing-widget-thumb a img,
+	.wp-listings-shortcode .listing-widget-thumb a img {
 		max-width: 100%;
 	}
 }
@@ -346,6 +421,22 @@ div.content-area {
 		width: 100%;
 		padding: 0;
 		margin: 0 0 20px;
+	}
+	.wp-listings-shortcode .listing-wrap.one-half,
+	.wp-listings-shortcode .listing-wrap.one-third,
+	.wp-listings-shortcode .listing-wrap.two-thirds,
+	.wp-listings-shortcode .listing-wrap.one-fourth,
+	.wp-listings-shortcode .listing-wrap.three-fourths,
+	.wp-listings-shortcode .listing-wrap.one-fifth,
+	.wp-listings-shortcode .listing-wrap.two-fifths,
+	.wp-listings-shortcode .listing-wrap.three-fifths,
+	.wp-listings-shortcode .listing-wrap.four-fifths,
+	.wp-listings-shortcode .listing-wrap.one-sixth,
+	.wp-listings-shortcode .listing-wrap.five-sixths {
+		float: none;
+		width: 100%;
+		padding: 0;
+		margin: 0 0 25px;
 	}
 }
 

@@ -198,52 +198,34 @@
 /* =Column classes (for widget only)
 ------------------------------------------------------------ */
 
-.widget .listing.five-sixths,
-.widget .listing.four-sixths,
-.widget .listing.one-fourth,
 .widget .listing.one-half,
-.widget .listing.one-sixth,
 .widget .listing.one-third,
-.widget .listing.three-fourths,
-.widget .listing.three-sixths,
-.widget .listing.two-fourths,
-.widget .listing.two-sixths,
-.widget .listing.two-thirds {
+.widget .listing.one-fourth,
+.widget .listing.one-fifth,
+.widget .listing.one-sixth {
 	float: left;
 	margin: 0 0 15px 2.564102564102564%;
 	padding: 0;
 }
 
-.widget .listing.one-half,
-.widget .listing.three-sixths,
-.widget .listing.two-fourths {
+.widget .listing.one-half {
 	width: 48.717948717948715%;
 }
 
-.widget .listing.one-third,
-.widget .listing.two-sixths {
+.widget .listing.one-third {
 	width: 31.623931623931625%;
-}
-
-.widget .listing.four-sixths,
-.widget .listing.two-thirds {
-	width: 65.81196581196582%;
 }
 
 .widget .listing.one-fourth {
 	width: 23.076923076923077%;
 }
 
-.widget .listing.three-fourths {
-	width: 74.35897435897436%;
+.widget .listing.one-fifth {
+	width: 17.948717948717948%;
 }
 
 .widget .listing.one-sixth {
 	width: 14.52991452991453%;
-}
-
-.widget .listing.five-sixths {
-	width: 82.90598290598291%;
 }
 
 .widget .listing.first {
@@ -258,15 +240,9 @@
 @media (max-width: 767px) {
 	.widget .listing.one-half,
 	.widget .listing.one-third,
-	.widget .listing.two-thirds,
 	.widget .listing.one-fourth,
-	.widget .listing.three-fourths,
 	.widget .listing.one-fifth,
-	.widget .listing.two-fifths,
-	.widget .listing.three-fifths,
-	.widget .listing.four-fifths,
-	.widget .listing.one-sixth,
-	.widget .listing.five-sixths {
+	.widget .listing.one-sixth {
 		float: none;
 		width: 100%;
 		padding: 0;
