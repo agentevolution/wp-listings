@@ -235,8 +235,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function listing_status_taxonomy() {
 
-		$name = 'Status';
-		$singular_name = 'Status';
+		$name = __( 'Status', 'wp_listings' );
+		$singular_name = __( 'Status', 'wp_listings' );
 
 		return array(
 			'status' => array(
@@ -256,7 +256,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( 'status' ),
+				'rewrite' => array( __( 'status', 'wp_listings' ) ),
 				'editable' => 0
 			)
 		);
@@ -268,8 +268,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function property_type_taxonomy() {
 
-		$name = 'Property Types';
-		$singular_name = 'Property Type';
+		$name = __( 'Property Types', 'wp_listings' );
+		$singular_name = __( 'Property Type', 'wp_listings' );
 
 		return array(
 			'property-types' => array(
@@ -289,7 +289,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( 'property-types' ),
+				'rewrite' => array( __( 'property-types', 'wp_listings' ) ),
 				'editable' => 0
 			)
 		);
@@ -301,8 +301,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function listing_location_taxonomy() {
 
-		$name = 'Locations';
-		$singular_name = 'Location';
+		$name = __( 'Locations', 'wp_listings' );
+		$singular_name = __( 'Location', 'wp_listings' );
 
 		return array(
 			'locations' => array(
@@ -322,7 +322,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( 'locations' ),
+				'rewrite' => array( __( 'locations', 'wp_listings' ) ),
 				'editable' => 0
 			)
 		);
@@ -334,8 +334,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function property_features_taxonomy() {
 
-		$name = 'Features';
-		$singular_name = 'Feature';
+		$name = __( 'Features', 'wp_listings' );
+		$singular_name = __( 'Feature', 'wp_listings' );
 
 		return array(
 			'features' => array(
@@ -355,7 +355,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => 0,
-				'rewrite' => array( 'features' ),
+				'rewrite' => array( __( 'features', 'wp_listings' ) ),
 				'editable' => 0
 			)
 		);
@@ -426,7 +426,7 @@ class WP_Listings_Taxonomies {
 		}?>
 	<h2><?php _e( 'Reorder Taxonomies', 'wp_listings' ); ?></h2>
 	<div id="col-container">
-		<div class="updated">Note: This will only allow you to reorder user-created taxonomies. Default taxonomies cannot be reordered (Status, Locations, Property Types, Features).</div>
+		<div class="updated"><?php _e('Note: This will only allow you to reorder user-created taxonomies. Default taxonomies cannot be reordered (Status, Locations, Property Types, Features).', 'wp_listings' ); ?> </div>
 		<style>
 		#sortable { list-style-type: none; margin: 10px 0 ; padding: 0; }
 		#sortable li .item { 
@@ -460,7 +460,7 @@ class WP_Listings_Taxonomies {
 		</script>
 		<div id="col-left">
 		<div class="col-wrap">
-	    <p>Drag and Drop to reorder</p>
+	    <p><?php _e('Drag and Drop to reorder', 'wp_listings'); ?></p>
 		<form method="post">
 		<ul id="sortable">
 	    	<?php foreach($wp_listings_taxes as $wp_listings_tax_key => $wp_listings_tax_value) { ?>
