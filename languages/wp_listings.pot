@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Listings\n"
-"POT-Creation-Date: 2014-04-29 09:36-0600\n"
-"PO-Revision-Date: 2014-04-29 09:36-0600\n"
+"POT-Creation-Date: 2014-07-14 13:30-0600\n"
+"PO-Revision-Date: 2014-07-14 13:31-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -27,21 +27,25 @@ msgid "WP Listings - Featured Listings"
 msgstr ""
 
 #: includes/class-featured-listings-widget.php:127
-#: includes/class-listings.php:98 includes/class-listings.php:99
+#: includes/class-listings.php:116 includes/class-listings.php:117
 #: includes/views/archive-listing.php:58
 msgid "View Listing"
 msgstr ""
 
-#: includes/class-featured-listings-widget.php:172
+#: includes/class-featured-listings-widget.php:174
 #: includes/class-listings-search-widget.php:76
 msgid "Title:"
 msgstr ""
 
-#: includes/class-featured-listings-widget.php:181
+#: includes/class-featured-listings-widget.php:182
+msgid "Image Size"
+msgstr ""
+
+#: includes/class-featured-listings-widget.php:196
 msgid "How many results should be returned?"
 msgstr ""
 
-#: includes/class-featured-listings-widget.php:189
+#: includes/class-featured-listings-widget.php:204
 msgid "All Taxonomies and Terms"
 msgstr ""
 
@@ -74,7 +78,7 @@ msgstr ""
 
 #: includes/class-listings-search-widget.php:20
 #: includes/class-listings-search-widget.php:68
-#: includes/class-listings.php:100
+#: includes/class-listings.php:118
 msgid "Search Listings"
 msgstr ""
 
@@ -86,133 +90,129 @@ msgstr ""
 msgid "Button Text:"
 msgstr ""
 
-#: includes/class-listings.php:28
+#: includes/class-listings.php:33
 msgid "Price:"
 msgstr ""
 
-#: includes/class-listings.php:29
+#: includes/class-listings.php:34
 msgid "Address:"
 msgstr ""
 
-#: includes/class-listings.php:30
+#: includes/class-listings.php:35
 msgid "City:"
 msgstr ""
 
-#: includes/class-listings.php:31
+#: includes/class-listings.php:36
 msgid "State:"
 msgstr ""
 
-#: includes/class-listings.php:32
+#: includes/class-listings.php:37
 msgid "ZIP:"
 msgstr ""
 
-#: includes/class-listings.php:33
+#: includes/class-listings.php:38
 msgid "MLS #:"
 msgstr ""
 
-#: includes/class-listings.php:34
+#: includes/class-listings.php:39
 msgid "Open House Time & Date:"
 msgstr ""
 
-#: includes/class-listings.php:37
+#: includes/class-listings.php:42
 msgid "Year Built:"
 msgstr ""
 
-#: includes/class-listings.php:38
+#: includes/class-listings.php:43
 msgid "Floors:"
 msgstr ""
 
-#: includes/class-listings.php:39
+#: includes/class-listings.php:44
 msgid "Square Feet:"
 msgstr ""
 
-#: includes/class-listings.php:40
+#: includes/class-listings.php:45
 msgid "Lot Square Feet:"
 msgstr ""
 
-#: includes/class-listings.php:41
+#: includes/class-listings.php:46
 msgid "Bedrooms:"
 msgstr ""
 
-#: includes/class-listings.php:42
+#: includes/class-listings.php:47
 msgid "Bathrooms:"
 msgstr ""
 
-#: includes/class-listings.php:43
+#: includes/class-listings.php:48
 msgid "Pool:"
 msgstr ""
 
-#: includes/class-listings.php:73
+#: includes/class-listings.php:91
 msgid "Settings"
 msgstr ""
 
-#: includes/class-listings.php:91
+#: includes/class-listings.php:109
 msgid "Listings"
 msgstr ""
 
-#: includes/class-listings.php:92
+#: includes/class-listings.php:110
 msgid "Listing"
 msgstr ""
 
-#: includes/class-listings.php:93
+#: includes/class-listings.php:111
 msgid "Add New"
 msgstr ""
 
-#: includes/class-listings.php:94
+#: includes/class-listings.php:112
 msgid "Add New Listing"
 msgstr ""
 
-#: includes/class-listings.php:95 includes/views/create-tax.php:48
-#: includes/views/single-listing.php:336
+#: includes/class-listings.php:113 includes/views/create-tax.php:48
+#: includes/views/single-listing.php:340
 msgid "Edit"
 msgstr ""
 
-#: includes/class-listings.php:96
+#: includes/class-listings.php:114
 msgid "Edit Listing"
 msgstr ""
 
-#: includes/class-listings.php:97
+#: includes/class-listings.php:115
 msgid "New Listing"
 msgstr ""
 
-#: includes/class-listings.php:101
+#: includes/class-listings.php:119
 msgid "No listings found"
 msgstr ""
 
-#: includes/class-listings.php:102
+#: includes/class-listings.php:120
 msgid "No listings found in Trash"
 msgstr ""
 
-#: includes/class-listings.php:120
+#: includes/class-listings.php:138
 msgid "Property Details"
 msgstr ""
 
-#: includes/class-listings.php:121
+#: includes/class-listings.php:139
 msgid "Additional Details"
 msgstr ""
 
-#: includes/class-listings.php:122
+#: includes/class-listings.php:140
 msgid "Agent Evolution"
 msgstr ""
 
-#: includes/class-listings.php:179
+#: includes/class-listings.php:197
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/class-listings.php:180
+#: includes/class-listings.php:198
 msgid "Listing Title"
 msgstr ""
 
-#: includes/class-listings.php:181
+#: includes/class-listings.php:199
 msgid "Details"
 msgstr ""
 
-#: includes/class-listings.php:182
+#: includes/class-listings.php:200
 msgid "Tags"
-msgstr ""
-
-#: includes/class-listings.php:183
-msgid "Categories"
 msgstr ""
 
 #: includes/class-taxonomies.php:42
@@ -308,6 +308,60 @@ msgstr ""
 
 #: includes/class-taxonomies.php:225
 msgid "Taxonomy successfully deleted."
+msgstr ""
+
+#: includes/class-taxonomies.php:238 includes/class-taxonomies.php:239
+msgid "Status"
+msgstr ""
+
+#: includes/class-taxonomies.php:259
+msgid "status"
+msgstr ""
+
+#: includes/class-taxonomies.php:271
+msgid "Property Types"
+msgstr ""
+
+#: includes/class-taxonomies.php:272
+msgid "Property Type"
+msgstr ""
+
+#: includes/class-taxonomies.php:292
+msgid "property-types"
+msgstr ""
+
+#: includes/class-taxonomies.php:304
+msgid "Locations"
+msgstr ""
+
+#: includes/class-taxonomies.php:305
+msgid "Location"
+msgstr ""
+
+#: includes/class-taxonomies.php:325
+msgid "locations"
+msgstr ""
+
+#: includes/class-taxonomies.php:337
+msgid "Features"
+msgstr ""
+
+#: includes/class-taxonomies.php:338
+msgid "Feature"
+msgstr ""
+
+#: includes/class-taxonomies.php:358
+msgid "features"
+msgstr ""
+
+#: includes/class-taxonomies.php:429
+msgid ""
+"Note: This will only allow you to reorder user-created taxonomies. Default "
+"taxonomies cannot be reordered (Status, Locations, Property Types, Features)."
+msgstr ""
+
+#: includes/class-taxonomies.php:463
+msgid "Drag and Drop to reorder"
 msgstr ""
 
 #: includes/helpers.php:18
@@ -509,39 +563,39 @@ msgid ""
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/single-listing.php:94
+#: includes/views/single-listing.php:95
 msgid "View more <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: includes/views/single-listing.php:128
+#: includes/views/single-listing.php:133
 msgid "Home Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:130
+#: includes/views/single-listing.php:135
 msgid "Kitchen Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:132
+#: includes/views/single-listing.php:137
 msgid "Living Room"
 msgstr ""
 
-#: includes/views/single-listing.php:134
+#: includes/views/single-listing.php:139
 msgid "Master Suite"
 msgstr ""
 
-#: includes/views/single-listing.php:332
+#: includes/views/single-listing.php:336
 msgid "Leave a comment"
 msgstr ""
 
-#: includes/views/single-listing.php:332
+#: includes/views/single-listing.php:336
 msgid "1 Comment"
 msgstr ""
 
-#: includes/views/single-listing.php:332
+#: includes/views/single-listing.php:336
 msgid "% Comments"
 msgstr ""
 
-#: includes/views/wp-listings-settings.php:27
+#: includes/views/wp-listings-settings.php:48
 msgid ""
 "<h2>Default State</h2><p>You can enter a default state that will "
 "automatically be output on template pages and widgets that show the state. "
@@ -550,7 +604,7 @@ msgid ""
 "entering a value into the state field.</p>"
 msgstr ""
 
-#: includes/views/wp-listings-settings.php:32
+#: includes/views/wp-listings-settings.php:53
 msgid ""
 "<h2>Default Number of Posts</h2><p>The default number of posts displayed on "
 "a listing archive page is 9. Here you can set a custom number. Enter <span "

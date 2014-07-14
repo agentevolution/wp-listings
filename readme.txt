@@ -130,6 +130,7 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 * CSS fix for thumbnail overlays with shortcode and archive pages
 * Fix for undefined variables in featured istings widget and single listing contact form
 * Make default registered terms (status, property-type) filterable
+* Make default taxonomy names and slugs translatable, improve translation
 
 = 1.1 =
 * Add `[listings]` shortcode to output listings on any post or page
