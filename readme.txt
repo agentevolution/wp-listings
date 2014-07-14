@@ -3,7 +3,7 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -57,6 +57,8 @@ Single listings include a contact form for visitors to inquire about a property,
 Allows for any number of custom single listing templates to be created and displayed on a per listing basis.
 
 Premium Single Listing Templates available at [agentevolution.com](http://www.agentevolution.com/product-category/listing-templates/).
+
+Feel free to contribute to this project on [Github](https://github.com/agentevolution/wp-listings).
 
 == Installation ==
 
@@ -123,6 +125,11 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 8. Listing archive template display
 
 == Changelog ==
+
+= 1.1.1 =
+* CSS fix for thumbnail overlays with shortcode and archive pages
+* Fix for undefined variables in featured istings widget and single listing contact form
+* Make default registered terms (status, property-type) filterable
 
 = 1.1 =
 * Add `[listings]` shortcode to output listings on any post or page

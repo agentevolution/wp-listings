@@ -74,7 +74,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				'paged'				=> get_query_var('paged') ? get_query_var('paged') : 1
 			);
 
-			if ( count($posts_term) == 2 ) {
+			if ( !empty( $instance['posts_term'] ) && count($posts_term) == 2 ) {
 				$query_args[$posts_term['0']] = $posts_term['1'];
 			}
 

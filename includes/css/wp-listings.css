@@ -72,7 +72,7 @@ div.content-area {
 	position: absolute;
 }
 
-.archive .listing-wrap span.listing-status.
+.archive .listing-wrap span.listing-status,
 .wp-listings-shortcode .listing-wrap span.listing-status {
 	width: 130px;
 	padding: 5px;

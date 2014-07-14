@@ -194,6 +194,9 @@ function single_listing_post_content() {
 
 			} else {
 
+				$nameError = '';
+				$emailError = '';
+
 				if(isset($_POST['submitted'])) {
 
 				$url = get_permalink();

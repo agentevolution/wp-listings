@@ -388,7 +388,7 @@ class WP_Listings_Taxonomies {
 	function create_terms() {
 
 		/** Default terms for status */
-		$status_terms = array('Active' => 'active', 'Pending' => 'pending', 'For Rent' => 'for-rent', 'Sold' => 'sold', 'Featured' => 'featured', 'New' => 'new', 'Reduced' => 'reduced');
+		$status_terms = apply_filters( 'wp_listings_default_status_terms', array('Active' => 'active', 'Pending' => 'pending', 'For Rent' => 'for-rent', 'Sold' => 'sold', 'Featured' => 'featured', 'New' => 'new', 'Reduced' => 'reduced') );
 		foreach ($status_terms as $term => $slug) {
 			if (term_exists($term, 'status')) {
 				continue;
@@ -397,7 +397,7 @@ class WP_Listings_Taxonomies {
 		}
 
 		/** Default terms for property-type */
-		$property_type_terms = array('Residential' => 'residential', 'Condo' => 'condo', 'Townhome' => 'townhome', 'Commercial' => 'commercial' );
+		$property_type_terms = apply_filters( 'wp_listings_default_property_type_terms', array('Residential' => 'residential', 'Condo' => 'condo', 'Townhome' => 'townhome', 'Commercial' => 'commercial' ) );
 		foreach ($property_type_terms as $term => $slug) {
 			if (term_exists($term, 'property-types')) {
 				continue;
