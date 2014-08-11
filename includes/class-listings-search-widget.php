@@ -49,8 +49,8 @@ class WP_Listings_Search_Widget extends WP_Widget {
 			echo '</select>';
 		}
 
-		echo '<div class="btn-search"><input type="submit" id="searchsubmit" class="searchsubmit" value="'. esc_attr( $instance['button_text'] ) .'" /></div>
-		<div class="clear"></div>
+		echo '<div class="btn-search"><button type="submit" class="searchsubmit"><i class="fa fa-search"></i><span class="button-text">'. esc_attr( $instance['button_text'] ) .'</span></button></div>';
+		echo '<div class="clear"></div>
 		</form>';
 
 		echo $after_widget;

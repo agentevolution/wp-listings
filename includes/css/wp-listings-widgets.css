@@ -161,6 +161,9 @@
 	width: 100%;
 }
 
+.widget.listings-search .btn-search i {
+	display: none;
+}
 
 /* =Listing overlays
 ------------------------------------------------------------ */
