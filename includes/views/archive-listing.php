@@ -65,7 +65,9 @@ function archive_listing_loop() {
 			}
 		
 		endwhile;
-		if (function_exists('genesis_init')) {
+		if (function_exists('equity')) {
+			equity_posts_nav();
+		} elseif (function_exists('genesis_init')) {
 			genesis_posts_nav();
 		} else {
 			wp_listings_paging_nav();
@@ -73,7 +75,18 @@ function archive_listing_loop() {
 
 }
 
-if (function_exists('genesis_init')) {
+if (function_exists('equity')) {
+
+	add_filter( 'equity_pre_get_option_site_layout', '__equity_return_full_width_content' );
+	remove_action( 'equity_entry_header', 'equity_post_info', 12 );
+	remove_action( 'equity_entry_footer', 'equity_post_meta' );
+
+	remove_action( 'equity_loop', 'equity_do_loop' );
+	add_action( 'equity_loop', 'archive_listing_loop' );
+
+	equity();
+
+} elseif (function_exists('genesis_init')) {
 
 	add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
 	remove_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );

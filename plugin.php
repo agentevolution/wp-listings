@@ -1,12 +1,12 @@
 <?php
 /*
 	Plugin Name: WP Listings
-	Plugin URI: http://agentevolution.com
+	Plugin URI: http://wordpress.org/plugins/wp-listings/
 	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.1.1
+	Version: 1.1.2
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -54,7 +54,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.1' );
+	define( 'WP_LISTINGS_VERSION', '1.1.2' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -94,7 +94,7 @@ function wp_listings_init() {
 		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css');
 
 		/** Register Font Awesome icons but don't enqueue them */
-		wp_register_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 		
 		/** Register Properticons but don't enqueue them */
 		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css');

@@ -81,7 +81,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 			$terms = get_terms( $tax );
 			if ( empty( $terms ) )
 				continue;
-	
+			
 			$checked = isset( $instance[ $tax ] ) && $instance[ $tax ];
 
 			printf( '<p><label><input id="%s" type="checkbox" name="%s" value="1" %s />%s</label></p>', $this->get_field_id( 'tax' ), $this->get_field_name( $tax ), checked( 1, $checked, 0 ), esc_html( $data['labels']['name'] ) );

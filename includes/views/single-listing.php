@@ -9,7 +9,7 @@
 add_action('wp_enqueue_scripts', 'enqueue_single_listing_scripts');
 function enqueue_single_listing_scripts() {
 	wp_enqueue_style( 'wp-listings-single' );
-	wp_enqueue_style('font-awesome');
+	wp_enqueue_style( 'font-awesome' );
 	wp_enqueue_script( 'jquery-validate', array('jquery'), true, true );
 	wp_enqueue_script( 'fitvids', array('jquery'), true, true );
 	wp_enqueue_script( 'wp-listings-single', array('jquery, jquery-ui-tabs', 'jquery-validate'), true, true );
@@ -298,7 +298,17 @@ function single_listing_post_content() {
 <?php
 }
 
-if (function_exists('genesis_init')) {
+if (function_exists('equity')) {
+
+	remove_action( 'equity_entry_header', 'equity_post_info', 12 );
+	remove_action( 'equity_entry_footer', 'equity_post_meta' );
+
+	remove_action( 'equity_entry_content', 'equity_do_post_content' );
+	add_action( 'equity_entry_content', 'single_listing_post_content' );
+
+	equity();
+
+} elseif (function_exists('genesis_init')) {
 
 	remove_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );
 	remove_action( 'genesis_entry_header', 'genesis_post_info', 12 ); // HTML5
@@ -308,10 +318,10 @@ if (function_exists('genesis_init')) {
 	remove_action( 'genesis_after_entry', 'genesis_do_author_box_single', 8 ); // HTML5
 	remove_action( 'genesis_after_post', 'genesis_do_author_box_single' ); // XHTML
 
-	remove_action( 'genesis_entry_content' , 'genesis_do_post_content' ); // HTML5
-	remove_action( 'genesis_post_content' , 'genesis_do_post_content' ); // XHTML
-	add_action( 'genesis_entry_content' , 'single_listing_post_content' ); // HTML5
-	add_action( 'genesis_post_content' , 'single_listing_post_content' ); // XHTML
+	remove_action( 'genesis_entry_content', 'genesis_do_post_content' ); // HTML5
+	remove_action( 'genesis_post_content', 'genesis_do_post_content' ); // XHTML
+	add_action( 'genesis_entry_content', 'single_listing_post_content' ); // HTML5
+	add_action( 'genesis_post_content', 'single_listing_post_content' ); // XHTML
 
 	genesis();
 
