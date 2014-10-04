@@ -289,7 +289,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite'  => array( __( 'property-type', 'wp_listings' ), 'with_front' => false ),
+				'rewrite'  => array( __( 'property-types', 'wp_listings' ), 'with_front' => false ),
 				'editable' => 0
 			)
 		);
@@ -322,7 +322,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( __( 'location', 'wp_listings' ), 'with_front' => false ),
+				'rewrite' => array( __( 'locations', 'wp_listings' ), 'with_front' => false ),
 				'editable' => 0
 			)
 		);
