@@ -119,7 +119,7 @@ class WP_Listings_Taxonomies {
 		$args = array(
 			'labels'		=> $labels,
 			'hierarchical'	=> true,
-			'rewrite'		=> array( 'slug' => $id ),
+			'rewrite'		=> array( 'slug' => $id, 'with_front' => false ),
 			'editable'		=> 1
 		);
 
@@ -191,7 +191,7 @@ class WP_Listings_Taxonomies {
 		$args = array(
 			'labels'		=> $labels,
 			'hierarchical'	=> true,
-			'rewrite'		=> array( 'slug' => $id ),
+			'rewrite'		=> array( 'slug' => $id, 'with_front' => false ),
 			'editable'		=> 1
 		);
 
@@ -256,7 +256,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( __( 'status', 'wp_listings' ) ),
+				'rewrite'  => array( __( 'status', 'wp_listings' ), 'with_front' => false ),
 				'editable' => 0
 			)
 		);
@@ -289,7 +289,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( __( 'property-types', 'wp_listings' ) ),
+				'rewrite'  => array( __( 'property-type', 'wp_listings' ), 'with_front' => false ),
 				'editable' => 0
 			)
 		);
@@ -322,7 +322,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( __( 'locations', 'wp_listings' ) ),
+				'rewrite' => array( __( 'location', 'wp_listings' ), 'with_front' => false ),
 				'editable' => 0
 			)
 		);
@@ -355,7 +355,7 @@ class WP_Listings_Taxonomies {
 					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => 0,
-				'rewrite' => array( __( 'features', 'wp_listings' ) ),
+				'rewrite' => array( __( 'features', 'wp_listings' ),  'with_front' => false ),
 				'editable' => 0
 			)
 		);
