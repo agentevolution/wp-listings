@@ -58,7 +58,7 @@ function wp_listings_template_include( $template ) {
  * Controls output of default state for the state custom field if there is one set
  */
 function wp_listings_get_state() {
-	
+
 	$options = get_option('plugin_wp_listings_settings');
 
 	global $post;
@@ -86,7 +86,7 @@ function wp_listings_get_city() {
 	global $post;
 
 	$city = get_post_meta($post->ID, '_listing_city', true);
-	
+
 	if ( '' == $city ) {
 		$city = 'Cityname';
 	}
@@ -193,3 +193,18 @@ function wp_listings_post_number( $query ) {
 
 }
 add_action( 'pre_get_posts', 'wp_listings_post_number' );
+
+
+/**
+ * Better Jetpack Related Posts Support for Listings
+ */
+function wp_listings_jetpack_relatedposts( $headline ) {
+  if ( is_singular( 'listing' ) ) {
+    $headline = sprintf(
+            '<h3 class="jp-relatedposts-headline"><em>%s</em></h3>',
+            esc_html( 'Similar Listings' )
+            );
+    return $headline;
+  }
+}
+add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_relatedposts' );
