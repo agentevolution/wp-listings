@@ -3,7 +3,7 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.7
 Tested up to: 4.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -125,6 +125,10 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 8. Listing archive template display
 
 == Changelog ==
+
+= 1.1.3 =
+* Set with_front on rewrite rules for taxonomies. h/t bhubbard
+* Fix undefined index for default state
 
 = 1.1.2 =
 * Set with_front parameter to false in rewrite rules

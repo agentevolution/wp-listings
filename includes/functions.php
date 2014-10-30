@@ -65,7 +65,9 @@ function wp_listings_get_state() {
 
 	$state = get_post_meta($post->ID, '_listing_state', true);
 
-	$default_state = $options['wp_listings_default_state'];
+	if (isset($options['wp_listings_default_state'])) {
+		$default_state = $options['wp_listings_default_state'];
+	}
 
 	if ( empty($default_state) ) {
 		$default_state = 'ST';
