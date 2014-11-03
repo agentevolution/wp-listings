@@ -307,9 +307,10 @@
 	box-shadow: 1px 1px 3px #eee inset;
 	color: #999;
 	font-size: 14px;
-	padding: 16px;
+	padding: 10px;
 	margin: 0;
 	width: 100%;
+	height: auto;
 }
 
 #listing-contact label.error,
