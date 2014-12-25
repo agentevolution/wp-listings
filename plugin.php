@@ -91,13 +91,13 @@ function wp_listings_init() {
 		$options = get_option('plugin_wp_listings_settings');
 
 		/** Register single styles but don't enqueue them **/
-		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css');
+		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css', '', null, 'all');
 
 		/** Register Font Awesome icons but don't enqueue them */
-		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
+		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', '', null, 'all');
 
 		/** Register Properticons but don't enqueue them */
-		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css');
+		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css', '', null, 'all');
 
 		if ( !isset($options['wp_listings_stylesheet_load']) ) {
 			$options['wp_listings_stylesheet_load'] = 0;
@@ -108,7 +108,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings.css') ) {
-        	wp_register_style('wp_listings', WP_LISTINGS_URL . 'includes/css/wp-listings.css');
+        	wp_register_style('wp_listings', WP_LISTINGS_URL . 'includes/css/wp-listings.css', '', null, 'all');
             wp_enqueue_style('wp_listings');
         }
     }
@@ -128,7 +128,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings-widgets.css') ) {
-        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . 'includes/css/wp-listings-widgets.css');
+        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . 'includes/css/wp-listings-widgets.css', '', null, 'all');
             wp_enqueue_style('wp_listings_widgets');
         }
     }
