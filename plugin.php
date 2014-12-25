@@ -77,8 +77,8 @@ function wp_listings_init() {
 	/** Registers and enqueues scripts for single listings */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
 	function add_wp_listings_scripts() {
-		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.min.js' ); // enqueued only on single listings
-		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' ); // enqueued only on single listings
+		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.min.js', array('jquery'), null, true ); // enqueued only on single listings
+		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js', array('jquery'), null, true ); // enqueued only on single listings
 		wp_register_script( 'fitvids', '//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.js', array('jquery'), true, true ); // enqueued only on single listings
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
