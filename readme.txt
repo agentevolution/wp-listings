@@ -104,6 +104,26 @@ Single Listing Template: Test Template
 Description: Give it a description to help identify
 */`
 
+= How can I remove the default property status terms or property type terms? =
+
+Its possible to remove the default property status terms by using a filter in your theme or custom plugins. Here is an example for the status terms:
+
+`/* Remove Default Status Terms from WP Listings */
+add_filter( 'wp_listings_default_status_terms', 'custom_default_status_terms' );
+function custom_default_status_terms() {
+  $status_terms = array();
+  return $status_terms;
+}`
+
+Here is an example for the property terms:
+
+`/* Remove Default Property Terms from WP Listings */
+add_filter( 'wp_listings_default_property_type_terms', 'custom_default_property_type_terms' );
+function custom_default_property_type_terms() {
+  $property_type_terms = array();
+  return $property_type_terms;
+}`
+
 For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-listings/)
 
 == Screenshots ==
