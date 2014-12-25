@@ -15,6 +15,13 @@ function enqueue_single_listing_scripts() {
 	wp_enqueue_script( 'wp-listings-single', array('jquery, jquery-ui-tabs', 'jquery-validate'), true, true );
 }
 
+/** Set DNS Prefetch to improve performance on single listings templates */
+add_filter('wp_head','wp_listings_dnsprefetch', 0);
+function wp_listings_dnsprefetch() {
+    echo "\n<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />\n"; // Loads FontAwesome
+    echo "<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />\n"; // Loads FitVids
+}
+
 function single_listing_post_content() {
 
 	global $post;
@@ -140,7 +147,7 @@ function single_listing_post_content() {
 						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_master_suite', true)); ?></p>
 					</div><!-- .additional-features -->
 				<?php
-				} ?>				
+				} ?>
 
 			</div><!-- #listing-details -->
 
@@ -187,7 +194,7 @@ function single_listing_post_content() {
 
 		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
 			<h4>Listing Inquiry</h4>
-			<?php 
+			<?php
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
@@ -336,7 +343,7 @@ get_header(); ?>
 				// Start the Loop.
 				while ( have_posts() ) : the_post(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-					
+
 					<header class="entry-header">
 						<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 						<div class="entry-meta">
@@ -352,12 +359,12 @@ get_header(); ?>
 						</div><!-- .entry-meta -->
 					</header><!-- .entry-header -->
 
-					
+
 				<?php single_listing_post_content(); ?>
 
 				</article><!-- #post-ID -->
 
-			<?php 
+			<?php
 				// Previous/next post navigation.
 				wp_listings_post_nav();
 
