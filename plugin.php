@@ -77,7 +77,7 @@ function wp_listings_init() {
 	/** Registers and enqueues scripts for single listings */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
 	function add_wp_listings_scripts() {
-		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.js' ); // enqueued only on single listings
+		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.min.js' ); // enqueued only on single listings
 		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' ); // enqueued only on single listings
 		wp_register_script( 'fitvids', '//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.js', array('jquery'), true, true ); // enqueued only on single listings
 		wp_enqueue_script( 'jquery' );
@@ -95,10 +95,10 @@ function wp_listings_init() {
 
 		/** Register Font Awesome icons but don't enqueue them */
 		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
-		
+
 		/** Register Properticons but don't enqueue them */
 		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css');
-		
+
 		if ( !isset($options['wp_listings_stylesheet_load']) ) {
 			$options['wp_listings_stylesheet_load'] = 0;
 		}
