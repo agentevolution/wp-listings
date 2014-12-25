@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.1.3
+	Version: 1.1.4
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -54,7 +54,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.1.2' );
+	define( 'WP_LISTINGS_VERSION', '1.1.4' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
