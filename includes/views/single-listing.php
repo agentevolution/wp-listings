@@ -28,10 +28,10 @@ function single_listing_post_content() {
 
 	?>
 
-	<div class="entry-content wplistings-single-listing">
+	<div itemscope itemtype="http://schema.org/SingleFamilyResidence" class="entry-content wplistings-single-listing">
 
 		<div class="listing-image-wrap">
-			<?php echo get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image') );
+			<?php echo '<div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">'. get_the_post_thumbnail( $post->ID, 'listings-full', array('class' => 'single-listing-image', 'itemprop'=>'contentUrl') ) . '</div>';
 			if ( '' != wp_listings_get_status() ) {
 				printf( '<span class="listing-status %s">%s</span>', strtolower(str_replace(' ', '-', wp_listings_get_status())), wp_listings_get_status() );
 			}
@@ -98,7 +98,7 @@ function single_listing_post_content() {
 				<?php } ?>
 			</ul>
 
-			<div id="listing-description">
+			<div id="listing-description" itemprop="description">
 				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
 			</div><!-- #listing-description -->
 
@@ -110,14 +110,16 @@ function single_listing_post_content() {
 
 					echo '<table class="listing-details">';
 
-					echo '<tbody class="left">';
-					foreach ( (array) $details_instance->property_details['col1'] as $label => $key ) {
-						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
-						if (! empty( $detail_value ) ) :
-							printf( $pattern, $key, esc_html( $label ), $detail_value );
-						endif;
-					}
-					echo '</tbody>';
+                    echo '<tbody class="left">';
+                    echo '<tr class="wp_listings_listing_price"><td class="label">Price:</td><td>'.get_post_meta( $post->ID, '_listing_price', true) .'</td></tr>';
+                    echo '<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
+                    echo '<tr class="wp_listings_listing_address"><td class="label">Address:</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>';
+                    echo '<tr class="wp_listings_listing_city"><td class="label">City:</td><td itemprop="addressLocality">'.get_post_meta( $post->ID, '_listing_city', true) .'</td></tr>';
+                    echo '<tr class="wp_listings_listing_state"><td class="label">State:</td><td itemprop="addressRegion">'.get_post_meta( $post->ID, '_listing_state', true) .'</td></tr>';
+                    echo '<tr class="wp_listings_listing_zip"><td class="label">Zip:</td><td itemprop="postalCode">'.get_post_meta( $post->ID, '_listing_zip', true) .'</td></tr>';
+                    echo '</div>';
+                    echo '<tr class="wp_listings_listing_mls"><td class="label">MLS:</td><td>'.get_post_meta( $post->ID, '_listing_mls', true) .'</td></tr>';
+                    echo '</tbody>';
 
 					echo '<tbody class="right">';
 					foreach ( (array) $details_instance->property_details['col2'] as $label => $key ) {
@@ -345,7 +347,8 @@ get_header(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 					<header class="entry-header">
-						<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+						<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
+						<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
 						<div class="entry-meta">
 							<?php
 								if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
