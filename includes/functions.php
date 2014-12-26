@@ -210,3 +210,11 @@ function wp_listings_jetpack_relatedposts( $headline ) {
   }
 }
 add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_relatedposts' );
+
+
+/**
+ * Add Listings to Jetpack Omnisearch
+ */
+if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
+new Jetpack_Omnisearch_Posts( 'listing' );
+}
