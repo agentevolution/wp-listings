@@ -348,7 +348,7 @@ get_header(); ?>
 
 					<header class="entry-header">
 						<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
-						<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
+						<small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
 						<div class="entry-meta">
 							<?php
 								if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :

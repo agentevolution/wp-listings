@@ -120,7 +120,7 @@ get_header(); ?>
 
 					echo $title; ?>
 
-                    <?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
+                    <small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
 				</header><!-- .archive-header -->
 
 			<?php
