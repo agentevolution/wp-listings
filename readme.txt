@@ -146,6 +146,12 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 == Changelog ==
 
+= 1.1.5 =
+* Added basic schema support to Single Listings Template
+* Added support for Jetpack publicize and markdown editors
+* Added Jetpack shortcode links in messages about shortcodes
+* Added DNS Prefetch Support for scripts used on Single Listings Template
+
 = 1.1.4 =
 * Minified CSS, Setup SCSS for better site performance
 * Updates to script calls to improve site performance
