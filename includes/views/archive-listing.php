@@ -19,7 +19,7 @@ function archive_listing_loop() {
 
 			$count++; // add 1 to counter on each loop
 			$first = ($count == 1) ? 'first' : ''; // if counter is 1 add class of first
-			
+
 
 			$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
 
@@ -63,7 +63,7 @@ function archive_listing_loop() {
 			if ( 3 == $count ) { // if counter is 3, reset to 0
 				$count = 0;
 			}
-		
+
 		endwhile;
 		if (function_exists('equity')) {
 			equity_posts_nav();
@@ -119,6 +119,8 @@ get_header(); ?>
 					}
 
 					echo $title; ?>
+
+                    <small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
 				</header><!-- .archive-header -->
 
 			<?php

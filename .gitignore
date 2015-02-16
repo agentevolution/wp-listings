@@ -1,4 +1,16 @@
 #################
+## Mac Apps
+#################
+
+# Espresso
+*.esproj
+
+# Codekit
+.codekit-cache
+.sass-cache
+config.codekit
+
+#################
 ## Eclipse
 #################
 

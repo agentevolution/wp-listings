@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.1.3
+	Version: 1.1.5
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -54,7 +54,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.1.2' );
+	define( 'WP_LISTINGS_VERSION', '1.1.5' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -77,9 +77,9 @@ function wp_listings_init() {
 	/** Registers and enqueues scripts for single listings */
 	add_action('wp_enqueue_scripts', 'add_wp_listings_scripts');
 	function add_wp_listings_scripts() {
-		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.js' ); // enqueued only on single listings
-		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js' ); // enqueued only on single listings
-		wp_register_script( 'fitvids', '//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.js', array('jquery'), true, true ); // enqueued only on single listings
+		wp_register_script( 'wp-listings-single', WP_LISTINGS_URL . 'includes/js/single-listing.min.js', array('jquery'), null, true ); // enqueued only on single listings
+		wp_register_script( 'jquery-validate', WP_LISTINGS_URL . 'includes/js/jquery.validate.min.js', array('jquery'), null, true ); // enqueued only on single listings
+		wp_register_script( 'fitvids', '//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js', array('jquery'), null, true ); // enqueued only on single listings
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-tabs', array('jquery') );
     }
@@ -91,14 +91,14 @@ function wp_listings_init() {
 		$options = get_option('plugin_wp_listings_settings');
 
 		/** Register single styles but don't enqueue them **/
-		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css');
+		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css', '', null, 'all');
 
 		/** Register Font Awesome icons but don't enqueue them */
-		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
-		
+		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', '', null, 'all');
+
 		/** Register Properticons but don't enqueue them */
-		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css');
-		
+		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css', '', null, 'all');
+
 		if ( !isset($options['wp_listings_stylesheet_load']) ) {
 			$options['wp_listings_stylesheet_load'] = 0;
 		}
@@ -108,7 +108,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings.css') ) {
-        	wp_register_style('wp_listings', WP_LISTINGS_URL . 'includes/css/wp-listings.css');
+        	wp_register_style('wp_listings', WP_LISTINGS_URL . 'includes/css/wp-listings.css', '', null, 'all');
             wp_enqueue_style('wp_listings');
         }
     }
@@ -128,7 +128,7 @@ function wp_listings_init() {
 		}
 
         if ( file_exists(dirname( __FILE__ ) . '/includes/css/wp-listings-widgets.css') ) {
-        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . 'includes/css/wp-listings-widgets.css');
+        	wp_register_style('wp_listings_widgets', WP_LISTINGS_URL . 'includes/css/wp-listings-widgets.css', '', null, 'all');
             wp_enqueue_style('wp_listings_widgets');
         }
     }

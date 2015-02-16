@@ -1,0 +1,445 @@
+/* =WP Listings - Defaults
+------------------------------------------------------------ */
+
+/* reset some theme defaults */
+.full-width.singular .site-content article.hentry.has-post-thumbnail,
+.full-width .site-content .has-post-thumbnail header.entry-header {
+	margin-top: 0;
+}
+.single-listing.full-width .hentry {
+	width: 672px;
+}
+.single-listing .site-content .entry-header,
+.single-listing .site-content .entry-meta,
+.single-listing .site-content .entry-content {
+	width: 100%;
+	max-width: 100%;
+}
+.site-content .has-post-thumbnail .entry-header {
+	padding-top: 0
+}
+section.content-area,
+div.content-area {
+	overflow: hidden;
+}
+/* end reset some theme defaults */
+
+.listing,
+.listing-wrap {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+/* =Archive Listing template & shortcode
+------------------------------------------------------------ */
+
+.archive .listing-wrap,
+.wp-listings-shortcode .listing-wrap {
+	width: 100%;
+	margin: 0;
+}
+
+.archive .listing-widget-thumb,
+.wp-listings-shortcode .listing-widget-thumb {
+	position: relative;
+	overflow: hidden;
+	line-height: 0px;
+}
+
+.archive .listing-widget-thumb a img,
+.wp-listings-shortcode .listing-widget-thumb a img {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: auto;
+	border: none;
+}
+
+.archive .listing-widget-thumb a,
+.wp-listings-shortcode .listing-widget-thumb a {
+	padding: 0;
+	margin: 0;
+	border: none;
+	text-decoration: none;
+}
+
+.archive .listing-wrap span.listing-status,
+.archive .listing-wrap .listing-thumb-meta,
+.wp-listings-shortcode .listing-wrap span.listing-status,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta {
+	position: absolute;
+}
+
+.archive .listing-wrap span.listing-status,
+.wp-listings-shortcode .listing-wrap span.listing-status {
+	width: 130px;
+	padding: 5px;
+	top: 20px;
+	right: -30px;
+	font-size: 12px;
+	line-height: 18px;
+	-moz-transform: scale(1) rotate(45deg) translate(0px);
+	-webkit-transform: scale(1) rotate(45deg) translate(0px);
+	-o-transform: scale(1) rotate(45deg) translate(0px);
+	transform: scale(1) rotate(45deg) translate(0px);
+}
+
+.archive .listing-wrap .listing-thumb-meta,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta {
+	left: 0;
+	bottom: 0;
+}
+
+.archive .listing-wrap .listing-thumb-meta span,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta span {
+	position: relative;
+	padding: 5px 10px;
+	color: #111;
+	background: #fff;
+	background: rgba(255,255,255,0.80);
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: normal;
+	display: table;
+	top: inherit;
+	left: inherit;
+	border-radius: 0;
+}
+
+.archive .listing-wrap .listing-thumb-meta span.listing-price,
+.wp-listings-shortcode .listing-wrap .listing-thumb-meta span.listing-price {
+	padding: 8px 10px;
+	color: #fff;
+	font-size: 18px;
+	line-height: 18px;
+	font-weight: 700;
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+}
+
+.archive .listing-wrap span.listing-open-house,
+.wp-listings-shortcode .listing-wrap span.listing-open-house {
+	display: block;
+	padding: 5px 10px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	background: #be1d2c;
+}
+
+.archive .listing-widget-details,
+.wp-listings-shortcode .listing-widget-details {
+	color: #999;
+	text-align: left;
+	line-height: 18px;
+	background: #fff;
+	border: 1px solid #efefef;
+	border-top: none;
+	border-radius: 0 0 5px 5px;
+}
+
+.archive .listing-widget-details h3.listing-title,
+.wp-listings-shortcode .listing-widget-details h3.listing-title {
+	padding: 15px 15px 10px;
+	margin: 0;
+	line-height: 1;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+.archive .listing-widget-details h3.listing-title a,
+.wp-listings-shortcode .listing-widget-details h3.listing-title a {
+	padding: 0;
+	margin: 0;
+	color: #666;
+	background: none;
+	font-size: 18px;
+	text-decoration: none;
+	border: none;
+}
+
+.archive .listing-widget-details p.listing-address,
+.wp-listings-shortcode .listing-widget-details p.listing-address {
+	padding: 0 0 15px;
+	margin: 0;
+	display: block;
+	text-align: left;
+}
+
+.archive .listing-widget-details span.listing-address,
+.archive .listing-widget-details span.listing-city-state-zip,
+.wp-listings-shortcode .listing-widget-details span.listing-address,
+.wp-listings-shortcode .listing-widget-details span.listing-city-state-zip {
+	padding: 0 15px;
+	font-size: 14px;
+	line-height: 18px;
+	text-align: left;
+	display: inline;
+}
+
+.archive .listing-widget-details .listing-beds-baths-sqft,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft {
+	width: 100%;
+	padding: 15px 0;
+	margin: 0;
+	border-top: 1px solid #efefef;
+}
+
+.archive .listing-widget-details .listing-beds-baths-sqft li,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft li {
+	display: inline-block;
+	width: 32%;
+	color: #666;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.archive .listing-widget-details .listing-beds-baths-sqft li span,
+.wp-listings-shortcode .listing-widget-details .listing-beds-baths-sqft li span {
+	display: block;
+	color: #999;
+	margin: 5px 0 0 0;
+}
+
+.archive .listing-wrap .more-link {
+	display: none;
+}
+
+.wp-listings-shortcode {
+	overflow: hidden;
+}
+
+.wp-listings-shortcode .listing-wrap {
+	margin-bottom: 25px;
+}
+
+
+/* =Listing overlays
+------------------------------------------------------------ */
+
+.archive .listing-wrap span.listing-status,
+.wp-listings-shortcode .listing-wrap span.listing-status {
+	color: #fff;
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+	font-weight: 700;
+	text-align: center;
+	text-transform: uppercase;
+	box-shadow: 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.archive .listing-wrap span.listing-status.active,
+.wp-listings-shortcode .listing-wrap span.listing-status.active {
+	background: #53c331;
+	background: rgba(83, 195, 49, 0.80);
+}
+.archive .listing-wrap span.listing-status.sold,
+.wp-listings-shortcode .listing-wrap span.listing-status.sold {
+	background: #be1d2c;
+	background: rgba(190, 29, 44, 0.80);
+}
+.archive .listing-wrap span.listing-status.pending,
+.wp-listings-shortcode .listing-wrap span.listing-status.pending {
+	background: #db8323;
+	background: rgba(219, 131, 35, 0.80);
+}
+.archive .listing-wrap span.listing-status.new,
+.archive .listing-wrap span.listing-status.reduced,
+.archive .listing-wrap span.listing-status.for-rent,
+.wp-listings-shortcode .listing-wrap span.listing-status.new,
+.wp-listings-shortcode .listing-wrap span.listing-status.reduced,
+.wp-listings-shortcode .listing-wrap span.listing-status.for-rent {
+	background: #24a4ea;
+	background: rgba(36, 164, 234, 0.80);
+}
+
+
+/* =Column classes (one-third - for archive page)
+------------------------------------------------------------ */
+
+.archive .listing.one-third {
+	float: left;
+	margin-left: 2.564102564102564%;
+	margin-bottom: 15px;
+	padding: 0;
+	width: 31.623931623931625%;
+}
+
+.archive .listing.first {
+	clear: both;
+	margin-left: 0;
+}
+
+
+/* =Column classes (for shortcode only)
+------------------------------------------------------------ */
+
+.wp-listings-shortcode .listing-wrap.one-half,
+.wp-listings-shortcode .listing-wrap.one-third,
+.wp-listings-shortcode .listing-wrap.one-fourth,
+.wp-listings-shortcode .listing-wrap.one-fifth,
+.wp-listings-shortcode .listing-wrap.one-sixth {
+	float: left;
+	margin: 0 0 15px 2.564102564102564%;
+	padding: 0;
+}
+
+.wp-listings-shortcode .listing-wrap.one-half {
+	width: 48.717948717948715%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-third {
+	width: 31.623931623931625%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-fourth {
+	width: 23.076923076923077%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-fifth {
+	width: 17.948717948717948%;
+}
+
+.wp-listings-shortcode .listing-wrap.one-sixth {
+	width: 14.52991452991453%;
+}
+
+.wp-listings-shortcode .listing-wrap.first {
+	clear: both;
+	margin-left: 0;
+}
+
+
+/* =Listing Navigation
+------------------------------------------------------------ */
+
+.nav-links {
+	-webkit-hyphens: auto;
+	-moz-hyphens:    auto;
+	-ms-hyphens:     auto;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	hyphens:         auto;
+	word-wrap: break-word;
+}
+
+.listing-navigation {
+	margin: 24px auto 48px;
+	max-width: 474px;
+	padding: 0 10px;
+}
+
+.listing-navigation a {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 11px 0 12px;
+	width: 100%;
+}
+
+.listing-navigation .meta-nav {
+	color: #767676;
+	display: block;
+	font-size: 12px;
+	font-weight: 900;
+	line-height: 2;
+	text-transform: uppercase;
+}
+
+.listing-navigation a {
+	color: #2b2b2b;
+	display: block;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.7142857142;
+	text-transform: none;
+}
+
+.listing-navigation a:hover {
+	color: #41a62a;
+}
+
+/* Paging Navigation */
+
+.pagination,
+.archive-listing-navigation {
+	clear: both;
+}
+
+.archive-listing-navigation {
+	border-top: 5px solid #000;
+	margin: 48px 0;
+}
+
+.archive-listing-navigation .loop-pagination {
+	margin-top: -5px;
+	text-align: center;
+}
+
+.archive-listing-navigation .page-numbers {
+	border-top: 5px solid transparent;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 900;
+	margin-right: 1px;
+	padding: 7px 16px;
+	text-transform: uppercase;
+}
+
+.archive-listing-navigation a {
+	color: #2b2b2b;
+}
+
+.archive-listing-navigation .page-numbers.current {
+	border-top: 5px solid #24890d;
+}
+
+.archive-listing-navigation a:hover {
+	border-top: 5px solid #41a62a;
+	color: #2b2b2b;
+}
+
+
+/* =Responsive
+------------------------------------------------------------ */
+
+@media only screen and (max-width: 1139px) {
+	.archive .listing-widget-thumb a img,
+	.wp-listings-shortcode .listing-widget-thumb a img {
+		max-width: 100%;
+	}
+}
+
+@media only screen and (max-width: 979px) {
+	
+}
+
+@media (max-width: 767px) {
+	.archive .listing.one-third {
+		float: none;
+		width: 100%;
+		padding: 0;
+		margin: 0 0 20px;
+	}
+	.wp-listings-shortcode .listing-wrap.one-half,
+	.wp-listings-shortcode .listing-wrap.one-third,
+	.wp-listings-shortcode .listing-wrap.two-thirds,
+	.wp-listings-shortcode .listing-wrap.one-fourth,
+	.wp-listings-shortcode .listing-wrap.three-fourths,
+	.wp-listings-shortcode .listing-wrap.one-fifth,
+	.wp-listings-shortcode .listing-wrap.two-fifths,
+	.wp-listings-shortcode .listing-wrap.three-fifths,
+	.wp-listings-shortcode .listing-wrap.four-fifths,
+	.wp-listings-shortcode .listing-wrap.one-sixth,
+	.wp-listings-shortcode .listing-wrap.five-sixths {
+		float: none;
+		width: 100%;
+		padding: 0;
+		margin: 0 0 25px;
+	}
+}
+
+@media (max-width: 480px) {
+
+}
