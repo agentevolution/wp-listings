@@ -237,17 +237,21 @@ function single_listing_post_content() {
 				}
 
 
-				if(!isset($hasError)) {
-					$emailTo = get_the_author_meta( 'user_email', $post->post_author );
-					if (!isset($emailTo) || ($emailTo == '') ){
-						$emailTo = get_option('admin_email');
-					}
-					$subject = 'Listing Inquiry from '.$name;
-					$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
-					$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
+				if(isset($_POST['antispam']) && $_POST['antispam'] == '') {
+					if(!isset($hasError)) {
+						$emailTo = get_the_author_meta( 'user_email', $post->post_author );
+						if (!isset($emailTo) || ($emailTo == '') ){
+							$emailTo = get_option('admin_email');
+						}
+						$subject = 'Listing Inquiry from '.$name;
+						$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
+						$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
 
-					wp_mail($emailTo, $subject, $body, $headers);
-					$emailSent = true;
+						wp_mail($emailTo, $subject, $body, $headers);
+						$emailSent = true;
+					}
+				} else {
+					$emailSent = true; // make spammer think message went through
 				}
 
 			} ?>
@@ -288,6 +292,10 @@ function single_listing_post_content() {
 
 						<li class="contactComments"><label for="commentsText">Message:</label>
 							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+						</li>
+
+						<li>
+							<input style="display: none;" type="text" name="antispam" />
 						</li>
 
 						<li>

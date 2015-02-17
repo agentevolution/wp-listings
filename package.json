@@ -1,0 +1,11 @@
+{
+  "name": "wp-listings",
+  "version": "0.0.1",
+  "devDependencies": {
+    "node-sass": "~0.7.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-sass": "^0.18.0",
+    "grunt-wp-i18n": "^0.5.0"
+  }
+}

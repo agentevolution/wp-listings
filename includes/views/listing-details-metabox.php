@@ -30,9 +30,6 @@ echo '</div><br style="clear: both;" /><br /><br />';
 
 echo '<div style="width: 100%; float: left;">';
 
-	// Hide MCE Toolbar on this editor because it's not needed
-	echo '<style>#wp-_listing_gallery-wrap .mce-toolbar-grp {display: none;}</style>';
-
 	_e('<p><label>Photo Gallery (use Add Media button to insert Gallery):<br />', 'wp_listings');
 
 	$wplistings_gallery_content = get_post_meta( $post->ID, '_listing_gallery', true);
