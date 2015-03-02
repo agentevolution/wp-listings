@@ -243,10 +243,25 @@ function wp_listings_rest_api_allowed_public_metadata( $allowed_meta_keys )
     $allowed_meta_keys[] = '_listing_address';
     $allowed_meta_keys[] = '_listing_city';
     $allowed_meta_keys[] = '_listing_state';
+    $allowed_meta_keys[] = '_listing_zip';
     $allowed_meta_keys[] = '_listing_mls';
+    $allowed_meta_keys[] = '_listing_open_house';
+    $allowed_meta_keys[] = '_listing_year_built';
+    $allowed_meta_keys[] = '_listing_floors';
+    $allowed_meta_keys[] = '_listing_sqft';
+    $allowed_meta_keys[] = '_listing_lot_sqft';
     $allowed_meta_keys[] = '_listing_bedrooms';
     $allowed_meta_keys[] = '_listing_bathrooms';
+    $allowed_meta_keys[] = '_listing_pool';
+    $allowed_meta_keys[] = '_listing_text';
+    $allowed_meta_keys[] = '_listing_gallery';
     $allowed_meta_keys[] = '_listing_video';
+    $allowed_meta_keys[] = '_listing_map';
+    $allowed_meta_keys[] = '_listing_contact_form';
+    $allowed_meta_keys[] = '_listing_home_sum';
+    $allowed_meta_keys[] = '_listing_ktichen_sum';
+    $allowed_meta_keys[] = '_listing_living_room';
+    $allowed_meta_keys[] = '_listing_master_suite';
     $allowed_meta_keys[] = '_listing_school_neighborhood';
 
     return $allowed_meta_keys;
