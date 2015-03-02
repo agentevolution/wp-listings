@@ -228,3 +228,28 @@ function wp_listings_allow_post_types($allowed_post_types) {
 	return $allowed_post_types;
 }
 add_filter( 'rest_api_allowed_post_types', 'wp_listings_allow_post_types');
+
+
+/**
+ * Add Jetpack JSON Rest API Support (Listing MetaData)
+ */
+function wp_listings_rest_api_allowed_public_metadata( $allowed_meta_keys )
+{
+    // only run for REST API requests
+    if ( ! defined( 'REST_API_REQUEST' ) || ! REST_API_REQUEST )
+        return $allowed_meta_keys;
+
+    $allowed_meta_keys[] = '_listing_price';
+    $allowed_meta_keys[] = '_listing_address';
+    $allowed_meta_keys[] = '_listing_city';
+    $allowed_meta_keys[] = '_listing_state';
+    $allowed_meta_keys[] = '_listing_mls';
+    $allowed_meta_keys[] = '_listing_bedrooms';
+    $allowed_meta_keys[] = '_listing_bathrooms';
+    $allowed_meta_keys[] = '_listing_video';
+    $allowed_meta_keys[] = '_listing_school_neighborhood';
+
+    return $allowed_meta_keys;
+}
+
+add_filter( 'rest_api_allowed_public_metadata', 'wp_listings_rest_api_allowed_public_metadata' );
