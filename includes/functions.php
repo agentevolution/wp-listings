@@ -218,3 +218,13 @@ add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_related
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 new Jetpack_Omnisearch_Posts( 'listing' );
 }
+
+
+/**
+ * Add Jetpack JSON Rest API Support
+ */
+function wp_listings_allow_post_types($allowed_post_types) {
+	$allowed_post_types[] = 'listing';
+	return $allowed_post_types;
+}
+add_filter( 'rest_api_allowed_post_types', 'wp_listings_allow_post_types');
