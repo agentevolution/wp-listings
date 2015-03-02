@@ -146,6 +146,9 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 == Changelog ==
 
+= 1.2.2 =
+* Added support for listings to Jetpack JSON Rest API
+
 = 1.2.1 =
 * Fixed i18n in shortcode output h/t newlocalmedia
 
