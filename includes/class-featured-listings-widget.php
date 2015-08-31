@@ -7,10 +7,10 @@
  */
 class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
-	function WP_Listings_Featured_Listings_Widget() {
+	function __construct() {
 		$widget_ops  = array( 'classname' => 'wplistings-featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp_listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350 );
-		$this->WP_Widget( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
 	}
 
 	/**

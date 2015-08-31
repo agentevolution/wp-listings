@@ -7,10 +7,10 @@
  */
 class WP_Listings_Search_Widget extends WP_Widget {
 
-	function WP_Listings_Search_Widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp_listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
-		$this->WP_Widget( 'listings-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'listings-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -36,7 +36,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 			if ( ! isset( $instance[$tax] ) || ! $instance[$tax] )
 				continue;
 
-			$terms = get_terms( $tax, array( 'orderby' => 'count', 'order' => 'DESC', 'number' => 100, 'hierarchical' => false ) );
+			$terms = get_terms( $tax, array( 'orderby' => 'title', 'number' => 100, 'hierarchical' => false ) );
 			if ( empty( $terms ) )
 				continue;
 
