@@ -148,6 +148,7 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 = 1.2.2 =
 * Update widgets to use PHP5 object constructors
+* Added support for listings to Jetpack JSON Rest API
 
 = 1.2.1 =
 * Fixed i18n in shortcode output h/t newlocalmedia
