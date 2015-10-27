@@ -219,6 +219,7 @@ function single_listing_post_content() {
 			echo do_shortcode(get_post_meta( $post->ID, '_listing_map', true) );
 			echo '</div><!-- .listing-map -->';
 			}
+			// TODO: Add auto-map based on lat/long
 			// elseif(get_post_meta( $post->ID, '_listing_longitude', true) && get_post_meta( $post->ID, '_listing_latitude', true)) {
 
 			// }
