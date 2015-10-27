@@ -3,7 +3,7 @@ Contributors: agentevolution, davebonds, chadajohnson, idxbroker
 Tags: real estate, listings, property, properties, listing search, idx, agentpress
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -145,6 +145,9 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 8. Listing archive template display
 
 == Changelog ==
+
+= 1.2.3 =
+* Update single listing template to display IDX imported data
 
 = 1.2.2 =
 * Update widgets to use PHP5 object constructors

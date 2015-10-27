@@ -99,7 +99,12 @@ function single_listing_post_content() {
 			</ul>
 
 			<div id="listing-description" itemprop="description">
-				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) ); ?>
+				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) );
+
+				echo (get_post_meta($post->ID, '_listing_disclaimer', true)) ? '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>' : '';
+				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
+
+				?>
 			</div><!-- #listing-description -->
 
 			<div id="listing-details">
@@ -131,6 +136,37 @@ function single_listing_post_content() {
 					echo '</tbody>';
 
 					echo '</table>';
+
+					echo '<table class="listing-details extended">';
+					echo '<tbody class="left">';
+					echo (get_post_meta($post->ID, '_listing_proptype', true)) ? '<tr class="wp_listings_proptype"><td class="label">Property Type:</td><td>' . get_post_meta($post->ID, '_listing_proptype', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_condo', true)) ? '<tr class="wp_listings_condo"><td class="label">Condo:</td><td>' . get_post_meta($post->ID, '_listing_condo', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_financial', true)) ? '<tr class="wp_listings_financial"><td class="label">Financial:</td><td>' . get_post_meta($post->ID, '_listing_financial', true) . '</td></tr>' : '';					
+					echo (get_post_meta($post->ID, '_listing_condition', true)) ? '<tr class="wp_listings_condition"><td class="label">Condition:</td><td>' . get_post_meta($post->ID, '_listing_condition', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_construction', true)) ? '<tr class="wp_listings_construction"><td class="label">Construction:</td><td>' . get_post_meta($post->ID, '_listing_construction', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_exterior', true)) ? '<tr class="wp_listings_exterior"><td class="label">Exterior:</td><td>' . get_post_meta($post->ID, '_listing_exterior', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_fencing', true)) ? '<tr class="wp_listings_fencing"><td class="label">Fencing:</td><td>' . get_post_meta($post->ID, '_listing_fencing', true) . '</td></tr>' : '';					
+					echo (get_post_meta($post->ID, '_listing_interior', true)) ? '<tr class="wp_listings_interior"><td class="label">Interior:</td><td>' . get_post_meta($post->ID, '_listing_interior', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_flooring', true)) ? '<tr class="wp_listings_flooring"><td class="label">Flooring:</td><td>' . get_post_meta($post->ID, '_listing_flooring', true) . '</td></tr>' : '';					
+					echo (get_post_meta($post->ID, '_listing_heatcool', true)) ? '<tr class="wp_listings_heatcool"><td class="label">Heat/Cool:</td><td>' . get_post_meta($post->ID, '_listing_heatcool', true) . '</td></tr>' : '';
+					echo '</tbody>';
+					echo '<tbody class="right">';
+					echo (get_post_meta($post->ID, '_listing_lotsize', true)) ? '<tr class="wp_listings_lotsize"><td class="label">Lot size:</td><td>' . get_post_meta($post->ID, '_listing_lotsize', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_location', true)) ? '<tr class="wp_listings_location"><td class="label">Location:</td><td>' . get_post_meta($post->ID, '_listing_location', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_scenery', true)) ? '<tr class="wp_listings_scenery"><td class="label">Scenery:</td><td>' . get_post_meta($post->ID, '_listing_scenery', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_community', true)) ? '<tr class="wp_listings_community"><td class="label">Community:</td><td>' . get_post_meta($post->ID, '_listing_community', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_recreation', true)) ? '<tr class="wp_listings_recreation"><td class="label">Recreation:</td><td>' . get_post_meta($post->ID, '_listing_recreation', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_general', true)) ? '<tr class="wp_listings_general"><td class="label">General:</td><td>' . get_post_meta($post->ID, '_listing_general', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_inclusions', true)) ? '<tr class="wp_listings_inclusions"><td class="label">Inclusions:</td><td>' . get_post_meta($post->ID, '_listing_inclusions', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_parking', true)) ? '<tr class="wp_listings_parking"><td class="label">Parking:</td><td>' . get_post_meta($post->ID, '_listing_parking', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_rooms', true)) ? '<tr class="wp_listings_rooms"><td class="label">Rooms:</td><td>' . get_post_meta($post->ID, '_listing_rooms', true) . '</td></tr>' : '';
+					echo (get_post_meta($post->ID, '_listing_laundry', true)) ? '<tr class="wp_listings_laundry"><td class="label">Laundry:</td><td>' . get_post_meta($post->ID, '_listing_laundry', true) . '</td></tr>' : '';
+
+					echo (get_post_meta($post->ID, '_listing_utilities', true)) ? '<tr class="wp_listings_utilities"><td class="label">Utilities:</td><td>' . get_post_meta($post->ID, '_listing_utilities', true) . '</td></tr>' : '';
+
+					echo '</tbody>';
+					echo '</table>';
+
 
 				echo '<h5>Tagged Features</h5><ul class="tagged-features">';
 				echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
@@ -183,6 +219,9 @@ function single_listing_post_content() {
 			echo do_shortcode(get_post_meta( $post->ID, '_listing_map', true) );
 			echo '</div><!-- .listing-map -->';
 			}
+			// elseif(get_post_meta( $post->ID, '_listing_longitude', true) && get_post_meta( $post->ID, '_listing_latitude', true)) {
+
+			// }
 		?>
 
 		<?php
