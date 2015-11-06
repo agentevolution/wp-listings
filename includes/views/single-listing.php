@@ -215,14 +215,47 @@ function single_listing_post_content() {
 
 		<?php
 			if (get_post_meta( $post->ID, '_listing_map', true) != '') {
-			echo '<div id="listing-map"><h3>Location Map</h3>';
-			echo do_shortcode(get_post_meta( $post->ID, '_listing_map', true) );
-			echo '</div><!-- .listing-map -->';
+				echo '<div id="listing-map"><h3>Location Map</h3>';
+				echo do_shortcode(get_post_meta( $post->ID, '_listing_map', true) );
+				echo '</div><!-- .listing-map -->';
 			}
-			// TODO: Add auto-map based on lat/long
-			// elseif(get_post_meta( $post->ID, '_listing_longitude', true) && get_post_meta( $post->ID, '_listing_latitude', true)) {
+			elseif(get_post_meta( $post->ID, '_listing_latitude', true) && get_post_meta( $post->ID, '_listing_longitude', true) && get_post_meta( $post->ID, '_listing_automap', true) == 'y') {
 
-			// }
+				$map_info_content = sprintf('<p style="font-size: 14px; margin-bottom: 0;">%s<br />%s %s, %s</p>', get_post_meta( $post->ID, '_listing_address', true), get_post_meta( $post->ID, '_listing_city', true), get_post_meta( $post->ID, '_listing_state', true), get_post_meta( $post->ID, '_listing_zip', true));
+
+				echo '<script src="https://maps.googleapis.com/maps/api/js"></script>
+				<script>
+					function initialize() {
+						var mapCanvas = document.getElementById(\'map-canvas\');
+						var myLatLng = new google.maps.LatLng(' . get_post_meta( $post->ID, '_listing_latitude', true) . ', ' . get_post_meta( $post->ID, '_listing_longitude', true) . ')
+						var mapOptions = {
+							center: myLatLng,
+							zoom: 14,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+					    }
+
+					    var marker = new google.maps.Marker({
+						    position: myLatLng,
+						    icon: \'//s3.amazonaws.com/ae-plugins/wp-listings/images/active.png\'
+						});
+						
+						var infoContent = \' ' . $map_info_content . ' \';
+
+						var infowindow = new google.maps.InfoWindow({
+							content: infoContent
+						});
+
+					    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+					    marker.setMap(map);
+
+					    infowindow.open(map, marker);
+					}
+					google.maps.event.addDomListener(window, \'load\', initialize);
+				</script>
+				';
+				echo '<div id="listing-map"><h3>Location Map</h3><div id="map-canvas" style="width: 100%; height: 350px;"></div></div><!-- .listing-map -->';
+			}
 		?>
 
 		<?php

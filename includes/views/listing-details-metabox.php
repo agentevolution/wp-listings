@@ -13,20 +13,20 @@ echo '<div style="width: 45%; float: left">';
 
 echo '</div>';
 
-echo '<div style="width: 45%; float: left;">';
+echo '<div style="width: 45%; float: right;">';
 
 	foreach ( (array) $this->property_details['col2'] as $label => $key ) {
 		printf( $pattern, esc_html( $label ), $key, esc_attr( get_post_meta( $post->ID, $key, true ) ) );
 	}
 
-echo '</div><br style="clear: both;" /><br /><br />';
+echo '</div><br style="clear: both;" />';
 
 echo '<div style="width: 90%; float: left;">';
 
 	_e('<p><label>Custom Listing Text (custom text to display as overlay on featured listing widget)<br />', 'wp_listings');
 	printf( __( '<input type="text" name="wp_listings[_listing_text]" value="%s" /></label></p>', 'wp_listings' ), htmlentities( get_post_meta( $post->ID, '_listing_text', true) ) );
 
-echo '</div><br style="clear: both;" /><br /><br />';
+echo '</div><br style="clear: both;" /><br /><br /><hr>';
 
 echo '<div style="width: 100%; float: left;">';
 
@@ -58,7 +58,22 @@ echo '</div><br style="clear: both;" />';
 
 echo '<div style="width: 90%; float: left;">';
 
-	_e('<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a href="http://jetpack.me/support/shortcode-embeds/" target="_blank" rel="nofollow">Jetpack Shortcodes</a>, <a href="https://wordpress.org/plugins/simple-google-maps-short-code/" target="_blank" rel="nofollow">Simple Google Maps Short Code</a> or <a href="https://wordpress.org/plugins/mappress-google-maps-for-wordpress/" target="_blank" rel="nofollow">MapPress</a>):<br /><em>Recommend size: 660x300 (If possible, use 100% width, or your themes content width)</em><br />', 'wp_listings');
+echo '<div style="width: 45%; float: left">';
+	if(get_post_meta($post->ID, '_listing_automap', 1) == FALSE) {
+    	update_post_meta($post->ID, '_listing_automap', 'y');
+    }
+	printf( __('<p><label>Automatically insert map based on latitude/longitude? <br /> <input type="radio" name="wp_listings[_listing_automap]" value="y" %s>Yes</input> <input type="radio" name="wp_listings[_listing_automap]" value="n" %s>No</input></label></p>'),
+		checked( get_post_meta( $post->ID, '_listing_automap', true ), 'y', 0 ),
+		checked( get_post_meta( $post->ID, '_listing_automap', true ), 'n', 0 ) );
+echo '</div>';
+echo '<div style="clear: both; width: 45%; float: left;">';
+	printf( __('<p><label>Latitude: <br /><input type="text" name="wp_listings[_listing_latitude]" value="%s" /></label></p>', 'wp_listings'), get_post_meta( $post->ID, '_listing_latitude', true) );
+echo '</div>';
+echo '<div style="width: 45%; float: right;">';
+	printf( __('<p><label>Longitude: <br /><input type="text" name="wp_listings[_listing_longitude]" value="%s" /></label></p>', 'wp_listings'), get_post_meta( $post->ID, '_listing_longitude', true) );
+echo '</div><br style="clear: both;" />';
+
+	_e('<p><label>Or enter Map Embed Code or shortcode from Map plugin (such as <a href="http://jetpack.me/support/shortcode-embeds/" target="_blank" rel="nofollow">Jetpack Shortcodes</a>, <a href="https://wordpress.org/plugins/simple-google-maps-short-code/" target="_blank" rel="nofollow">Simple Google Maps Short Code</a> or <a href="https://wordpress.org/plugins/mappress-google-maps-for-wordpress/" target="_blank" rel="nofollow">MapPress</a>):<br /><em>Recommend size: 660x300 (If possible, use 100% width, or your themes content width)</em><br />', 'wp_listings');
 	printf( __( '<textarea name="wp_listings[_listing_map]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_map', true) ) );
 
 echo '</div>';
