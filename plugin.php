@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.2.3
+	Version: 1.3
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -54,7 +54,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.2' );
+	define( 'WP_LISTINGS_VERSION', '1.2.3' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -63,6 +63,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/helpers.php' );
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 	require_once( dirname( __FILE__ ) . '/includes/shortcodes.php' );
+	require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );
@@ -132,6 +133,12 @@ function wp_listings_init() {
             wp_enqueue_style('wp_listings_widgets');
         }
     }
+
+    /** Add admin styles */
+    function wp_listings_admin_style() {
+        wp_enqueue_style( 'wp_listings_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/wp-listings-admin.css' );
+	}
+	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_style' );
 
 	/** Instantiate */
 	$_wp_listings = new WP_Listings;

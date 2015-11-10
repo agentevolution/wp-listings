@@ -28,6 +28,9 @@ class WP_Listings_Taxonomies {
 		add_action( 'init', array( &$this, 'register_taxonomies' ), 15 );
 		add_action( 'init', array( $this, 'create_terms' ), 16 );
 
+		add_action('restrict_manage_posts', array($this, 'wp_listings_filter_post_type_by_taxonomy') );
+		add_filter('parse_query', array($this, 'wp_listings_convert_id_to_term_in_query') );
+
 	}
 
 	function register_settings() {
@@ -257,7 +260,10 @@ class WP_Listings_Taxonomies {
 				),
 				'hierarchical' => true,
 				'rewrite'  => array( __( 'status', 'wp_listings' ), 'with_front' => false ),
-				'editable' => 0
+				'editable' => 0,
+				'show_in_rest'  => true,
+				'rest_base'     => 'status',
+				'rest_controller_class' => 'WP_REST_Terms_Controller'
 			)
 		);
 
@@ -290,7 +296,10 @@ class WP_Listings_Taxonomies {
 				),
 				'hierarchical' => true,
 				'rewrite'  => array( __( 'property-types', 'wp_listings' ), 'with_front' => false ),
-				'editable' => 0
+				'editable' => 0,
+				'show_in_rest'  => true,
+				'rest_base'     => 'property-types',
+				'rest_controller_class' => 'WP_REST_Terms_Controller'
 			)
 		);
 
@@ -323,7 +332,10 @@ class WP_Listings_Taxonomies {
 				),
 				'hierarchical' => true,
 				'rewrite' => array( __( 'locations', 'wp_listings' ), 'with_front' => false ),
-				'editable' => 0
+				'editable' => 0,
+				'show_in_rest'  => true,
+				'rest_base'     => 'locations',
+				'rest_controller_class' => 'WP_REST_Terms_Controller'
 			)
 		);
 
@@ -356,7 +368,10 @@ class WP_Listings_Taxonomies {
 				),
 				'hierarchical' => 0,
 				'rewrite' => array( __( 'features', 'wp_listings' ),  'with_front' => false ),
-				'editable' => 0
+				'editable' => 0,
+				'show_in_rest'  => true,
+				'rest_base'     => 'features',
+				'rest_controller_class' => 'WP_REST_Terms_Controller'
 			)
 		);
 
@@ -405,6 +420,46 @@ class WP_Listings_Taxonomies {
 			wp_insert_term($term,'property-types', array('slug' => $slug));
 		}
 
+	}
+
+	/**
+	 * Display a custom taxonomy dropdown in admin
+	 */
+	function wp_listings_filter_post_type_by_taxonomy() {
+		global $typenow;
+		$post_type = 'listing';
+		$taxonomies  = array('property-types', 'status', 'locations');
+		foreach($taxonomies as $taxonomy) {
+			if ($typenow == $post_type) {
+				$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
+				$info_taxonomy = get_taxonomy($taxonomy);
+				wp_dropdown_categories(array(
+					'show_option_all' => __("Show All {$info_taxonomy->label}"),
+					'taxonomy'        => $taxonomy,
+					'name'            => $taxonomy,
+					'orderby'         => 'name',
+					'selected'        => $selected,
+					'show_count'      => true,
+					'hide_empty'      => true,
+				));
+			};
+		}
+	}
+
+	/**
+	 * Filter posts by taxonomy in admin
+	 */
+	function wp_listings_convert_id_to_term_in_query($query) {
+		global $pagenow;
+		$post_type = 'listing';
+		$taxonomies  = array('property-types', 'status', 'locations');
+		$q_vars    = &$query->query_vars;
+		foreach($taxonomies as $taxonomy) {
+			if ( $pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == $post_type && isset($q_vars[$taxonomy]) && is_numeric($q_vars[$taxonomy]) && $q_vars[$taxonomy] != 0 ) {
+				$term = get_term_by('id', $q_vars[$taxonomy], $taxonomy);
+				$q_vars[$taxonomy] = $term->slug;
+			}
+		}
 	}
 
 	/**

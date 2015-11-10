@@ -1,0 +1,4 @@
+#dashboard_right_now a.listing-count:before,
+#dashboard_right_now span.listing-count:before {
+	content: "\f102";
+}

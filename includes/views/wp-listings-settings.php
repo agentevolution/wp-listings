@@ -27,6 +27,9 @@
 				if ( !isset($options['wp_listings_slug']) ) {
 					$options['wp_listings_slug'] = 'listings';
 				}
+				if ( !isset($options['wp_listings_default_form']) ) {
+					$options['wp_listings_default_form'] = '';
+				}
 
             	?>
 
@@ -51,9 +54,13 @@
 
 					<?php
 					_e("<h2>Default Number of Posts</h2><p>The default number of posts displayed on a listing archive page is 9. Here you can set a custom number. Enter <span style='color: #f00;font-weight: 700;'>-1</span> to display all listing posts.<br /><em>If you have more than 20-30 posts, it's not recommended to show all or your page will load slow.</em></p>", 'wp_listings' );
-				    echo '<h4>Number of posts on listing archive page: <input name="plugin_wp_listings_settings[wp_listings_archive_posts_num]" id="wp_listings_archive_posts_num" type="text" value="' . $options['wp_listings_archive_posts_num'] . '" size="1" /></h4>';
+				    echo '<h4>Number of posts on listing archive page: <input name="plugin_wp_listings_settings[wp_listings_archive_posts_num]" id="wp_listings_archive_posts_num" type="text" value="' . $options['wp_listings_archive_posts_num'] . '" size="1" /></h4><hr>';
 					?>
-					<br />
+
+					<?php
+					_e("<h2>Default Form shortcode</h2><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp_listings' );
+				    echo '<h4>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . htmlentities($options['wp_listings_default_form']) . '" size="40" /></h4><hr>';
+					?>
 
 					<?php echo '<h4>Listings post type slug (leave as default or change as needed): <input type="text" name="plugin_wp_listings_settings[wp_listings_slug]" value="' . $options['wp_listings_slug'] . '" /></h4>'; ?>
 					<p>Don't forget to <a href="../wp-admin/options-permalink.php">reset your permalinks</a> if you change the slug.</p>

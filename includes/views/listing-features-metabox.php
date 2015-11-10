@@ -1,5 +1,14 @@
 <?php
 
+// Featured on
+global $post;
+
+echo '<div style="width: 90%; float: left;">';
+
+	printf( __( '<p><label>Featured on (allows shortcodes):<br /><textarea name="wp_listings[_listing_featured_on]" rows="3" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_featured_on', true) ) );
+
+echo '</div><br style="clear: both;" />';
+
 // Home Summary
 global $post;
 

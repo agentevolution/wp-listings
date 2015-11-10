@@ -146,6 +146,15 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 == Changelog ==
 
+= 1.3 =
+* Added: Listing meta fields for lat/long, country, half bath, garage
+* Added: Auto-map feature to listings with latitude and longitude. Option available to turn this off on single listings.
+* Added: Global option for default form shortcode
+* Added: JSON support added for more listing meta and core API
+* Added: Admin menu filtering for default taxonomies: Status, Property Types, Locations
+* Added: Listings added to "At a Glance" Dashboard widget
+* Fix: Support taxonomy template overrides
+
 = 1.2.3 =
 * Update single listing template to display IDX imported data
 

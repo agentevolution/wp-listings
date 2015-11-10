@@ -13,8 +13,10 @@ function wp_listings_template_include( $template ) {
 	$post_type = 'listing';
 
     if ( wp_listings_is_taxonomy_of($post_type) ) {
-        if ( file_exists(get_stylesheet_directory() . '/archive-' . $post_type . '.php' ) ) {
-            return get_stylesheet_directory() . '/archive-' . $post_type . '.php';
+    	if ( file_exists(get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php' ) ) {
+    	    return get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php';
+    	} elseif ( file_exists(get_stylesheet_directory() . '/archive-' . $post_type . '.php' ) ) {
+        	return get_stylesheet_directory() . '/archive-' . $post_type . '.php';
         } else {
             return dirname( __FILE__ ) . '/views/archive-' . $post_type . '.php';
         }
@@ -115,7 +117,7 @@ function wp_listings_get_address($post_id = null) {
 /**
  * Displays the status (active, pending, sold, for rent) of a listing
  */
-function wp_listings_get_status($post_id = null) {
+function wp_listings_get_status($post_id = null, $single = 0) {
 
 	if ( null == $post_id ) {
 		global $post;
@@ -128,11 +130,19 @@ function wp_listings_get_status($post_id = null) {
 		return;
 	}
 
+	$status = null;
+
 	foreach($listing_status as $term) {
-		if ( $term->name != 'Featured' ) {
-			return $term->name;
+		if ( $term->name != 'Featured') {
+			$status .= $term->name;
+			if($single == 1) {
+				return $status;
+			}
+			$status .= '<br />';
 		}
 	}
+
+	return $status;
 }
 
 /**
@@ -196,6 +206,38 @@ function wp_listings_post_number( $query ) {
 }
 add_action( 'pre_get_posts', 'wp_listings_post_number' );
 
+/**
+ * Add Listings to "At a glance" Dashboard widget
+ */
+add_filter( 'dashboard_glance_items', 'custom_glance_items', 10, 1 );
+function custom_glance_items( $items = array() ) {
+
+    $post_types = array( 'listing' );
+    
+    foreach( $post_types as $type ) {
+
+        if( ! post_type_exists( $type ) ) continue;
+
+        $num_posts = wp_count_posts( $type );
+        
+        if( $num_posts ) {
+      
+            $published = intval( $num_posts->publish );
+            $post_type = get_post_type_object( $type );
+            
+            $text = _n( '%s ' . $post_type->labels->singular_name, '%s ' . $post_type->labels->name, $published, 'wp_listings' );
+            $text = sprintf( $text, number_format_i18n( $published ) );
+            
+            if ( current_user_can( $post_type->cap->edit_posts ) ) {
+                $items[] = sprintf( '<a class="%1$s-count" href="edit.php?post_type=%1$s">%2$s</a>', $type, $text ) . "\n";
+            } else {
+                $items[] = sprintf( '<span class="%1$s-count">%2$s</span>', $type, $text ) . "\n";
+            }
+        }
+    }
+    
+    return $items;
+}
 
 /**
  * Better Jetpack Related Posts Support for Listings
@@ -216,55 +258,5 @@ add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_related
  * Add Listings to Jetpack Omnisearch
  */
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
-new Jetpack_Omnisearch_Posts( 'listing' );
+	new Jetpack_Omnisearch_Posts( 'listing' );
 }
-
-
-/**
- * Add Jetpack JSON Rest API Support
- */
-function wp_listings_allow_post_types($allowed_post_types) {
-	$allowed_post_types[] = 'listing';
-	return $allowed_post_types;
-}
-add_filter( 'rest_api_allowed_post_types', 'wp_listings_allow_post_types');
-
-
-/**
- * Add Jetpack JSON Rest API Support (Listing MetaData)
- */
-function wp_listings_rest_api_allowed_public_metadata( $allowed_meta_keys )
-{
-    // only run for REST API requests
-    if ( ! defined( 'REST_API_REQUEST' ) || ! REST_API_REQUEST )
-        return $allowed_meta_keys;
-
-    $allowed_meta_keys[] = '_listing_price';
-    $allowed_meta_keys[] = '_listing_address';
-    $allowed_meta_keys[] = '_listing_city';
-    $allowed_meta_keys[] = '_listing_state';
-    $allowed_meta_keys[] = '_listing_zip';
-    $allowed_meta_keys[] = '_listing_mls';
-    $allowed_meta_keys[] = '_listing_open_house';
-    $allowed_meta_keys[] = '_listing_year_built';
-    $allowed_meta_keys[] = '_listing_floors';
-    $allowed_meta_keys[] = '_listing_sqft';
-    $allowed_meta_keys[] = '_listing_lot_sqft';
-    $allowed_meta_keys[] = '_listing_bedrooms';
-    $allowed_meta_keys[] = '_listing_bathrooms';
-    $allowed_meta_keys[] = '_listing_pool';
-    $allowed_meta_keys[] = '_listing_text';
-    $allowed_meta_keys[] = '_listing_gallery';
-    $allowed_meta_keys[] = '_listing_video';
-    $allowed_meta_keys[] = '_listing_map';
-    $allowed_meta_keys[] = '_listing_contact_form';
-    $allowed_meta_keys[] = '_listing_home_sum';
-    $allowed_meta_keys[] = '_listing_ktichen_sum';
-    $allowed_meta_keys[] = '_listing_living_room';
-    $allowed_meta_keys[] = '_listing_master_suite';
-    $allowed_meta_keys[] = '_listing_school_neighborhood';
-
-    return $allowed_meta_keys;
-}
-
-add_filter( 'rest_api_allowed_public_metadata', 'wp_listings_rest_api_allowed_public_metadata' );

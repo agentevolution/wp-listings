@@ -101,6 +101,8 @@ function single_listing_post_content() {
 			<div id="listing-description" itemprop="description">
 				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) );
 
+				echo (get_post_meta($post->ID, '_listing_featured_on', true)) ? '<p class="wp_listings_featured_on">' . get_post_meta($post->ID, '_listing_featured_on', true) . '</p>' : '';
+
 				echo (get_post_meta($post->ID, '_listing_disclaimer', true)) ? '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>' : '';
 				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
@@ -268,14 +270,19 @@ function single_listing_post_content() {
 		?>
 
 		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
-			<h4>Listing Inquiry</h4>
+			
 			<?php
+			$options = get_option('plugin_wp_listings_settings');
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
 
-			} else {
+			} elseif (isset($options['wp_listings_default_form'])) {
 
+				echo do_shortcode($options['wp_listings_default_form']);
+
+			} else {
+				echo '<h4>Listing Inquiry</h4>';
 				$nameError = '';
 				$emailError = '';
 
