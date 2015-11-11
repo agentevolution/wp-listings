@@ -21,9 +21,38 @@ echo '<div style="width: 45%; float: right;">';
 
 echo '</div><br style="clear: both;" />';
 
-echo '<div style="width: 90%; float: left;">';
+$pattern = '<p><label>%s<br /><textarea type="text" name="wp_listings[%s]" value="%s" rows="2" cols="40">%s</textarea></label></p>';
 
-	_e('<p><label>Custom Listing Text (custom text to display as overlay on featured listing widget)<br />', 'wp_listings');
+_e('<h4>Extended Details:</h4>', 'wp_listings');
+echo '<div style="width: 45%; float: left">';
+
+	foreach ( (array) $this->extended_property_details['col1'] as $label => $key ) {
+		printf( $pattern, esc_html( $label ), $key, esc_attr( get_post_meta( $post->ID, $key, true ) ), esc_attr( get_post_meta( $post->ID, $key, true ) ) );
+	}
+
+echo '</div>';
+
+echo '<div style="width: 45%; float: right;">';
+
+	foreach ( (array) $this->extended_property_details['col2'] as $label => $key ) {
+		printf( $pattern, esc_html( $label ), $key, esc_attr( get_post_meta( $post->ID, $key, true ) ), esc_attr( get_post_meta( $post->ID, $key, true ) ) );
+	}
+
+echo '</div><br style="clear: both;" />';
+
+echo '<div style="width: 45%; float: left">';
+	_e('<h4>Price Options</h4>', 'wp_listings');
+	printf( __('<p><label>Hide the price from visitors?<br /> <input type="checkbox" name="wp_listings[_listing_hide_price]" value="1" %s /></label></p>'),
+		checked( get_post_meta( $post->ID, '_listing_hide_price', true ), 1, 0 ) );
+
+	_e('<p><label>Text to display instead of price (or leave blank):<br />', 'wp_listings');
+	printf( __( '<input type="text" name="wp_listings[_listing_price_alt]" value="%s" /></label></p>', 'wp_listings' ), htmlentities( get_post_meta( $post->ID, '_listing_price_alt', true) ) );
+echo '</div>';
+
+echo '<div style="width: 90%; float: left;">';
+	
+	_e('<h4>Custom Overlay Text</h4>', 'wp_listings');
+	_e('<p><label>Custom text to display as overlay on featured listings<br />', 'wp_listings');
 	printf( __( '<input type="text" name="wp_listings[_listing_text]" value="%s" /></label></p>', 'wp_listings' ), htmlentities( get_post_meta( $post->ID, '_listing_text', true) ) );
 
 echo '</div><br style="clear: both;" /><br /><br /><hr>';
@@ -59,10 +88,12 @@ echo '</div><br style="clear: both;" />';
 echo '<div style="width: 90%; float: left;">';
 
 echo '<div style="width: 45%; float: left">';
+	_e('<h4>Map Options</h4>', 'wp_listings');
+
 	if(get_post_meta($post->ID, '_listing_automap', 1) == FALSE) {
     	update_post_meta($post->ID, '_listing_automap', 'y');
     }
-	printf( __('<p><label>Automatically insert map based on latitude/longitude? <br /> <input type="radio" name="wp_listings[_listing_automap]" value="y" %s>Yes</input> <input type="radio" name="wp_listings[_listing_automap]" value="n" %s>No</input></label></p>'),
+	printf( __('<p><label>Automatically insert map based on latitude/longitude? <strong>Will be overridden if a shortode is entered below.</strong><br /> <input type="radio" name="wp_listings[_listing_automap]" value="y" %s>Yes</input> <input type="radio" name="wp_listings[_listing_automap]" value="n" %s>No</input></label></p>'),
 		checked( get_post_meta( $post->ID, '_listing_automap', true ), 'y', 0 ),
 		checked( get_post_meta( $post->ID, '_listing_automap', true ), 'n', 0 ) );
 echo '</div>';
@@ -79,6 +110,7 @@ echo '</div><br style="clear: both;" />';
 echo '</div>';
 
 echo '<div style="width: 90%; float: left;">';
+	_e('<h4>Contact Form</h4>', 'wp_listings');
 
 	_e('<p><label>If you use a Contact Form plugin, you may enter the Contact Form shortcode here. Otherwise, the single listing template will use a default contact form:<br />', 'wp_listings');
 	printf( __( '<textarea name="wp_listings[_listing_contact_form]" rows="1" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_contact_form', true) ) );

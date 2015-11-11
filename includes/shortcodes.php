@@ -1,6 +1,7 @@
 <?php 
 /**
  * Adds shortcode to display listings
+ * Adds shortcode to display post meta
  */
 
 add_shortcode( 'listings', 'wp_listings_shortcode' );
@@ -116,4 +117,19 @@ function wp_listings_shortcode($atts, $content = null) {
 
     return $output;
     
+}
+
+add_shortcode('wp_listings_meta', 'wp_listings_meta_shortcode');
+/**
+ * Returns meta data for listings
+ * @param  array $atts meta key
+ * @return string meta value wrapped in span
+ */
+function wp_listings_meta_shortcode($atts) {
+    extract(shortcode_atts(array(
+        'key' => ''
+    ), $atts ) );
+    $postid = get_the_id();
+
+    return '<span class=' . $key . '>' . get_post_meta($postid, '_listing_' . $key, true) . '</span>';
 }

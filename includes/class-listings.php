@@ -52,6 +52,34 @@ class WP_Listings {
 			),
 		) );
 
+		$this->extended_property_details = apply_filters( 'wp_listings_extended_property_details', array(
+			'col1' => array(
+			    __( 'Property Type:', 'wp_listings' ) 			=> '_listing_proptype',
+			    __( 'Condo:', 'wp_listings' )					=> '_listing_condo',
+			    __( 'Financial:', 'wp_listings' )				=> '_listing_financial',
+			    __( 'Condition:', 'wp_listings' )				=> '_listing_condition',
+			    __( 'Construction:', 'wp_listings' )			=> '_listing_construction',
+			    __( 'Exterior:', 'wp_listings' )				=> '_listing_exterior',
+			    __( 'Fencing:', 'wp_listings' ) 				=> '_listing_fencing',
+				__( 'Interior:', 'wp_listings' ) 				=> '_listing_interior',
+				__( 'Flooring:', 'wp_listings' ) 				=> '_listing_flooring',
+				__( 'Heat/Cool:', 'wp_listings' ) 				=> '_listing_heatcool'
+			),
+			'col2' => array(
+			    __( 'Lot size:', 'wp_listings' ) 				=> '_listing_lostize',
+			    __( 'Location:', 'wp_listings' ) 				=> '_listing_location',
+			    __( 'Scenery:', 'wp_listings' )					=> '_listing_scenery',
+				__( 'Community:', 'wp_listings' )				=> '_listing_community',
+			    __( 'Recreation:', 'wp_listings' )				=> '_listing_recreation',
+			    __( 'General:', 'wp_listings' )					=> '_listing_general',
+			    __( 'Inclusions:', 'wp_listings' )				=> '_listing_inclusions',
+			    __( 'Parking:', 'wp_listings' )					=> '_listing_parking',
+			    __( 'Rooms:', 'wp_listings' )					=> '_listing_rooms',
+			    __( 'Laundry:', 'wp_listings' )					=> '_listing_laundry',
+			    __( 'Utilities:', 'wp_listings' )				=> '_listing_utilities'
+			),
+		) );
+
 		add_action( 'init', array( $this, 'create_post_type' ) );
 
 		add_filter( 'manage_edit-listing_columns', array( $this, 'columns_filter' ) );
@@ -178,6 +206,9 @@ class WP_Listings {
 	        return;
 
 	    $property_details = $_POST['wp_listings'];
+
+	    if ( ! isset( $property_details['_listing_hide_price'] ) )
+				$property_details['_listing_hide_price'] = 0;
 
 	    /** Store the property details custom fields */
 	    foreach ( (array) $property_details as $key => $value ) {

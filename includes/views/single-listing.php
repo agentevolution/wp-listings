@@ -43,7 +43,9 @@ function single_listing_post_content() {
 		<?php
 		$listing_meta = sprintf( '<ul class="listing-meta">');
 
-		if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
+		if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
+			$listing_meta .= (get_post_meta($post->ID, '_listing_price_alt', true)) ? sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price_alt', true ) ) : '';
+		} else {
 			$listing_meta .= sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price', true ) );
 		}
 
@@ -118,14 +120,18 @@ function single_listing_post_content() {
 					echo '<table class="listing-details">';
 
                     echo '<tbody class="left">';
-                    echo '<tr class="wp_listings_listing_price"><td class="label">Price:</td><td>'.get_post_meta( $post->ID, '_listing_price', true) .'</td></tr>';
+                    if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
+                    	echo (get_post_meta($post->ID, '_listing_price_alt', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price_alt', true) .'</td></tr>' : '';
+                	} else {
+                    	echo (get_post_meta($post->ID, '_listing_price', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price', true) .'</td></tr>' : '';
+                	}
                     echo '<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-                    echo '<tr class="wp_listings_listing_address"><td class="label">Address:</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>';
-                    echo '<tr class="wp_listings_listing_city"><td class="label">City:</td><td itemprop="addressLocality">'.get_post_meta( $post->ID, '_listing_city', true) .'</td></tr>';
-                    echo '<tr class="wp_listings_listing_state"><td class="label">State:</td><td itemprop="addressRegion">'.get_post_meta( $post->ID, '_listing_state', true) .'</td></tr>';
-                    echo '<tr class="wp_listings_listing_zip"><td class="label">Zip:</td><td itemprop="postalCode">'.get_post_meta( $post->ID, '_listing_zip', true) .'</td></tr>';
+                    echo (get_post_meta($post->ID, '_listing_address', true)) ? '<tr class="wp_listings_listing_address"><td class="label">' . __('Address:', 'wp_listings') . '</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_city', true)) ? '<tr class="wp_listings_listing_city"><td class="label">' . __('City:', 'wp_listings') . '</td><td itemprop="addressLocality">'.get_post_meta( $post->ID, '_listing_city', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_state', true)) ? '<tr class="wp_listings_listing_state"><td class="label">' . __('State:', 'wp_listings') . '</td><td itemprop="addressRegion">'.get_post_meta( $post->ID, '_listing_state', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_zip', true)) ? '<tr class="wp_listings_listing_zip"><td class="label">' . __('Zip Code:', 'wp_listings') . '</td><td itemprop="postalCode">'.get_post_meta( $post->ID, '_listing_zip', true) .'</td></tr>' : '';
                     echo '</div>';
-                    echo '<tr class="wp_listings_listing_mls"><td class="label">MLS:</td><td>'.get_post_meta( $post->ID, '_listing_mls', true) .'</td></tr>';
+                    echo (get_post_meta($post->ID, '_listing_mls', true)) ? '<tr class="wp_listings_listing_mls"><td class="label">MLS:</td><td>'.get_post_meta( $post->ID, '_listing_mls', true) .'</td></tr>' : '';
                     echo '</tbody>';
 
 					echo '<tbody class="right">';
@@ -141,38 +147,28 @@ function single_listing_post_content() {
 
 					echo '<table class="listing-details extended">';
 					echo '<tbody class="left">';
-					echo (get_post_meta($post->ID, '_listing_proptype', true)) ? '<tr class="wp_listings_proptype"><td class="label">Property Type:</td><td>' . get_post_meta($post->ID, '_listing_proptype', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_condo', true)) ? '<tr class="wp_listings_condo"><td class="label">Condo:</td><td>' . get_post_meta($post->ID, '_listing_condo', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_financial', true)) ? '<tr class="wp_listings_financial"><td class="label">Financial:</td><td>' . get_post_meta($post->ID, '_listing_financial', true) . '</td></tr>' : '';					
-					echo (get_post_meta($post->ID, '_listing_condition', true)) ? '<tr class="wp_listings_condition"><td class="label">Condition:</td><td>' . get_post_meta($post->ID, '_listing_condition', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_construction', true)) ? '<tr class="wp_listings_construction"><td class="label">Construction:</td><td>' . get_post_meta($post->ID, '_listing_construction', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_exterior', true)) ? '<tr class="wp_listings_exterior"><td class="label">Exterior:</td><td>' . get_post_meta($post->ID, '_listing_exterior', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_fencing', true)) ? '<tr class="wp_listings_fencing"><td class="label">Fencing:</td><td>' . get_post_meta($post->ID, '_listing_fencing', true) . '</td></tr>' : '';					
-					echo (get_post_meta($post->ID, '_listing_interior', true)) ? '<tr class="wp_listings_interior"><td class="label">Interior:</td><td>' . get_post_meta($post->ID, '_listing_interior', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_flooring', true)) ? '<tr class="wp_listings_flooring"><td class="label">Flooring:</td><td>' . get_post_meta($post->ID, '_listing_flooring', true) . '</td></tr>' : '';					
-					echo (get_post_meta($post->ID, '_listing_heatcool', true)) ? '<tr class="wp_listings_heatcool"><td class="label">Heat/Cool:</td><td>' . get_post_meta($post->ID, '_listing_heatcool', true) . '</td></tr>' : '';
+					foreach ( (array) $details_instance->extended_property_details['col1'] as $label => $key ) {
+						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+						if (! empty( $detail_value ) ) :
+							printf( $pattern, $key, esc_html( $label ), $detail_value );
+						endif;
+					}
 					echo '</tbody>';
 					echo '<tbody class="right">';
-					echo (get_post_meta($post->ID, '_listing_lotsize', true)) ? '<tr class="wp_listings_lotsize"><td class="label">Lot size:</td><td>' . get_post_meta($post->ID, '_listing_lotsize', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_location', true)) ? '<tr class="wp_listings_location"><td class="label">Location:</td><td>' . get_post_meta($post->ID, '_listing_location', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_scenery', true)) ? '<tr class="wp_listings_scenery"><td class="label">Scenery:</td><td>' . get_post_meta($post->ID, '_listing_scenery', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_community', true)) ? '<tr class="wp_listings_community"><td class="label">Community:</td><td>' . get_post_meta($post->ID, '_listing_community', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_recreation', true)) ? '<tr class="wp_listings_recreation"><td class="label">Recreation:</td><td>' . get_post_meta($post->ID, '_listing_recreation', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_general', true)) ? '<tr class="wp_listings_general"><td class="label">General:</td><td>' . get_post_meta($post->ID, '_listing_general', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_inclusions', true)) ? '<tr class="wp_listings_inclusions"><td class="label">Inclusions:</td><td>' . get_post_meta($post->ID, '_listing_inclusions', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_parking', true)) ? '<tr class="wp_listings_parking"><td class="label">Parking:</td><td>' . get_post_meta($post->ID, '_listing_parking', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_rooms', true)) ? '<tr class="wp_listings_rooms"><td class="label">Rooms:</td><td>' . get_post_meta($post->ID, '_listing_rooms', true) . '</td></tr>' : '';
-					echo (get_post_meta($post->ID, '_listing_laundry', true)) ? '<tr class="wp_listings_laundry"><td class="label">Laundry:</td><td>' . get_post_meta($post->ID, '_listing_laundry', true) . '</td></tr>' : '';
-
-					echo (get_post_meta($post->ID, '_listing_utilities', true)) ? '<tr class="wp_listings_utilities"><td class="label">Utilities:</td><td>' . get_post_meta($post->ID, '_listing_utilities', true) . '</td></tr>' : '';
-
+					foreach ( (array) $details_instance->extended_property_details['col2'] as $label => $key ) {
+						$detail_value = esc_html( get_post_meta($post->ID, $key, true) );
+						if (! empty( $detail_value ) ) :
+							printf( $pattern, $key, esc_html( $label ), $detail_value );
+						endif;
+					}
 					echo '</tbody>';
 					echo '</table>';
 
-
-				echo '<h5>Tagged Features</h5><ul class="tagged-features">';
-				echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
-				echo '</ul><!-- .tagged-features -->';
+				if(get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' ) != null) {
+					echo '<h5>' . __('Tagged Features:', 'wp_listings') . '</h5><ul class="tagged-features">';
+					echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
+					echo '</ul><!-- .tagged-features -->';
+				}
 
 				if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
 					<div class="additional-features">
