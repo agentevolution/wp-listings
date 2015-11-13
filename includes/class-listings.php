@@ -66,17 +66,17 @@ class WP_Listings {
 				__( 'Heat/Cool:', 'wp_listings' ) 				=> '_listing_heatcool'
 			),
 			'col2' => array(
-			    __( 'Lot size:', 'wp_listings' ) 				=> '_listing_lostize',
-			    __( 'Location:', 'wp_listings' ) 				=> '_listing_location',
-			    __( 'Scenery:', 'wp_listings' )					=> '_listing_scenery',
+				__( 'Lot size:', 'wp_listings' ) 				=> '_listing_lostize',
+				__( 'Location:', 'wp_listings' ) 				=> '_listing_location',
+				__( 'Scenery:', 'wp_listings' )					=> '_listing_scenery',
 				__( 'Community:', 'wp_listings' )				=> '_listing_community',
-			    __( 'Recreation:', 'wp_listings' )				=> '_listing_recreation',
-			    __( 'General:', 'wp_listings' )					=> '_listing_general',
-			    __( 'Inclusions:', 'wp_listings' )				=> '_listing_inclusions',
-			    __( 'Parking:', 'wp_listings' )					=> '_listing_parking',
-			    __( 'Rooms:', 'wp_listings' )					=> '_listing_rooms',
-			    __( 'Laundry:', 'wp_listings' )					=> '_listing_laundry',
-			    __( 'Utilities:', 'wp_listings' )				=> '_listing_utilities'
+				__( 'Recreation:', 'wp_listings' )				=> '_listing_recreation',
+				__( 'General:', 'wp_listings' )					=> '_listing_general',
+				__( 'Inclusions:', 'wp_listings' )				=> '_listing_inclusions',
+				__( 'Parking:', 'wp_listings' )					=> '_listing_parking',
+				__( 'Rooms:', 'wp_listings' )					=> '_listing_rooms',
+				__( 'Laundry:', 'wp_listings' )					=> '_listing_laundry',
+				__( 'Utilities:', 'wp_listings' )				=> '_listing_utilities'
 			),
 		) );
 
@@ -148,7 +148,10 @@ class WP_Listings {
 					'view_item'				=> __( 'View Listing', 'wp_listings' ),
 					'search_items'			=> __( 'Search Listings', 'wp_listings' ),
 					'not_found'				=> __( 'No listings found', 'wp_listings' ),
-					'not_found_in_trash'	=> __( 'No listings found in Trash', 'wp_listings' )
+					'not_found_in_trash'	=> __( 'No listings found in Trash', 'wp_listings' ),
+					'filter_items_list'     => __( 'Filter Listings', 'wp_listings' ),
+					'items_list_navigation' => __( 'Listings navigation', 'wp_listings' ),
+					'items_list'            => __( 'Listings list', 'wp_listings' )
 				),
 				'public'		=> true,
 				'query_var'		=> true,
