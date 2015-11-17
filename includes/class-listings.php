@@ -251,23 +251,31 @@ class WP_Listings {
 
 		global $post, $wp_taxonomies;
 
+		$image_size = 'style="max-width: 115px;"';
+
+		apply_filters( 'wp_listings_admin_listing_details', $admin_details = $this->property_details['col1']);
+
+		if (isset($_GET["mode"]) && trim($_GET["mode"]) == 'excerpt' ) {
+			apply_filters( 'wp_listings_admin_extended_details', $admin_details = $this->property_details['col1'] + $this->property_details['col2']);
+			$image_size = 'style="max-width: 150px;"';
+		}
+
+		$image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
+
 		switch( $column ) {
 			case "listing_thumbnail":
-				printf( '<p>%s</p>', the_post_thumbnail( 'thumbnail' ) );
+				echo '<p><img src="' . $image[0] . '" alt="listing-thumbnail" ' . $image_size . '/></p>';
 				break;
 			case "listing_details":
-				foreach ( (array) $this->property_details['col1'] as $label => $key ) {
-					printf( '<b>%s</b> %s<br />', esc_html( $label ), esc_html( get_post_meta($post->ID, $key, true) ) );
-				}
-				foreach ( (array) $this->property_details['col2'] as $label => $key ) {
+				foreach ( (array) $admin_details as $label => $key ) {
 					printf( '<b>%s</b> %s<br />', esc_html( $label ), esc_html( get_post_meta($post->ID, $key, true) ) );
 				}
 				break;
 			case "listing_tags":
-				echo '<b>Status</b>: ' . get_the_term_list( $post->ID, 'status', '', ', ', '' ) . '<br /><br />';
-				echo '<b>Property Type:</b> ' . get_the_term_list( $post->ID, 'property-types', '', ', ', '' ) . '<br /><br />';
-				echo '<b>Location:</b> ' . get_the_term_list( $post->ID, 'locations', '', ', ', '' ) . '<br /><br />';
-				echo '<b>Features</b><br />' . get_the_term_list( $post->ID, 'features', '', ', ', '' );
+				_e('<b>Status</b>: ' . get_the_term_list( $post->ID, 'status', '', ', ', '' ) . '<br />', 'wp_listings');
+				_e('<b>Property Type:</b> ' . get_the_term_list( $post->ID, 'property-types', '', ', ', '' ) . '<br />', 'wp_listings');
+				_e('<b>Location:</b> ' . get_the_term_list( $post->ID, 'locations', '', ', ', '' ) . '<br />', 'wp_listings');
+				_e('<b>Features:</b> ' . get_the_term_list( $post->ID, 'features', '', ', ', '' ), 'wp_listings');
 				break;
 		}
 
