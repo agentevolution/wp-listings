@@ -28,6 +28,11 @@ function wp_listings_activation() {
 			$_wp_listings_taxonomies->register_taxonomies();
 		}
 		flush_rewrite_rules();
+
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -39,6 +44,11 @@ register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
 function wp_listings_deactivation() {
 
 		flush_rewrite_rules();
+
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
@@ -69,6 +79,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-admin-notice.php' );
 
 	/** Add theme support for post thumbnails if it does not exist */
 	if(!current_theme_supports('post-thumbnails')) {
@@ -134,11 +145,23 @@ function wp_listings_init() {
         }
     }
 
-    /** Add admin styles */
-    function wp_listings_admin_style() {
-        wp_enqueue_style( 'wp_listings_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/wp-listings-admin.css' );
+    /** Add admin scripts and styles */
+    function wp_listings_admin_scripts_styles() {
+        wp_enqueue_style( 'wp_listings_admin_css', WP_LISTINGS_URL . 'includes/css/wp-listings-admin.css' );
+
+        global $wp_version;
+        $nonce_action = 'wp_listings_admin_notice';
+
+		wp_enqueue_style( 'wp-listings-admin-notice', WP_LISTINGS_URL . 'includes/css/wp-listings-admin-notice.css' );
+		wp_enqueue_script( 'wp-listings-admin', WP_LISTINGS_URL . 'includes/js/admin.js' );
+		wp_localize_script( 'wp-listings-admin', 'wp_listings_adminL10n', array(
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'nonce'      => wp_create_nonce( $nonce_action ),
+			'wp_version' => $wp_version,
+			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+		) );
 	}
-	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_style' );
+	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_scripts_styles' );
 
 	/** Instantiate */
 	$_wp_listings = new WP_Listings;
@@ -148,8 +171,6 @@ function wp_listings_init() {
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
 
 	// /** For troubleshooting the loaded template */
-	// add_action('genesis_entry_header', 'echo_template_name');
-	// add_action('genesis_after_post_title', 'echo_template_name');
 	// function echo_template_name() {
 	// 	global $post, $template;
 	// 	echo $template;
