@@ -10,8 +10,20 @@ add_image_size( 'listings', 560, 380, true );
 add_filter( 'template_include', 'wp_listings_template_include' );
 function wp_listings_template_include( $template ) {
 
+	global $wp_query;
+
 	$post_type = 'listing';
 
+	if ( $wp_query->is_search && get_post_type() == 'listing' ) {
+		if ( file_exists(get_stylesheet_directory() . '/search-' . $post_type . '.php') ) {
+			$template = get_stylesheet_directory() . '/search-' . $post_type . '.php';
+			return $template;
+		} elseif ( file_exists(get_stylesheet_directory() . '/search.php' ) ) {
+			return get_stylesheet_directory() . '/search.php';
+		} else {
+			return dirname( __FILE__ ) . '/views/archive-' . $post_type . '.php';
+		}
+	}
     if ( wp_listings_is_taxonomy_of($post_type) ) {
     	if ( file_exists(get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php' ) ) {
     	    return get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php';
@@ -253,10 +265,20 @@ function wp_listings_jetpack_relatedposts( $headline ) {
 }
 add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_relatedposts' );
 
-
 /**
  * Add Listings to Jetpack Omnisearch
  */
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 	new Jetpack_Omnisearch_Posts( 'listing' );
+}
+
+/**
+ * Function to return term image for use on front end
+ * @param  num  $term_id the id of the term
+ * @param  boolean $html    use html wrapper with wp_get_attachment_image
+ * @return mixed  the image with html markup or the image id
+ */
+function wp_listings_term_image( $term_id, $html = true, $size = 'full' ) {
+	$image_id = get_term_meta( $term_id, 'wpl_term_image', true );
+	return $image_id && $html ? wp_get_attachment_image( $image_id, $size, false, array('class' => 'wp-listings-term-image') ) : $image_id;
 }

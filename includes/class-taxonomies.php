@@ -27,6 +27,20 @@ class WP_Listings_Taxonomies {
 
 		add_action( 'init', array( &$this, 'register_taxonomies' ), 15 );
 		add_action( 'init', array( $this, 'create_terms' ), 16 );
+		add_action( 'init', array( $this, 'register_term_meta' ), 17 );
+
+		if ( function_exists( 'get_term_meta' ) ) {
+			add_action( 'init', array( $this, 'register_term_meta' ), 17 );
+			
+			foreach( (array) $this->get_taxonomies() as $slug => $data ) {
+				add_action( "{$slug}_add_form_fields", array( $this, 'wp_listings_new_term_image_field') );
+				add_action( "{$slug}_edit_form_fields", array( $this, 'wp_listings_edit_term_image_field') );
+				add_action( "create_{$slug}", array( $this, 'wp_listings_save_term_image') );
+				add_action( "edit_{$slug}", array( $this, 'wp_listings_save_term_image') );
+				add_filter( "manage_edit-{$slug}_columns", array( $this, 'wp_listings_edit_term_columns' ) );
+				add_action( "manage_{$slug}_custom_column", array( $this, 'wp_listings_manage_term_custom_column' ), 10, 3 );
+			}
+		}
 
 		add_action('restrict_manage_posts', array($this, 'wp_listings_filter_post_type_by_taxonomy') );
 		add_filter('parse_query', array($this, 'wp_listings_convert_id_to_term_in_query') );
@@ -406,7 +420,9 @@ class WP_Listings_Taxonomies {
 	}
 
 	/**
-	 * Create the terms
+	 * Create the default terms
+	 * @uses  wp_listings_default_status_terms filter to add or remove default taxonomy terms
+	 * @uses  wp_listings_default_property_type_terms filter to add or remove default taxonomy terms
 	 */
 	function create_terms() {
 
@@ -428,6 +444,85 @@ class WP_Listings_Taxonomies {
 			wp_insert_term($term,'property-types', array('slug' => $slug));
 		}
 
+	}
+
+	/**
+	 * Register term meta for a featured image
+	 * @return [type] [description]
+	 */
+	function register_term_meta() {
+		register_meta( 'term', 'wpl_term_image', 'wp_listings_sanitize_term_image' );
+	}
+
+	/**
+	 * Callback to retrieve the term image
+	 * @return [type] [description]
+	 */
+	function wp_listings_sanitize_term_image( $wpl_term_image ) {
+		return $wpl_term_image;
+	}
+
+	/**
+	 * Get the term featured image id
+	 * @param  $html bool whether to use html wrapper
+	 * @uses  wp_get_attachment_image to return image id wrapped in markup
+	 */
+	function wp_listings_get_term_image( $term_id, $html = true ) {
+		$image_id = get_term_meta( $term_id, 'wpl_term_image', true );
+		return $image_id && $html ? wp_get_attachment_image( $image_id, 'thumbnail' ) : $image_id;
+	}
+
+	/**
+	 * Save the image uploaded
+	 * @param  string $term_id term slug
+	 */
+	function wp_listings_save_term_image( $term_id ) {
+
+	    if ( ! isset( $_POST['wpl_term_image_nonce'] ) || ! wp_verify_nonce( $_POST['wpl_term_image_nonce'], basename( __FILE__ ) ) )
+	        return;
+
+	    $old_image = $this->wp_listings_get_term_image( $term_id );
+	    $new_image = isset( $_POST['wpl-term-image'] ) ? $_POST['wpl-term-image'] : '';
+
+	    if ( $old_image && '' === $new_image )
+	        delete_term_meta( $term_id, 'wpl_term_image' );
+
+	    else if ( $old_image !== $new_image )
+	        update_term_meta( $term_id, 'wpl_term_image', $new_image );
+
+	    return $term_id;
+
+	}
+
+	/**
+	 * Filter the edit term columns
+	 */
+	
+	function wp_listings_edit_term_columns( $columns ) {
+
+	    $columns['wpl_term_image'] = __( 'Image', 'wp_listings' );
+
+	    return $columns;
+	}
+
+	/**
+	 * Display the new column
+	 */
+	function wp_listings_manage_term_custom_column( $out, $column, $term_id ) {
+
+	    if ( 'wpl_term_image' === $column ) {
+
+	        $image_id = $this->wp_listings_get_term_image( $term_id, false );
+
+	        if (!$image_id)
+	        	return $out;
+
+	        $image_markup = wp_get_attachment_image( $image_id, 'thumbnail', true, array('class' => 'wpl-term-image'));
+
+	        $out = $image_markup;
+	    }
+
+	    return $out;
 	}
 
 	/**
@@ -470,6 +565,55 @@ class WP_Listings_Taxonomies {
 			}
 		}
 	}
+
+	/**
+	 * Field for adding a new image on a term
+	 */
+	function wp_listings_new_term_image_field( $term ) {
+
+	    $image_id = '';
+
+	    wp_nonce_field( basename( __FILE__ ), 'wpl_term_image_nonce' ); ?>
+
+	    <div class="form-field wpl-term-image-wrap">
+	        <label for="wpl-term-image"><?php _e( 'Image', 'wp_listings' ); ?></label>
+	        <!-- Begin term image -->
+			<p>
+				<input type="hidden" name="wpl-term-image" id="wpl-term-image" value="<?php echo esc_attr( $image_id ); ?>" />
+				<a href="#" class="wpl-add-media wpl-add-media-img"><img class="wpl-term-image-url" src="" style="max-width: 100%; max-height: 200px; height: auto; display: block;" /></a>
+				<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp_listings' ); ?></a>
+				<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp_listings' ); ?></a>
+			</p>
+			<!-- End term image -->
+	    </div>
+	<?php }
+
+	/**
+	 * Field for editing an image on a term
+	 */
+	function wp_listings_edit_term_image_field( $term ) {
+
+	    $image_id = $this->wp_listings_get_term_image( $term->term_id, false );
+	    $image_url = wp_get_attachment_url($image_id);
+
+	    if ( ! $image_url )
+	    	$image_url = ''; ?>
+
+	    <tr class="form-field wpl-term-image-wrap">
+	        <th scope="row"><label for="wpl-term-image"><?php _e( 'Image', 'wp_listings' ); ?></label></th>
+	        <td>
+	            <?php wp_nonce_field( basename( __FILE__ ), 'wpl_term_image_nonce' ); ?>
+	            <!-- Begin term image -->
+				<p>
+					<input type="hidden" name="wpl-term-image" id="wpl-term-image" value="<?php echo esc_attr( $image_id ); ?>" />
+					<a href="#" class="wpl-add-media wpl-add-media-img"><img class="wpl-term-image-url" src="<?php echo esc_url( $image_url ); ?>" style="max-width: 100%; max-height: 200px; height: auto; display: block;" /></a>
+					<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp_listings' ); ?></a>
+					<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp_listings' ); ?></a>
+				</p>
+				<!-- End term image -->
+	        </td>
+	    </tr>
+	<?php }
 
 	/**
 	 * Reorder taxonomies

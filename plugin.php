@@ -134,11 +134,30 @@ function wp_listings_init() {
         }
     }
 
-    /** Add admin styles */
-    function wp_listings_admin_style() {
-        wp_enqueue_style( 'wp_listings_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/wp-listings-admin.css' );
+    /** Add admin scripts and styles */
+    function wp_listings_admin_scripts_styles() {
+        wp_enqueue_style( 'wp_listings_admin_css', WP_LISTINGS_URL . 'includes/css/wp-listings-admin.css' );
+
+        global $wp_version;
+        $nonce_action = 'wp_listings_admin_notice';
+
+		wp_enqueue_style( 'wp-listings-admin-notice', WP_LISTINGS_URL . 'includes/css/wp-listings-admin-notice.css' );
+		wp_enqueue_script( 'wp-listings-admin', WP_LISTINGS_URL . 'includes/js/admin.js', 'media-views' );
+
+		$localize_script = array(
+			'title'        => __( 'Set Term Image', 'wp_listings' ),
+			'button'       => __( 'Set term image', 'wp_listings' )
+		);
+
+		/* Pass custom variables to the script. */
+		wp_localize_script( 'wp-listings-admin', 'wpl_term_image', $localize_script );
+
+		wp_enqueue_media();
+
 	}
-	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_style' );
+	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_scripts_styles' );
+
+
 
 	/** Instantiate */
 	$_wp_listings = new WP_Listings;
@@ -147,14 +166,6 @@ function wp_listings_init() {
 
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
 
-	// /** For troubleshooting the loaded template */
-	// add_action('genesis_entry_header', 'echo_template_name');
-	// add_action('genesis_after_post_title', 'echo_template_name');
-	// function echo_template_name() {
-	// 	global $post, $template;
-	// 	echo $template;
-	// 	echo get_post_meta( $post->ID, '_wp_post_template', true );
-	// }
 }
 
 /**
