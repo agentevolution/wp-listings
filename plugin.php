@@ -138,10 +138,6 @@ function wp_listings_init() {
     /** Add admin scripts and styles */
     function wp_listings_admin_scripts_styles() {
         wp_enqueue_style( 'wp_listings_admin_css', WP_LISTINGS_URL . 'includes/css/wp-listings-admin.css' );
-
-		wp_enqueue_style( 'wp-listings-import', WP_LISTINGS_URL . 'includes/css/wp-listings-import.css' );
-		wp_enqueue_script( 'wp-listings-admin', WP_LISTINGS_URL . 'includes/js/admin.js', 'media-views' );
-
 	}
 	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_scripts_styles' );
 
