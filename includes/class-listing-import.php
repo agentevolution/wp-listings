@@ -293,21 +293,32 @@ function wp_listings_idx_listing_setting_page() {
 			<form id="wplistings-idx-listing-import" method="post" action="options.php">
 				<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
 				<?php submit_button('Import Listings'); ?>
-				<ol id="selectable" class="grid">
-			<div class="grid-sizer"></div>
-			<?php
 
+			<?php 
 			// Show popup if IDX Broker plugin not active or installed
 			if( !class_exists( 'IDX_Broker_Plugin') ) {
-				// lightbox
+				// thickbox like content
+				echo '
+					<img class="idx-import bkg" src="' . WP_LISTINGS_URL . 'images/import-bg.jpg' . '" /></a>
+					<div class="idx-import thickbox">
+					     <a href="http://www.idxbroker.com/features/idx-wordpress-plugin"><img src="' . WP_LISTINGS_URL . 'images/idx-ad.png' . '" alt="Sign up for IDX now!"/></a>
+					</div>';
+
 				return;
 			}
+			?>		
+			
+			<ol id="selectable" class="grid">
+			<div class="grid-sizer"></div>
 
+			<?php
 			// Get properties from IDX Broker plugin
 			if (class_exists( 'IDX_Broker_Plugin' )) {
 				require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
 				$_idx_api = new \IDX\Idx_Api;
 				$properties = $_idx_api->client_properties('featured');
+			} else {
+				return;
 			}
 
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_options');
