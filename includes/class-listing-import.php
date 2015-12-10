@@ -74,7 +74,8 @@ class WPL_Idx_Listing {
 						$equity_properties = $_equity_idx->equity_listing_ID($prop['idxID'], $prop['listingID']);
 
 						if($equity_properties == false) {
-							add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_empty', 'The API returned no data for property ' . $prop['listingID'] . '. This is usually caused by your WordPress domain not matching the approved domain in your IDX account.', 'error');
+							add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_empty', 'The Equity API returned no data for property ' . $prop['listingID'] . '. This is usually caused by your WordPress domain not matching the approved domain in your IDX account. Only some data has been imported.', 'error');
+							$equity_properties = $properties[$key];
 							delete_transient('equity_listing_' . $prop['listingID']);
 						}
 					}
@@ -130,20 +131,16 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data) {
 
-		$imgs = '';
-		
-		if (class_exists( 'Equity_Idx_Listing' )) {
+		if (class_exists( 'Equity_Idx_Api' )) {
+			$imgs = '';
+			$featured_image = $idx_featured_listing_data['images']['1']['url'];
+
 			foreach ($idx_featured_listing_data['images'] as $image_data => $img) {
-				$featured_image = $idx_featured_listing_data['images']['1']['url'];
 				if($image_data == "totalCount") continue;
 				$imgs .= sprintf('<img src="%s" alt="%s"/>', $img['url'], $idx_featured_listing_data['address']);
 			}
 		} else {
-			foreach ($idx_featured_listing_data['image'] as $image_data => $img) {
-				$featured_image = $idx_featured_listing_data['image']['0']['url'];
-				if($image_data == "totalCount") continue;
-				$imgs .= sprintf('<img src="%s" alt="%s"/>', $img['url'], $idx_featured_listing_data['address']);
-			}
+			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 		}
 		
 		if ($idx_featured_listing_data['propStatus'] == 'A'){
@@ -172,11 +169,12 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_bedrooms', $idx_featured_listing_data['bedrooms']);
 		update_post_meta($id, '_listing_bathrooms', $idx_featured_listing_data['totalBaths']);
 		update_post_meta($id, '_listing_half_bath', $idx_featured_listing_data['partialBaths']);
-		update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_idx_listing_gallery', $imgs));
+		update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_idx_listing_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
 
-		// Add post meta for all fields
-		if (class_exists( 'Equity_Idx_Listing' )) {
-			foreach ($idx_featured_listing_data as $metakey => $metavalue) {	
+		// Add post meta for equity fields
+		if (class_exists( 'Equity_Idx_Api' )) {
+			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_idx_listing_gallery', $imgs));
+			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
 				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '') {
 					update_post_meta($id, '_listing_' . strtolower($metakey), $metavalue);
 				} elseif(isset( $metavalue ) && is_array( $metavalue )) {
@@ -219,7 +217,7 @@ class WPL_Idx_Listing {
 		// Set attachment data
 		$attachment = array(
 			'post_mime_type' => $wp_filetype['type'],
-			'post_title'     => $idx_featured_listing_data['listingID'],
+			'post_title'     => $idx_featured_listing_data['listingID'] . ' - ' . $idx_featured_listing_data['address'],
 			'post_content'   => '',
 			'post_status'    => 'inherit'
 		);
@@ -306,6 +304,8 @@ function wp_listings_idx_listing_setting_page() {
 
 				return;
 			}
+
+			settings_errors('wp_listings_idx_listing_settings_group');
 			?>		
 			
 			<ol id="selectable" class="grid">
@@ -322,8 +322,6 @@ function wp_listings_idx_listing_setting_page() {
 			}
 
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_options');
-
-			settings_errors('wp_listings_idx_listing_settings_group');
 			
 			settings_fields( 'wp_listings_idx_listing_settings_group' );
 			do_settings_sections( 'wp_listings_idx_listing_settings_group' );
