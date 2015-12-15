@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class WPL_Idx_Listing {
 
 	public $_idx;
-	
+
 	public function __construct() {
 	}
 
@@ -59,7 +59,6 @@ class WPL_Idx_Listing {
 
 				if(!in_array($prop['listingID'], $listings)) {
 					$idx_featured_listing_wp_options[$prop['listingID']]['listingID'] = $prop['listingID'];
-					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = '';
 				}
 
 				if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
@@ -68,7 +67,7 @@ class WPL_Idx_Listing {
 			 	}
 
 				if(in_array($prop['listingID'], $listings) && !isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
-					
+
 					// Get Equity listing API data if available
 					if(class_exists( 'Equity_Idx_Api' )) {
 						$equity_properties = $_equity_idx->equity_listing_ID($prop['idxID'], $prop['listingID']);
@@ -101,9 +100,25 @@ class WPL_Idx_Listing {
 					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'publish');
 					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 				}
-				elseif( !in_array($prop['listingID'], $listings)&& $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
-					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'draft';
+				elseif( !in_array($prop['listingID'], $listings) && isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+
+					// change to draft or delete listing if the post exists but is not in the listing array based on settings
+					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
+
+						// Change to draft
+						self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'draft';
+					} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
+
+						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'deleted';
+
+						// Delete featured image
+						$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+						wp_delete_attachment( $post_featured_image_id );
+
+						//Delete post
+						wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+					}
 				}
 			}
 			update_option('wp_listings_idx_featured_listing_wp_options', $idx_featured_listing_wp_options);
@@ -178,7 +193,7 @@ class WPL_Idx_Listing {
 			}
 
 		}
-		
+
 	}
 
 	/**
@@ -214,7 +229,7 @@ class WPL_Idx_Listing {
 		} else {
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 		}
-		
+
 		if ($idx_featured_listing_data['propStatus'] == 'A'){
 			$propstatus = 'Active';
 		} elseif($idx_featured_listing_data['propStatus'] == 'S') {
@@ -368,7 +383,7 @@ function wp_listings_idx_listing_delete(){
 }
 
 function wp_listings_idx_listing_setting_page() {
-	
+
 	?>
 			<h1>Import IDX Listings</h1>
 			<p>Select the listings to import.</p>
@@ -376,7 +391,7 @@ function wp_listings_idx_listing_setting_page() {
 				<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
 				<?php submit_button('Import Listings'); ?>
 
-			<?php 
+			<?php
 			// Show popup if IDX Broker plugin not active or installed
 			if( !class_exists( 'IDX_Broker_Plugin') ) {
 				// thickbox like content
@@ -390,8 +405,8 @@ function wp_listings_idx_listing_setting_page() {
 			}
 
 			settings_errors('wp_listings_idx_listing_settings_group');
-			?>		
-			
+			?>
+
 			<ol id="selectable" class="grid">
 			<div class="grid-sizer"></div>
 
@@ -405,8 +420,8 @@ function wp_listings_idx_listing_setting_page() {
 				return;
 			}
 
-			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_options');
-			
+			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+
 			settings_fields( 'wp_listings_idx_listing_settings_group' );
 			do_settings_sections( 'wp_listings_idx_listing_settings_group' );
 
@@ -434,8 +449,8 @@ function wp_listings_idx_listing_setting_page() {
 							$nonce
 					 );
 				}
-				
-				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p>%s<br/>%s<br/>%s</p>%s</li></label></div>',
+
+				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p><span class="price">%s</span><br/><span class="address">%s</span><br/><span class="mls">MLS#: </span>%s</p>%s</li></label></div>',
 					$prop['listingID'],
 					isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "imported" : '') : '',
 					isset($prop['image']['0']['url']) ? $prop['image']['0']['url'] : '//mlsphotos.idxbroker.com/defaultNoPhoto/noPhotoFull.png',
@@ -457,7 +472,7 @@ function wp_listings_idx_listing_setting_page() {
 	<?php
 }
 
-/** 
+/**
  * Check if update is scheduled - if not, schedule it to run twice daily.
  * Only add if IDX plugin is installed
  * @since 2.0

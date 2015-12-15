@@ -29,43 +29,29 @@ if( isset($_GET['settings-updated']) ) { ?>
 
             	<?php $options = get_option('plugin_wp_listings_settings');
 
-            	if ( !isset($options['wp_listings_stylesheet_load']) ) {
-					$options['wp_listings_stylesheet_load'] = 0;
-				}
-				if ( !isset($options['wp_listings_widgets_stylesheet_load']) ) {
-					$options['wp_listings_widgets_stylesheet_load'] = 0;
-				}
-				if ( !isset($options['wp_listings_default_state']) ) {
-					$options['wp_listings_default_state'] = '';
-				}
-				if ( !isset($options['wp_listings_archive_posts_num']) ) {
-					$options['wp_listings_archive_posts_num'] = 9;
-				}
-				if ( !isset($options['wp_listings_slug']) ) {
-					$options['wp_listings_slug'] = 'listings';
-				}
-				if ( !isset($options['wp_listings_default_form']) ) {
-					$options['wp_listings_default_form'] = '';
-				}
-				if ( !isset($options['wp_listings_custom_wrapper']) ) {
-					$options['wp_listings_custom_wrapper'] = 0;
-				}
-				if ( !isset($options['wp_listings_start_wrapper']) ) {
-					$options['wp_listings_start_wrapper'] = '';
-				}
-				if ( !isset($options['wp_listings_end_wrapper']) ) {
-					$options['wp_listings_end_wrapper'] = '';
-				}
-				if ( !isset($options['wp_listings_idx_update']) ) {
-					$options['wp_listings_idx_update'] = 'update-all';
-				}
-				if ( !isset($options['wp_listings_idx_sold']) ) {
-					$options['wp_listings_idx_sold'] = 'sold-keep';
-				}
+            	$defaults = array(
+            		'wp_listings_stylesheet_load'         => 0,
+            		'wp_listings_widgets_stylesheet_load' => 0,
+            		'wp_listings_default_state'           => '',
+            		'wp_listings_archive_posts_num'       => 9,
+            		'wp_listings_slug'                    => 'listings',
+            		'wp_listings_default_form'            => '',
+            		'wp_listings_custom_wrapper'          => 0,
+            		'wp_listings_start_wrapper'           => '',
+            		'wp_listings_end_wrapper'             => '',
+            		'wp_listings_idx_update'              => 'update-all',
+            		'wp_listings_idx_sold'                => 'sold-keep'
+            		);
+
+            	foreach($defaults as $name => $value) {
+            		if ( !isset($options[$name]) ) {
+						$options[$name] = $value;
+					}
+            	}
 
             	?>
 
-            	
+
 				<?php
 				if ($options['wp_listings_stylesheet_load'] == 1)
 					echo '<p style="color:red; font-weight: bold;">The plugin\'s main stylesheet (wp-listings.css) has been deregistered<p>';
@@ -75,35 +61,35 @@ if( isset($_GET['settings-updated']) ) { ?>
 				<form action="options.php" method="post" id="wp-listings-settings-options-form">
 					<?php
 					settings_fields('wp_listings_options');
-				
-					
+
+
 					_e('<h3>Include CSS?</h3>', 'wp_listings');
 					_e('<p>Here you can deregister the WP Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp_listings');
 					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister WP Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
 
 					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister WP Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
 
-					
+
 					_e("<h3>Default State</h3><p>You can enter a default state that will automatically be output on template pages and widgets that show the state. When you are create a listing and leave the state field empty, the default entered below will be shown. You can override the default on each listing by entering a value into the state field.</p>", 'wp_listings' );
 				    echo '<p>Default State: <input name="plugin_wp_listings_settings[wp_listings_default_state]" id="wp_listings_default_state" type="text" value="' . $options['wp_listings_default_state'] . '" size="1" /></p><hr>';
-				
 
-					
+
+
 					_e("<h3>Default Number of Posts</h3><p>The default number of posts displayed on a listing archive page is 9. Here you can set a custom number. Enter <span style='color: #f00;font-weight: 700;'>-1</span> to display all listing posts.<br /><em>If you have more than 20-30 posts, it's not recommended to show all or your page will load slow.</em></p>", 'wp_listings' );
 				    _e('<p>Number of posts on listing archive page: <input name="plugin_wp_listings_settings[wp_listings_archive_posts_num]" id="wp_listings_archive_posts_num" type="text" value="' . $options['wp_listings_archive_posts_num'] . '" size="1" /></p><hr>', 'wp-listings' );
-				
 
-					
+
+
 					_e("<h3>Default Form shortcode</h3><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp_listings' );
 				    _e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p><hr>', 'wp-listings');
-				
 
-					
+
+
 					_e("<h3>Custom Wrapper</h3><p>If your theme's content HTML ID's and Classes are different than the included template, you can enter the HTML of your content wrapper beginning and end:</p>", 'wp_listings' );
 					_e('<p><label><input name="plugin_wp_listings_settings[wp_listings_custom_wrapper]" id="wp_listings_custom_wrapper" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_custom_wrapper'], false ) . ' /> Use Custom Wrapper?</p>', 'wp-listings' );
 				    _e('<p><label>Wrapper Start HTML: </p><input name="plugin_wp_listings_settings[wp_listings_start_wrapper]" id="wp_listings_start_wrapper" type="text" value="' . esc_html($options['wp_listings_start_wrapper']) . '" size="80" /></label>', 'wp-listings' );
 				    _e('<p><label>Wrapper End HTML: </p><input name="plugin_wp_listings_settings[wp_listings_end_wrapper]" id="wp_listings_end_wrapper" type="text" value="' . esc_html($options['wp_listings_end_wrapper']) . '" size="80" /></label><hr>', 'wp-listings' );
-				
+
 
 					_e('<h3>Listings slug</h3><p>Optionally change the slug of the listing post type<br /><input type="text" name="plugin_wp_listings_settings[wp_listings_slug]" value="' . $options['wp_listings_slug'] . '" /></p>', 'wp-listings' );
 					_e("<em>Don't forget to <a href='../wp-admin/options-permalink.php'>reset your permalinks</a> if you change the slug!</em></p>", 'wp-listings' );

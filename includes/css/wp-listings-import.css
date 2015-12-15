@@ -16,6 +16,15 @@ img.listing {
 #wplistings-idx-listing-import .idx-listing:hover li {
 	background: #97c58b;
 }
+#wplistings-idx-listing-import li p {
+	font-size: 12px;
+}
+#wplistings-idx-listing-import li p span.price {
+	font-size: 14px;
+}
+#wplistings-idx-listing-import li p span.mls {
+	font-size: 11px;
+}
 #wplistings-idx-listing-import li span.imported {
 	font-size: 0.8em;
 	line-height: 3em;
