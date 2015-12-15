@@ -124,14 +124,15 @@ class WPL_Idx_Listing {
 
 		// Load WP options
 		$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+		$wpl_options = get_option('plugin_wp_listings_settings');
 
+		// Loop through featured properties
 		foreach ( $properties as $prop ) {
 
 			$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
-			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && $idx_featured_listing_wp_options[$prop['listingID']]['listingID'] != $prop['listingID'] ) {
-				self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-			} elseif( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+				// Update property data
 				if(class_exists( 'Equity_Idx_Api' )) {
 					require_once(ABSPATH . 'wp-content/themes/equity/lib/idx/class.Equity_Idx_Api.inc.php');
 					$_equity_idx = new Equity_Idx_Api;
@@ -140,35 +141,40 @@ class WPL_Idx_Listing {
 						$equity_properties = $properties[$key];
 						delete_transient('equity_listing_' . $prop['listingID']);
 					}
-					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, true);
+					if(isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
 				} else {
-					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, true);
+					if(isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
 				}
 			}
 
 		}
 
-		// Load Sold properties
+		// Load and loop throguh Sold properties
 		$sold_properties = $_idx_api->client_properties('soldpending');
 		foreach ( $sold_properties as $prop ) {
 
 			$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
 			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
-				if(class_exists( 'Equity_Idx_Api' )) {
-					require_once(ABSPATH . 'wp-content/themes/equity/lib/idx/class.Equity_Idx_Api.inc.php');
-					$_equity_idx = new Equity_Idx_Api;
-					$equity_properties = $_equity_idx->equity_listing_ID($prop['idxID'], $prop['listingID']);
-					if($equity_properties == false) {
-						$equity_properties = $properties[$key];
-						delete_transient('equity_listing_' . $prop['listingID']);
+
+					// Update property data
+					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+
+					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
+
+						// Change to draft
+						self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+					} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
+
+						// Delete featured image
+						$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+						wp_delete_attachment( $post_featured_image_id );
+
+						//Delete post
+						wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
 					}
-					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true);
-					//self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-				} else {
-					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true);
-					//self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-				}
 			}
 
 		}
@@ -197,7 +203,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true) {
 
-		if (class_exists( 'Equity_Idx_Api' )) {
+		if (class_exists( 'Equity_Idx_Api' ) && $update == false && $update_image == true) {
 			$imgs = '';
 			$featured_image = $idx_featured_listing_data['images']['1']['url'];
 
@@ -245,7 +251,7 @@ class WPL_Idx_Listing {
 				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_idx_listing_gallery', $imgs));
 			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
-				if ($update) {
+				if ($update == true) {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
 				}
 				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '') {
@@ -265,7 +271,7 @@ class WPL_Idx_Listing {
 		}
 
 		/**
-		 * Pull featured image if it's not an update or update image setting is true
+		 * Pull featured image if it's not an update or update image is set to true
 		 */
 		if($update ==  false || $update_image == true) {
 			// Add Featured Image to Post
@@ -362,8 +368,6 @@ function wp_listings_idx_listing_delete(){
 }
 
 function wp_listings_idx_listing_setting_page() {
-	// $update = new WPL_Idx_Listing;
-	// $update->wp_listings_update_post();
 	
 	?>
 			<h1>Import IDX Listings</h1>
@@ -431,7 +435,7 @@ function wp_listings_idx_listing_setting_page() {
 					 );
 				}
 				
-				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p>%s<br/>%s</p>%s</li></label></div>',
+				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p>%s<br/>%s<br/>%s</p>%s</li></label></div>',
 					$prop['listingID'],
 					isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "imported" : '') : '',
 					isset($prop['image']['0']['url']) ? $prop['image']['0']['url'] : '//mlsphotos.idxbroker.com/defaultNoPhoto/noPhotoFull.png',
@@ -441,6 +445,7 @@ function wp_listings_idx_listing_setting_page() {
 					isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "<span class='imported'><i class='dashicons dashicons-yes'></i>Imported</span>" : '') : '',
 					$prop['listingPrice'],
 					$prop['address'],
+					$prop['listingID'],
 					isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? $delete_listing : '') : ''
 					);
 
