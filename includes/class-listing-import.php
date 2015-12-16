@@ -59,6 +59,7 @@ class WPL_Idx_Listing {
 
 				if(!in_array($prop['listingID'], $listings)) {
 					$idx_featured_listing_wp_options[$prop['listingID']]['listingID'] = $prop['listingID'];
+					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = '';
 				}
 
 				if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
@@ -100,7 +101,7 @@ class WPL_Idx_Listing {
 					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'publish');
 					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 				}
-				elseif( !in_array($prop['listingID'], $listings) && isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+				elseif( !in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
 
 					// change to draft or delete listing if the post exists but is not in the listing array based on settings
 					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
@@ -139,14 +140,14 @@ class WPL_Idx_Listing {
 
 		// Load WP options
 		$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
-		$wpl_options = get_option('plugin_wp_listings_settings');
 
-		// Loop through featured properties
 		foreach ( $properties as $prop ) {
 
 			$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
-			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && $idx_featured_listing_wp_options[$prop['listingID']]['listingID'] != $prop['listingID'] ) {
+				self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+			} elseif( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
 				// Update property data
 				if(class_exists( 'Equity_Idx_Api' )) {
 					require_once(ABSPATH . 'wp-content/themes/equity/lib/idx/class.Equity_Idx_Api.inc.php');
@@ -156,11 +157,13 @@ class WPL_Idx_Listing {
 						$equity_properties = $properties[$key];
 						delete_transient('equity_listing_' . $prop['listingID']);
 					}
-					if(isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
+					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
 						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				} else {
-					if(isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
+					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
 						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				}
 			}
 
@@ -174,25 +177,27 @@ class WPL_Idx_Listing {
 
 			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
 
-					// Update property data
-					self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+				// Update property data
+				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
 
-					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
+				if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
-						// Change to draft
-						self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-					} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
+					// Change to draft
+					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+				} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
 
-						// Delete featured image
-						$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
-						wp_delete_attachment( $post_featured_image_id );
+					// Delete featured image
+					$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+					wp_delete_attachment( $post_featured_image_id );
 
-						//Delete post
-						wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
-					}
+					//Delete post
+					wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+				}
 			}
 
 		}
+
+		update_option('wp_listings_idx_featured_listing_wp_options', $idx_featured_listing_wp_options);
 
 	}
 
@@ -420,7 +425,7 @@ function wp_listings_idx_listing_setting_page() {
 				return;
 			}
 
-			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_options');
 
 			settings_fields( 'wp_listings_idx_listing_settings_group' );
 			do_settings_sections( 'wp_listings_idx_listing_settings_group' );
