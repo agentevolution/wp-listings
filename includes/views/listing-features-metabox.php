@@ -2,6 +2,7 @@
 function wp_listings_additional_details() {
 
 	global $post;
+	$additonal_details = '';
 
 	// Create meta box labels and input fields
 	$additonal_details .= '<p>All fields accept text or shortcodes</p>';
