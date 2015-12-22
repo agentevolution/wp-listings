@@ -230,7 +230,7 @@ class WPL_Idx_Listing {
 			foreach ($idx_featured_listing_data['images'] as $image_data => $img) {
 				if($image_data == "totalCount") continue;
 				$img_markup = sprintf('<img src="%s" alt="%s" />', $img['url'], $idx_featured_listing_data['address']);
-				$imgs .= apply_filters( 'wp_listings_imported_image_markup', $img_markup, $img['url'], $idx_featured_listing_data['address'], $img['caption'] );
+				$imgs .= apply_filters( 'wp_listings_imported_image_markup', $img_markup, $img, $idx_featured_listing_data );
 			}
 		} else {
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
