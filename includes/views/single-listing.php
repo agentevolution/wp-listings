@@ -172,17 +172,38 @@ function single_listing_post_content() {
 					echo '</ul><!-- .tagged-features -->';
 				}
 
-				if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
+				$addfeat_home    = get_post_meta( $post->ID, '_listing_home_sum', true);
+				$addfeat_kitchen = get_post_meta( $post->ID, '_listing_kitchen_sum', true);
+				$addfeat_living  = get_post_meta( $post->ID, '_listing_living_room', true);
+				$addfeat_master  = get_post_meta( $post->ID, '_listing_master_suite', true);
+
+				if ( !empty( $addfeat_home ) || !empty( $addfeat_kitchen ) || !empty( $addfeat_living ) || !empty( $addfeat_master ) ) { ?>
 					<div class="additional-features">
 						<h4>Additional Features</h4>
-						<h6 class="label"><?php _e("Home Summary", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_home_sum', true)); ?></p>
-						<h6 class="label"><?php _e("Kitchen Summary", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_kitchen_sum', true)); ?></p>
-						<h6 class="label"><?php _e("Living Room", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_living_room', true)); ?></p>
-						<h6 class="label"><?php _e("Master Suite", 'wp_listings'); ?></h6>
-						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_master_suite', true)); ?></p>
+						<?php if ( !empty( $addfeat_home ) ) { ?>
+							<div>
+								<h6 class="label"><?php _e( "Home Summary", 'wp_listings' ); ?></h6>
+								<p class="value"><?php echo do_shortcode( $addfeat_home); ?></p>
+							</div>
+						<?php } ?>
+						<?php if ( !empty( $addfeat_kitchen ) ) { ?>
+							<div>
+								<h6 class="label"><?php _e( "Kitchen Summary", 'wp_listings' ); ?></h6>
+								<p class="value"><?php echo do_shortcode( $addfeat_kitchen ); ?></p>
+							</div>
+						<?php } ?>
+						<?php if ( !empty( $addfeat_living ) ) { ?>
+							<div>
+								<h6 class="label"><?php _e( "Living Room", 'wp_listings' ); ?></h6>
+								<p class="value"><?php echo do_shortcode( $addfeat_living ); ?></p>
+							</div>
+						<?php } ?>
+						<?php if ( !empty( $addfeat_master ) ) { ?>
+							<div>
+								<h6 class="label"><?php _e( "Master Suite", 'wp_listings' ); ?></h6>
+								<p class="value"><?php echo do_shortcode( $addfeat_master ); ?></p>
+							</div>
+						<?php } ?>
 					</div><!-- .additional-features -->
 				<?php
 				} ?>
@@ -238,7 +259,7 @@ function single_listing_post_content() {
 						    position: myLatLng,
 						    icon: \'//s3.amazonaws.com/ae-plugins/wp-listings/images/active.png\'
 						});
-						
+
 						var infoContent = \' ' . $map_info_content . ' \';
 
 						var infowindow = new google.maps.InfoWindow({
@@ -268,9 +289,9 @@ function single_listing_post_content() {
 		?>
 
 		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
-			
+
 			<?php
-			
+
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
@@ -468,15 +489,15 @@ if (isset($options['wp_listings_custom_wrapper']) && $options['wp_listings_start
 					comments_template();
 				}
 			endwhile;
-			
-			if ($options['wp_listings_custom_wrapper'] == 1 && $options['wp_listings_end_wrapper'] != null) {
+
+			if (isset($options['wp_listings_custom_wrapper']) && $options['wp_listings_custom_wrapper'] == 1 && $options['wp_listings_end_wrapper'] != null) {
 				echo $options['wp_listings_end_wrapper'];
 			} else {
 				echo '
 					</div><!-- #content -->
 				</div><!-- #primary -->';
 			}
-			
+
 get_sidebar( 'content' );
 get_sidebar();
 
