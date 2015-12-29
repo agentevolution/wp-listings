@@ -1,9 +1,9 @@
 === WP Listings ===
-Contributors: agentevolution, davebonds, chadajohnson, idxbroker
-Tags: real estate, listings, property, properties, listing search, idx, agentpress
+Contributors: agentevolution, davebonds, chadajohnson, idxco
+Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 3.7
-Tested up to: 4.3
-Stable tag: 1.2.3
+Tested up to: 4.4
+Stable tag: 2.0
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
@@ -146,14 +146,26 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 == Changelog ==
 
-= 1.3 =
-* Added: Listing meta fields for lat/long, country, half bath, garage
-* Added: Auto-map feature to listings with latitude and longitude. Option available to turn this off on single listings.
-* Added: Global option for default form shortcode
-* Added: JSON support added for more listing meta and core API
-* Added: Admin menu filtering for default taxonomies: Status, Property Types, Locations
-* Added: Listings added to "At a Glance" Dashboard widget
-* Fix: Support taxonomy template overrides
+= 2.0 =
+* Added: Listing importer for IDX Broker. Import your listings into WordPress! Import addditional photos and data with [Equity](http://www.agentevolution.com/equity/).
+* Added: listing_meta shortcode to output arbitrary listing meta data. e.g use listing_meta key="price" to output price.
+* Added: Listing meta fields for lat/long, country, half bath, custom disclaimer, and others.
+* Added: Auto-map feature for listings with lat/long available. Option available to turn this off on single listings.
+* Added: Global option for default form shortcode.
+* Added: Option for a custom HTML wrapper to allow better compatibility with more themes.
+* Added: Support for WP core REST API. Listings and default taxonomy endpoints added. GET and POST supported. GET method returns supported listing meta data, filterable with wp_listings_allowed_api_meta_keys
+* Added: Listings admin menu filtering for default taxonomies: Status, Property Types, Locations
+* Added: Listings added to "At a Glance" Dashboard widget.
+* Added: Filter for additional details meta boxes using wp_listings_additional_details_meta_boxes
+* Added: Filter for imported listing photo gallery markup using wp_listings_imported_image_markup (Equity only)
+* Added: Support for featured images for listing taxonomy terms. (WP 4.4+ required)
+* Added: Checkbox to hide price on individual listings and optionally enter price placeholder.
+* Added: Admin notice class.
+* Added: Support for List or Excerpt view in Listings Admin.
+* Added: Support for new heading hierarchy, post type and taxonomy labels in WP 4.4.
+* Updated: Font Awesome version to 4.5.0
+* Fix: Support taxonomy template overrides.
+* Fix: Support shortcodes in video field.
 
 = 1.2.3 =
 * Update single listing template to display IDX imported data
