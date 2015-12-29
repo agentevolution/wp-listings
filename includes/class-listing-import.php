@@ -45,8 +45,7 @@ class WPL_Idx_Listing {
 			}
 
 			// Load IDX Broker API Class and retrieve featured properties
-			require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
-			$_idx_api = new \IDX\Idx_Api;
+			$_idx_api = new \IDX\Idx_Api();
 			$properties = $_idx_api->client_properties('featured');
 
 			// Load WP options
@@ -134,8 +133,7 @@ class WPL_Idx_Listing {
 	public static function wp_listings_update_post() {
 
 		// Load IDX Broker API Class and retrieve featured properties
-		require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
-		$_idx_api = new \IDX\Idx_Api;
+		$_idx_api = new \IDX\Idx_Api();
 		$properties = $_idx_api->client_properties('featured');
 
 		// Load WP options
@@ -229,7 +227,8 @@ class WPL_Idx_Listing {
 
 			foreach ($idx_featured_listing_data['images'] as $image_data => $img) {
 				if($image_data == "totalCount") continue;
-				$imgs .= sprintf('<img src="%s" alt="%s"/>', $img['url'], $idx_featured_listing_data['address']);
+				$img_markup = sprintf('<img src="%s" alt="%s" />', $img['url'], $idx_featured_listing_data['address']);
+				$imgs .= apply_filters( 'wp_listings_imported_image_markup', $img_markup, $img, $idx_featured_listing_data );
 			}
 		} else {
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
@@ -262,13 +261,13 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_bathrooms', $idx_featured_listing_data['totalBaths']);
 		update_post_meta($id, '_listing_half_bath', $idx_featured_listing_data['partialBaths']);
 		if ($update == false || $update_image == true) {
-			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_listing_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
+			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
 		}
 
 		// Add post meta for Equity API fields
 		if (class_exists( 'Equity_Idx_Api' )) {
 			if ($update == false || $update_image == true) {
-				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_idx_listing_gallery', $imgs));
+				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_imported_gallery', $imgs));
 			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
 				if ($update == true) {
@@ -418,8 +417,7 @@ function wp_listings_idx_listing_setting_page() {
 			<?php
 			// Get properties from IDX Broker plugin
 			if (class_exists( 'IDX_Broker_Plugin' )) {
-				require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
-				$_idx_api = new \IDX\Idx_Api;
+				$_idx_api = new \IDX\Idx_Api();
 				$properties = $_idx_api->client_properties('featured');
 			} else {
 				return;
