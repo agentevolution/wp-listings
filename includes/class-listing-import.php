@@ -402,7 +402,7 @@ function wp_listings_idx_listing_setting_page() {
 				echo '
 					<img class="idx-import bkg" src="' . WP_LISTINGS_URL . 'images/import-bg.jpg' . '" /></a>
 					<div class="idx-import thickbox">
-					     <a href="http://www.idxbroker.com/features/idx-wordpress-plugin"><img src="' . WP_LISTINGS_URL . 'images/idx-ad.png' . '" alt="Sign up for IDX now!"/></a>
+					     <a href="http://www.idxbroker.com/features/idx-wordpress-plugin" target="_blank"><img src="' . WP_LISTINGS_URL . 'images/idx-ad.png' . '" alt="Sign up for IDX now!"/></a>
 					</div>';
 
 				return;
@@ -415,8 +415,18 @@ function wp_listings_idx_listing_setting_page() {
 			<div class="grid-sizer"></div>
 
 			<?php
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			$plugin_data = get_plugins();
+
 			// Get properties from IDX Broker plugin
 			if (class_exists( 'IDX_Broker_Plugin' )) {
+				// bail if IDX plugin version is not at least 2.0
+				if($plugin_data['idx-broker-platinum/idx-broker-platinum.php']['Version'] < 2.0 ) {
+					add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_update', 'You must update to <a href="' . admin_url( 'update-core.php' ) . '">IMPress for IDX Broker</a> version 2.0.0 or higher to import listings.', 'error');
+					settings_errors('wp_listings_idx_listing_settings_group');
+					return;
+				}
+
 				$_idx_api = new \IDX\Idx_Api();
 				$properties = $_idx_api->client_properties('featured');
 			} else {
