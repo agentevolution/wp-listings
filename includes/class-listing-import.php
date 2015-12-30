@@ -292,7 +292,13 @@ class WPL_Idx_Listing {
 		/**
 		 * Pull featured image if it's not an update or update image is set to true
 		 */
-		if($update ==  false || $update_image == true) {
+		if($update == false || $update_image == true) {
+			// Delete previously attached image
+			if($update_image == true) {
+				$post_featured_image_id = get_post_thumbnail_id( $id );
+				wp_delete_attachment( $post_featured_image_id );
+			}
+
 			// Add Featured Image to Post
 			$image_url  = $featured_image; // Define the image URL here
 			$upload_dir = wp_upload_dir(); // Set upload folder
