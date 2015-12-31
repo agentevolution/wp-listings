@@ -46,9 +46,11 @@
 	height: auto;
 }
 
-.js #idx_metabox .handlediv {
+.js #idx_metabox .handlediv,
+#idx_metabox h2.hndle {
 	display: none;
 }
-.js #equity_metabox .handlediv {
+.js #equity_metabox .handlediv,
+#equity_metabox h2.hndle {
 	display: none;
 }
