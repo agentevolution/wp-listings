@@ -28,6 +28,7 @@ function wp_listings_activation() {
 			$_wp_listings_taxonomies->register_taxonomies();
 		}
 		flush_rewrite_rules();
+
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -142,7 +143,8 @@ function wp_listings_init() {
 
         /** Enqueue Font Awesome in the Admin if IDX Broker is not installed */
 		if (!class_exists( 'Idx_Broker_Plugin' )) {
-			wp_enqueue_style('font-awesome');
+			wp_register_style('font-awesome-admin', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', '', null, 'all');
+			wp_enqueue_style('font-awesome-admin');
 			wp_enqueue_style('upgrade-icon', WP_LISTINGS_URL . 'includes/css/wp-listings-upgrade.css');
 		}
 
