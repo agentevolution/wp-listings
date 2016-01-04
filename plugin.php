@@ -1,6 +1,6 @@
 <?php
 /*
-	Plugin Name: WP Listings
+	Plugin Name: IMPress Listings
 	Plugin URI: http://wordpress.org/plugins/wp-listings/
 	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
@@ -29,6 +29,10 @@ function wp_listings_activation() {
 		}
 		flush_rewrite_rules();
 
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -40,11 +44,16 @@ register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
 function wp_listings_deactivation() {
 
 		flush_rewrite_rules();
+
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
 /**
- * Initialize WP Listings.
+ * Initialize IMPress Listings.
  *
  * Include the libraries, define global variables, instantiate the classes.
  *
@@ -71,6 +80,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-admin-notice.php' );
 
 	/** Add theme support for post thumbnails if it does not exist */
 	if(!current_theme_supports('post-thumbnails')) {
@@ -148,6 +158,28 @@ function wp_listings_init() {
 			wp_enqueue_style('upgrade-icon', WP_LISTINGS_URL . 'includes/css/wp-listings-upgrade.css');
 		}
 
+        global $wp_version;
+        $nonce_action = 'wp_listings_admin_notice';
+
+		wp_enqueue_style( 'wp-listings-admin-notice', WP_LISTINGS_URL . 'includes/css/wp-listings-admin-notice.css' );
+		wp_enqueue_script( 'wp-listings-admin', WP_LISTINGS_URL . 'includes/js/admin.js', 'media-views' );
+		wp_localize_script( 'wp-listings-admin', 'wp_listings_adminL10n', array(
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'nonce'      => wp_create_nonce( $nonce_action ),
+			'wp_version' => $wp_version,
+			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+		) );
+
+		$localize_script = array(
+			'title'        => __( 'Set Term Image', 'wp_listings' ),
+			'button'       => __( 'Set term image', 'wp_listings' )
+		);
+
+		/* Pass custom variables to the script. */
+		wp_localize_script( 'wp-listings-admin', 'wpl_term_image', $localize_script );
+
+		wp_enqueue_media();
+
 	}
 	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_scripts_styles' );
 
@@ -159,6 +191,31 @@ function wp_listings_init() {
 	$_wp_listings_templates = new Single_Listing_Template;
 
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
+
+	/**
+	 * Function to add admin notices
+	 * @param  string  $message    the error messag text
+	 * @param  boolean $error      html class - true for error false for updated
+	 * @param  string  $cap_check  required capability
+	 * @param  boolean $ignore_key ignore key
+	 * @return string              HTML of admin notice
+	 *
+	 * @since  1.3
+	 */
+	function wp_listings_admin_notice( $message,  $error = false, $cap_check = 'activate_plugins', $ignore_key = false ) {
+		$_wp_listings_admin = new WP_Listings_Admin_Notice;
+		return $_wp_listings_admin->notice( $message, $error, $cap_check, $ignore_key );
+	}
+
+	/**
+	 * Admin notice AJAX callback
+	 * @since  1.3
+	 */
+	add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
+	function wp_listings_admin_notice_cb() {
+		$_wp_listings_admin = new WP_Listings_Admin_Notice;
+		return $_wp_listings_admin::ajax_cb();
+	}
 
 }
 

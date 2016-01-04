@@ -1,2 +1,2 @@
 <?php
-echo '<a href="http://www.agentevolution.com" target="_blank"><img src="' . WP_LISTINGS_URL . 'images/ae-themes-ad.png" alt="Equity - WordPress Theme Framework by Agent Evolution"></a>';
+echo '<a href="http://www.agentevolution.com/equity" target="_blank"><img style="max-width: 100%;" src="' . WP_LISTINGS_URL . 'images/equity-ad.png" alt="Import your Listings with the Equity Framework"></a>';

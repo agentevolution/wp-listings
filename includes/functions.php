@@ -10,8 +10,20 @@ add_image_size( 'listings', 560, 380, true );
 add_filter( 'template_include', 'wp_listings_template_include' );
 function wp_listings_template_include( $template ) {
 
+	global $wp_query;
+
 	$post_type = 'listing';
 
+	if ( $wp_query->is_search && get_post_type() == 'listing' ) {
+		if ( file_exists(get_stylesheet_directory() . '/search-' . $post_type . '.php') ) {
+			$template = get_stylesheet_directory() . '/search-' . $post_type . '.php';
+			return $template;
+		} elseif ( file_exists(get_stylesheet_directory() . '/search.php' ) ) {
+			return get_stylesheet_directory() . '/search.php';
+		} else {
+			return get_template_directory() . '/search.php';
+		}
+	}
     if ( wp_listings_is_taxonomy_of($post_type) ) {
     	if ( file_exists(get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php' ) ) {
     	    return get_stylesheet_directory() . '/taxonomy-' . $post_type . '.php';
@@ -253,10 +265,33 @@ function wp_listings_jetpack_relatedposts( $headline ) {
 }
 add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_relatedposts' );
 
-
 /**
  * Add Listings to Jetpack Omnisearch
  */
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 	new Jetpack_Omnisearch_Posts( 'listing' );
+}
+
+/**
+ * Function to add admin notices
+ * @param  string  $message    the error messag text
+ * @param  boolean $error      html class - true for error false for updated
+ * @param  string  $cap_check  required capability
+ * @param  boolean $ignore_key ignore key
+ * @return string              HTML of admin notice
+ *
+ * @since  1.3
+ */
+function wp_listings_admin_notice( $message,  $error = false, $cap_check = 'activate_plugins', $ignore_key = false ) {
+	include_once dirname( __FILE__ ) . '/class-admin-notice.php';
+	return WP_Listings_Admin_Notice::notice( $message, $error, $cap_check, $ignore_key );
+}
+
+/**
+ * Admin notice AJAX callback
+ * @since  1.3
+ */
+add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
+function wp_listings_admin_notice_cb() {
+	return WP_Listings_Admin_Notice::ajax_cb();
 }

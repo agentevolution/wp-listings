@@ -256,9 +256,7 @@ class WP_Listings_Taxonomies {
 					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list_navigation' => sprintf( __( '%s list navigation', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list'            => sprintf( __( '%s list', 'wp_listings' ), strip_tags( $singular_name ) )
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
 				'rewrite'  => array( __( 'status', 'wp_listings' ), 'with_front' => false ),
@@ -294,9 +292,7 @@ class WP_Listings_Taxonomies {
 					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list_navigation' => sprintf( __( '%s list navigation', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list'            => sprintf( __( '%s list', 'wp_listings' ), strip_tags( $singular_name ) )
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
 				'rewrite'  => array( __( 'property-types', 'wp_listings' ), 'with_front' => false ),
@@ -332,9 +328,7 @@ class WP_Listings_Taxonomies {
 					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list_navigation' => sprintf( __( '%s list navigation', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list'            => sprintf( __( '%s list', 'wp_listings' ), strip_tags( $singular_name ) )
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
 				'rewrite' => array( __( 'locations', 'wp_listings' ), 'with_front' => false ),
@@ -370,9 +364,7 @@ class WP_Listings_Taxonomies {
 					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
 					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list_navigation' => sprintf( __( '%s list navigation', 'wp_listings' ), strip_tags( $name ) ),
-					'items_list'            => sprintf( __( '%s list', 'wp_listings' ), strip_tags( $singular_name ) )
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => 0,
 				'rewrite' => array( __( 'features', 'wp_listings' ),  'with_front' => false ),
@@ -441,9 +433,8 @@ class WP_Listings_Taxonomies {
 			if ($typenow == $post_type) {
 				$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
 				$info_taxonomy = get_taxonomy($taxonomy);
-				echo '<label for="filter-by-' . strtolower( $info_taxonomy->label ) . '" class="screen-reader-text">Filter by ' . $info_taxonomy->label . '</label>';
 				wp_dropdown_categories(array(
-					'show_option_all' => __("All {$info_taxonomy->label}"),
+					'show_option_all' => __("Show All {$info_taxonomy->label}"),
 					'taxonomy'        => $taxonomy,
 					'name'            => $taxonomy,
 					'orderby'         => 'name',
