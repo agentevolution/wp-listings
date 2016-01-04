@@ -88,7 +88,7 @@ class WP_Listings {
 		add_action( 'admin_menu', array( $this, 'register_meta_boxes' ), 5 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
-		add_action( 'save_post', array( $this, 'save_post' ) );
+		add_action( 'save_post', array( $this, 'save_post' ), 1, 3 );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
@@ -105,7 +105,7 @@ class WP_Listings {
 	}
 
 	/**
-	 * Sets default slug in options
+	 * Sets default slug and default post number in options
 	 */
 	function add_options() {
 
@@ -117,6 +117,7 @@ class WP_Listings {
 		if ( empty($this->options['wp_listings_slug']) && empty($this->options['wp_listings_archive_posts_num']) )  {
 			add_option( 'plugin_wp_listings_settings', $new_options );
 		}
+
 	}
 
 	/**
@@ -125,7 +126,7 @@ class WP_Listings {
 	function settings_init() {
 		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
 
-		add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp_listings' ), __( 'Import IDX Listings', 'wp_listings' ), 'manage_options', 'wplistings-idx-listing', array( &$this, 'wplistings_idx_listing_setting_page') );
+		//add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp_listings' ), __( 'Import IDX Listings', 'wp_listings' ), 'manage_options', 'wplistings-idx-listing', array( &$this, 'wplistings_idx_listing_setting_page') );
 	}
 
 	/**
@@ -185,7 +186,7 @@ class WP_Listings {
 		if( !function_exists( 'equity' ) ) {
 			add_meta_box( 'agentevo_metabox', __( 'Equity Framework', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
 		}
-		
+
 	}
 
 	function listing_details_metabox() {
@@ -350,10 +351,15 @@ class WP_Listings {
 
 		} else {
 
-			$_idx = new Equity_Idx_Api;
-			$_listing = new Equity_Idx_Listing;
-
-			$properties = $_idx->client_properties('featured');
+			if(class_exists( 'Idx_Broker_Plugin' )) {
+				$_idx = new Equity_Idx_Api;
+				$_listing = new Equity_Idx_Listing;
+				$properties = $_idx->client_properties('featured');
+			} elseif(class_exists( 'Equity_Idx_Listing' )) {
+				$_idx = new Equity_Idx_Api;
+				$_listing = new Equity_Idx_Listing;
+				$properties = $_idx->client_properties('featured');
+			}
 
 			$idx_featured_listing_wp_options = get_option('equity_idx_featured_listing_wp_options');
 
@@ -365,7 +371,7 @@ class WP_Listings {
 			settings_errors('equity_idx_listing_settings_group');
 
 			?>
-			
+
 					<h1>Import IDX Listings</h1>
 					<p>Select the listings to import.</p>
 					<form id="equity-idx-listing-import" method="post" action="options.php">
@@ -374,7 +380,7 @@ class WP_Listings {
 						<ol id="selectable" class="grid">
 					<div class="grid-sizer"></div>
 					<?php
-					
+
 					settings_fields( 'equity_idx_listing_settings_group' );
 					do_settings_sections( 'equity_idx_listing_settings_group' );
 
@@ -400,7 +406,7 @@ class WP_Listings {
 									$nonce
 							 );
 						}
-						
+
 						printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="equity_idx_featured_listing_options[]" value="%s" %s />%s<p>%s<br/>%s</p>%s</li></label></div>',
 							$prop['listingID'],
 							isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "imported" : '') : '',
