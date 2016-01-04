@@ -1,0 +1,10 @@
+.menu-icon-listing a[href="edit.php?post_type=listing&page=wplistings-idx-listing"]:after {
+	font-family: 'FontAwesome';
+	font-size: 9px;
+	content: "\f062";
+	padding: 2px 3px 3px 3px;
+	margin-left: 5px;
+	border-radius: 9px;
+	background-color: #d54e21;
+    color: #fff;
+}

@@ -1,0 +1,55 @@
+/* Copied from WordPress 4.2 */
+.wp-core-ui .notice.is-dismissible {
+	padding-right: 38px;
+	position: relative;
+}
+
+.notice-dismiss:before {
+	background: none;
+	color: #b4b9be;
+	content: '\f153';
+	display: block;
+	font: normal 16px/20px 'dashicons';
+	speak: none;
+	height: 20px;
+	text-align: center;
+	width: 20px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.notice-dismiss {
+	position: absolute;
+	top: 0;
+	right: 1px;
+	border: none;
+	margin: 0;
+	padding: 9px;
+	background: none;
+	color: #b4b9be;
+	cursor: pointer;
+}
+
+.notice-dismiss:hover:before,
+.notice-dismiss:active:before,
+.notice-dismiss:focus:before {
+	color: #c00;
+}
+
+.notice-dismiss:focus {
+	outline: none;
+	-webkit-box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+	box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+}
+
+.ie8 .notice-dismiss:focus {
+	outline: 1px solid #5b9dd9;
+}
+
+@media screen and ( max-width: 782px ) {
+	.notice-dismiss {
+		padding: 13px;
+	}
+	.wp-core-ui .notice.is-dismissible {
+		padding-right: 46px;
+	}
+}
