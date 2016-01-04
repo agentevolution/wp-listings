@@ -3,7 +3,6 @@
  * Holds miscellaneous functions for use in the WP Listings plugin
  *
  */
-
 add_image_size( 'listings-full', 1060, 9999, false );
 add_image_size( 'listings', 560, 380, true );
 
@@ -21,7 +20,7 @@ function wp_listings_template_include( $template ) {
 		} elseif ( file_exists(get_stylesheet_directory() . '/search.php' ) ) {
 			return get_stylesheet_directory() . '/search.php';
 		} else {
-			return get_template_directory() . '/search.php';
+			return dirname( __FILE__ ) . '/views/archive-' . $post_type . '.php';
 		}
 	}
     if ( wp_listings_is_taxonomy_of($post_type) ) {
@@ -225,21 +224,21 @@ add_filter( 'dashboard_glance_items', 'custom_glance_items', 10, 1 );
 function custom_glance_items( $items = array() ) {
 
     $post_types = array( 'listing' );
-    
+
     foreach( $post_types as $type ) {
 
         if( ! post_type_exists( $type ) ) continue;
 
         $num_posts = wp_count_posts( $type );
-        
+
         if( $num_posts ) {
-      
+
             $published = intval( $num_posts->publish );
             $post_type = get_post_type_object( $type );
-            
+
             $text = _n( '%s ' . $post_type->labels->singular_name, '%s ' . $post_type->labels->name, $published, 'wp_listings' );
             $text = sprintf( $text, number_format_i18n( $published ) );
-            
+
             if ( current_user_can( $post_type->cap->edit_posts ) ) {
                 $items[] = sprintf( '<a class="%1$s-count" href="edit.php?post_type=%1$s">%2$s</a>', $type, $text ) . "\n";
             } else {
@@ -247,7 +246,7 @@ function custom_glance_items( $items = array() ) {
             }
         }
     }
-    
+
     return $items;
 }
 
@@ -273,25 +272,12 @@ if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 }
 
 /**
- * Function to add admin notices
- * @param  string  $message    the error messag text
- * @param  boolean $error      html class - true for error false for updated
- * @param  string  $cap_check  required capability
- * @param  boolean $ignore_key ignore key
- * @return string              HTML of admin notice
- *
- * @since  1.3
+ * Function to return term image for use on front end
+ * @param  num  $term_id the id of the term
+ * @param  boolean $html    use html wrapper with wp_get_attachment_image
+ * @return mixed  the image with html markup or the image id
  */
-function wp_listings_admin_notice( $message,  $error = false, $cap_check = 'activate_plugins', $ignore_key = false ) {
-	include_once dirname( __FILE__ ) . '/class-admin-notice.php';
-	return WP_Listings_Admin_Notice::notice( $message, $error, $cap_check, $ignore_key );
-}
-
-/**
- * Admin notice AJAX callback
- * @since  1.3
- */
-add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
-function wp_listings_admin_notice_cb() {
-	return WP_Listings_Admin_Notice::ajax_cb();
+function wp_listings_term_image( $term_id, $html = true, $size = 'full' ) {
+	$image_id = get_term_meta( $term_id, 'wpl_term_image', true );
+	return $image_id && $html ? wp_get_attachment_image( $image_id, $size, false, array('class' => 'wp-listings-term-image') ) : $image_id;
 }

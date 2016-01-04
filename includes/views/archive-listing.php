@@ -14,6 +14,9 @@ function archive_listing_loop() {
 
 		$count = 0; // start counter at 0
 
+		// Uncomment to use term image in your theme
+		// echo '<div class="wp-listings-term-image">' . wp_listings_term_image(get_queried_object()->term_id, true, 'full') . '</div>';
+
 		// Start the Loop.
 		while ( have_posts() ) : the_post();
 
@@ -24,7 +27,7 @@ function archive_listing_loop() {
 			$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
 
 			if ( '' != wp_listings_get_status() ) {
-				$loop .= sprintf( '<span class="listing-status %s">%s</span>', strtolower(str_replace(' ', '-', wp_listings_get_status())), wp_listings_get_status() );
+				$loop .= sprintf( '<span class="listing-status %s">%s</span>', strtolower(str_replace(' ', '-', wp_listings_get_status($post->ID, 1))), wp_listings_get_status() );
 			}
 
 			$loop .= sprintf( '<div class="listing-thumb-meta">' );
