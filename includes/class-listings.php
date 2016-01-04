@@ -125,8 +125,6 @@ class WP_Listings {
 	 */
 	function settings_init() {
 		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
-
-		//add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp_listings' ), __( 'Import IDX Listings', 'wp_listings' ), 'manage_options', 'wplistings-idx-listing', array( &$this, 'wplistings_idx_listing_setting_page') );
 	}
 
 	/**
@@ -331,102 +329,6 @@ class WP_Listings {
 		}
 
 		return $screen;
-	}
-
-	/**
-	 * Displays Import IDX listing submenu page
-	 * @return [type] [description]
-	 */
-	function wplistings_idx_listing_setting_page() {
-		if(!class_exists( 'IDXB' )) { ?>
-
-			<h1>Import IDX Listings</h1>
-				<p>Select the listings to import.</p>
-				<form id="equity-idx-listing-import" method="post" action="options.php">
-					<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
-					<?php submit_button('Import Listings'); ?>
-					<ol id="selectable" class="grid">
-				<div class="grid-sizer"></div>
-		<?php
-
-		} else {
-
-			if(class_exists( 'Idx_Broker_Plugin' )) {
-				$_idx = new Equity_Idx_Api;
-				$_listing = new Equity_Idx_Listing;
-				$properties = $_idx->client_properties('featured');
-			} elseif(class_exists( 'Equity_Idx_Listing' )) {
-				$_idx = new Equity_Idx_Api;
-				$_listing = new Equity_Idx_Listing;
-				$properties = $_idx->client_properties('featured');
-			}
-
-			$idx_featured_listing_wp_options = get_option('equity_idx_featured_listing_wp_options');
-
-			if( !is_plugin_active( 'wp-listings/plugin.php' ) ) {
-				echo "<p>To import IDX listings, the <a href='http://wordpress.org/plugins/wp-listings/'>WP Listings</a> plugin must be installed and active.</p>";
-				return;
-			}
-
-			settings_errors('equity_idx_listing_settings_group');
-
-			?>
-
-					<h1>Import IDX Listings</h1>
-					<p>Select the listings to import.</p>
-					<form id="equity-idx-listing-import" method="post" action="options.php">
-						<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
-						<?php submit_button('Import Listings'); ?>
-						<ol id="selectable" class="grid">
-					<div class="grid-sizer"></div>
-					<?php
-
-					settings_fields( 'equity_idx_listing_settings_group' );
-					do_settings_sections( 'equity_idx_listing_settings_group' );
-
-					if(!$properties) {
-						echo 'No featured properties found.';
-						return;
-					}
-
-					foreach ($properties as $prop) {
-
-						if(!isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) || !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
-							$idx_featured_listing_wp_options[$prop['listingID']] = array(
-								'listingID' => $prop['listingID']
-								);
-						}
-
-						if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
-							$pid = $idx_featured_listing_wp_options[$prop['listingID']]['post_id'];
-							$nonce = wp_create_nonce('equity_idx_listing_delete_nonce');
-							$delete_listing = sprintf('<a href="%s" data-id="%s" data-nonce="%s" class="delete-post">Delete</a>',
-								admin_url( 'admin-ajax.php?action=equity_idx_listing_delete&id=' . $pid . '&nonce=' . $nonce),
-									$pid,
-									$nonce
-							 );
-						}
-
-						printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="equity_idx_featured_listing_options[]" value="%s" %s />%s<p>%s<br/>%s</p>%s</li></label></div>',
-							$prop['listingID'],
-							isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "imported" : '') : '',
-							isset($prop['image']['0']['url']) ? $prop['image']['0']['url'] : '//mlsphotos.idxbroker.com/defaultNoPhoto/noPhotoFull.png',
-							$prop['listingID'],
-							$prop['listingID'],
-							isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "checked" : '') : '',
-							isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "<span class='imported'><i class='dashicons dashicons-yes'></i>Imported</span>" : '') : '',
-							$prop['listingPrice'],
-							$prop['address'],
-							isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? $delete_listing : '') : ''
-							);
-					}
-					echo '</ol>';
-					submit_button('Import Listings');
-					update_option('equity_idx_featured_listing_wp_options', $idx_featured_listing_wp_options);
-					?>
-					</form>
-			<?php
-		}
 	}
 
 }
