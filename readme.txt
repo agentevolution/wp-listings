@@ -1,9 +1,13 @@
 === IMPress Listings ===
+Author: Agent Evolution
+Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 3.7
 Tested up to: 4.4
 Stable tag: 2.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
