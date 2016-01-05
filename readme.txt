@@ -1,17 +1,17 @@
-=== WP Listings ===
+=== IMPress Listings ===
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 3.7
 Tested up to: 4.4
-Stable tag: 2.0
+Stable tag: 2.0.0
 
 Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 
 == Description ==
 
-WP Listings uses custom post types, taxonomies, templates, and widgets to create a listing management system for WordPress. It includes custom templates and widgets for front end display.
+IMPress Listings uses custom post types, taxonomies, templates, and widgets to create a listing management system for WordPress. It includes custom templates and widgets for front end display.
 
-View a demo of the plugin in action: [WP Listings demo](http://demo.wp-listings.com/)
+View a demo of the plugin in action: [IMPress Listings demo](http://demo.wp-listings.com/)
 
 You can use the taxonomy creation tool to create your own way of classifying listings (i.e. bedrooms, bathrooms, locations, price ranges) and use those taxonomies to allow users to search for listings. Also includes ability to reorder the taxonomies as needed.
 
@@ -24,7 +24,7 @@ Default taxonomies (and terms):
 
 Also includes a Featured Listings widget to display listings in any taxonomy (Property type, Status, Location, etc.) and display them in a custom number of columns. Plus, a Search widget to allow visitors to search your listings by taxonomy.
 
-If you're using the AgentPress listings plugin, we've made it easy to switch to WP Listings. The plugin uses the same post type name and data fields (plus several more) so all your entered listing data will remain in place.
+If you're using the AgentPress listings plugin, we've made it easy to switch to IMPress Listings. The plugin uses the same post type name and data fields (plus several more) so all your entered listing data will remain in place.
 
 Custom data fields include:
 
@@ -42,11 +42,7 @@ Custom data fields include:
 * Photo gallery
 * Video or virtual tour
 * Map
-* Home Summary
-* Kitchen Summary
-* Living Room
-* Master Suite
-* School and Neighborhood Info
+* and more!
 
 Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it will display on the page.
 
@@ -90,7 +86,7 @@ This will display all listings in the "Status" taxonomy, assigned to the "Active
 
 = I already use the AgentPress Listings plugin, can I use this plugin? =
 
-Yes. This plugin can be used instead of the AgentPress Listings plugin. It uses the same post type name and custom field names (along with several new fields), so the posts you've added using AgentPress, along with the associated meta data, will remain attached to the listing post. Just be sure to deactivate AgentPress before activating WP Listings.
+Yes. This plugin can be used instead of the AgentPress Listings plugin. It uses the same post type name and custom field names (along with several new fields), so the posts you've added using AgentPress, along with the associated meta data, will remain attached to the listing post. Just be sure to deactivate AgentPress before activating IMPress Listings.
 
 = My theme already has a single listing template. How do I use the one provided with the plugin? =
 
@@ -108,7 +104,7 @@ Description: Give it a description to help identify
 
 Its possible to remove the default property status terms by using a filter in your theme or custom plugins. Here is an example for the status terms:
 
-`/* Remove Default Status Terms from WP Listings */
+`/* Remove Default Status Terms from IMPress Listings */
 add_filter( 'wp_listings_default_status_terms', 'custom_default_status_terms' );
 function custom_default_status_terms() {
   $status_terms = array();
@@ -117,7 +113,7 @@ function custom_default_status_terms() {
 
 Here is an example for the property terms:
 
-`/* Remove Default Property Terms from WP Listings */
+`/* Remove Default Property Terms from IMPress Listings */
 add_filter( 'wp_listings_default_property_type_terms', 'custom_default_property_type_terms' );
 function custom_default_property_type_terms() {
   $property_type_terms = array();
