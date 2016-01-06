@@ -27,30 +27,30 @@ function wp_listings_register_listing_meta() {
  * Another method for adding listing meta field keys to WP 4.4+ REST API responses for GET
  */
 // add_filter( 'rest_prepare_listing', 'wp_listings_add_meta_to_json', 10, 3 );
-function wp_listings_add_meta_to_json($data, $post, $request){
+// function wp_listings_add_meta_to_json($data, $post, $request){
 
-	$response_data = $data->get_data();
+// 	$response_data = $data->get_data();
 
-	if ( $request['context'] !== 'view' || is_wp_error( $data ) ) {
-	    return $data;
-	}
+// 	if ( $request['context'] !== 'view' || is_wp_error( $data ) ) {
+// 	    return $data;
+// 	}
 
-	$allowed_meta_keys = allowed_meta_keys();
+// 	$allowed_meta_keys = allowed_meta_keys();
 
-	foreach($allowed_meta_keys as $listing_meta_key) {
-		if(!empty(get_post_meta( $post->ID, $listing_meta_key, true ))){
-		    $listing_meta[$listing_meta_key] = get_post_meta( $post->ID, $listing_meta_key, true );
-		}
-	}
+// 	foreach($allowed_meta_keys as $listing_meta_key) {
+// 		if(!empty(get_post_meta( $post->ID, $listing_meta_key, true ))){
+// 		    $listing_meta[$listing_meta_key] = get_post_meta( $post->ID, $listing_meta_key, true );
+// 		}
+// 	}
 
-	if($post->post_type == 'listing') {
-	    $response_data['listing_meta'] = $listing_meta;
-	}
+// 	if($post->post_type == 'listing') {
+// 	    $response_data['listing_meta'] = $listing_meta;
+// 	}
 
-	$data->set_data( $response_data );
+// 	$data->set_data( $response_data );
 
-	return $data;
-}
+// 	return $data;
+// }
 
 /**
  * Get the value of the listing meta key
@@ -109,7 +109,7 @@ function wp_listings_rest_api_allowed_public_metadata( $allowed_meta_keys )
 add_filter( 'rest_api_allowed_public_metadata', 'wp_listings_rest_api_allowed_public_metadata' );
 
 /**
- * Keep an array of allowed meta fields for the listing via the api methods 
+ * Keep an array of allowed meta fields for the listing via the api methods
  * @return allowed_meta_keys the post meta keys
  */
 function allowed_meta_keys() {
