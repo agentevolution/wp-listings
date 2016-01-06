@@ -1,17 +1,17 @@
-# Copyright (C) 2015 Agent Evolution
+# Copyright (C) 2016 Agent Evolution
 # This file is distributed under the GNU General Public License v2.0 (or later).
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Listings 1.1.4\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/plugin\n"
-"POT-Creation-Date: 2015-02-17 01:37:04+00:00\n"
+"Project-Id-Version: IMPress Listings 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin\n"
+"POT-Creation-Date: 2016-01-04 19:46:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.0\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
 "X-Poedit-KeywordsList: "
 "__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
 "attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
@@ -24,6 +24,10 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
+#: includes/class-admin-notice.php:120 plugin.php:170
+msgid "Dismiss this notice"
+msgstr ""
+
 #: includes/class-featured-listings-widget.php:11
 msgid "Display grid-style featured listings"
 msgstr ""
@@ -33,8 +37,8 @@ msgid "WP Listings - Featured Listings"
 msgstr ""
 
 #: includes/class-featured-listings-widget.php:127
-#: includes/class-listings.php:116 includes/class-listings.php:117
-#: includes/views/archive-listing.php:58
+#: includes/class-listings.php:154 includes/class-listings.php:155
+#: includes/views/archive-listing.php:61
 msgid "View Listing"
 msgstr ""
 
@@ -53,6 +57,10 @@ msgstr ""
 
 #: includes/class-featured-listings-widget.php:204
 msgid "All Taxonomies and Terms"
+msgstr ""
+
+#: includes/class-listing-import.php:361
+msgid "Import IDX Listings"
 msgstr ""
 
 #: includes/class-listing-template.php:61
@@ -83,7 +91,7 @@ msgid "WP Listings - Search"
 msgstr ""
 
 #: includes/class-listings-search-widget.php:20
-#: includes/class-listings-search-widget.php:68 includes/class-listings.php:118
+#: includes/class-listings-search-widget.php:68 includes/class-listings.php:156
 msgid "Search Listings"
 msgstr ""
 
@@ -95,270 +103,422 @@ msgstr ""
 msgid "Button Text:"
 msgstr ""
 
-#: includes/class-listings.php:33
+#: includes/class-listings.php:33 includes/views/single-listing.php:126
+#: includes/views/single-listing.php:128
 msgid "Price:"
 msgstr ""
 
-#: includes/class-listings.php:34
+#: includes/class-listings.php:34 includes/views/single-listing.php:131
 msgid "Address:"
 msgstr ""
 
-#: includes/class-listings.php:35
+#: includes/class-listings.php:35 includes/views/single-listing.php:132
 msgid "City:"
 msgstr ""
 
-#: includes/class-listings.php:36
+#: includes/class-listings.php:36 includes/views/single-listing.php:133
 msgid "State:"
 msgstr ""
 
 #: includes/class-listings.php:37
-msgid "ZIP:"
+msgid "Country:"
 msgstr ""
 
 #: includes/class-listings.php:38
-msgid "MLS #:"
+msgid "ZIP:"
 msgstr ""
 
 #: includes/class-listings.php:39
+msgid "MLS #:"
+msgstr ""
+
+#: includes/class-listings.php:40
 msgid "Open House Time & Date:"
 msgstr ""
 
-#: includes/class-listings.php:42
+#: includes/class-listings.php:43
 msgid "Year Built:"
 msgstr ""
 
-#: includes/class-listings.php:43
+#: includes/class-listings.php:44
 msgid "Floors:"
 msgstr ""
 
-#: includes/class-listings.php:44
+#: includes/class-listings.php:45
 msgid "Square Feet:"
 msgstr ""
 
-#: includes/class-listings.php:45
+#: includes/class-listings.php:46
 msgid "Lot Square Feet:"
 msgstr ""
 
-#: includes/class-listings.php:46
+#: includes/class-listings.php:47
 msgid "Bedrooms:"
 msgstr ""
 
-#: includes/class-listings.php:47
+#: includes/class-listings.php:48
 msgid "Bathrooms:"
 msgstr ""
 
-#: includes/class-listings.php:48
+#: includes/class-listings.php:49
+msgid "Half Bathrooms:"
+msgstr ""
+
+#: includes/class-listings.php:50
+msgid "Garage:"
+msgstr ""
+
+#: includes/class-listings.php:51
 msgid "Pool:"
 msgstr ""
 
-#: includes/class-listings.php:91
+#: includes/class-listings.php:57
+msgid "Property Type:"
+msgstr ""
+
+#: includes/class-listings.php:58
+msgid "Condo:"
+msgstr ""
+
+#: includes/class-listings.php:59
+msgid "Financial:"
+msgstr ""
+
+#: includes/class-listings.php:60
+msgid "Condition:"
+msgstr ""
+
+#: includes/class-listings.php:61
+msgid "Construction:"
+msgstr ""
+
+#: includes/class-listings.php:62
+msgid "Exterior:"
+msgstr ""
+
+#: includes/class-listings.php:63
+msgid "Fencing:"
+msgstr ""
+
+#: includes/class-listings.php:64
+msgid "Interior:"
+msgstr ""
+
+#: includes/class-listings.php:65
+msgid "Flooring:"
+msgstr ""
+
+#: includes/class-listings.php:66
+msgid "Heat/Cool:"
+msgstr ""
+
+#: includes/class-listings.php:69
+msgid "Lot size:"
+msgstr ""
+
+#: includes/class-listings.php:70
+msgid "Location:"
+msgstr ""
+
+#: includes/class-listings.php:71
+msgid "Scenery:"
+msgstr ""
+
+#: includes/class-listings.php:72
+msgid "Community:"
+msgstr ""
+
+#: includes/class-listings.php:73
+msgid "Recreation:"
+msgstr ""
+
+#: includes/class-listings.php:74
+msgid "General:"
+msgstr ""
+
+#: includes/class-listings.php:75
+msgid "Inclusions:"
+msgstr ""
+
+#: includes/class-listings.php:76
+msgid "Parking:"
+msgstr ""
+
+#: includes/class-listings.php:77
+msgid "Rooms:"
+msgstr ""
+
+#: includes/class-listings.php:78
+msgid "Laundry:"
+msgstr ""
+
+#: includes/class-listings.php:79
+msgid "Utilities:"
+msgstr ""
+
+#: includes/class-listings.php:127
 msgid "Settings"
 msgstr ""
 
-#: includes/class-listings.php:109
+#: includes/class-listings.php:147
 msgid "Listings"
 msgstr ""
 
-#: includes/class-listings.php:110
+#: includes/class-listings.php:148
 msgid "Listing"
 msgstr ""
 
-#: includes/class-listings.php:111
+#: includes/class-listings.php:149
 msgid "Add New"
 msgstr ""
 
-#: includes/class-listings.php:112
+#: includes/class-listings.php:150
 msgid "Add New Listing"
 msgstr ""
 
-#: includes/class-listings.php:113 includes/views/create-tax.php:48
-#: includes/views/single-listing.php:368
+#: includes/class-listings.php:151 includes/views/create-tax.php:48
+#: includes/views/single-listing.php:473
 msgid "Edit"
 msgstr ""
 
-#: includes/class-listings.php:114
+#: includes/class-listings.php:152
 msgid "Edit Listing"
 msgstr ""
 
-#: includes/class-listings.php:115
+#: includes/class-listings.php:153
 msgid "New Listing"
 msgstr ""
 
-#: includes/class-listings.php:119
+#: includes/class-listings.php:157
 msgid "No listings found"
 msgstr ""
 
-#: includes/class-listings.php:120
+#: includes/class-listings.php:158
 msgid "No listings found in Trash"
 msgstr ""
 
-#: includes/class-listings.php:138
+#: includes/class-listings.php:159
+msgid "Filter Listings"
+msgstr ""
+
+#: includes/class-listings.php:160 includes/helpers.php:116
+msgid "Listings navigation"
+msgstr ""
+
+#: includes/class-listings.php:161
+msgid "Listings list"
+msgstr ""
+
+#: includes/class-listings.php:181
 msgid "Property Details"
 msgstr ""
 
-#: includes/class-listings.php:139
+#: includes/class-listings.php:182
 msgid "Additional Details"
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "Agent Evolution"
+#: includes/class-listings.php:184
+msgid "IDX Broker"
 msgstr ""
 
-#: includes/class-listings.php:197
+#: includes/class-listings.php:187
+msgid "Equity Framework"
+msgstr ""
+
+#: includes/class-listings.php:252
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/class-listings.php:198
+#: includes/class-listings.php:253
 msgid "Listing Title"
 msgstr ""
 
-#: includes/class-listings.php:199
+#: includes/class-listings.php:254
 msgid "Details"
 msgstr ""
 
-#: includes/class-listings.php:200
+#: includes/class-listings.php:255
 msgid "Tags"
 msgstr ""
 
-#: includes/class-taxonomies.php:42
+#: includes/class-listings.php:326 includes/views/wp-listings-settings.php:4
+msgid ""
+"<strong>Integrate your MLS Listings into WordPress with IDX "
+"Broker!</strong> <a "
+"href=\"http://www.idxbroker.com/features/idx-wordpress-plugin\">Find out "
+"how</a>"
+msgstr ""
+
+#: includes/class-listings.php:329
+msgid ""
+"<strong>Stop filling out forms. Equity automatically enhances your listings "
+"with extra details and photos.</strong> <a "
+"href=\"http://www.agentevolution.com/equity/\">Find out how</a>"
+msgstr ""
+
+#: includes/class-taxonomies.php:58
 msgid "Register Taxonomies"
 msgstr ""
 
-#: includes/class-taxonomies.php:43 includes/class-taxonomies.php:427
+#: includes/class-taxonomies.php:59 includes/class-taxonomies.php:634
 #: includes/views/reorder-tax.php:17 includes/views/reorder-tax.php:40
 msgid "Reorder Taxonomies"
 msgstr ""
 
-#: includes/class-taxonomies.php:95 includes/class-taxonomies.php:97
-#: includes/class-taxonomies.php:99 includes/class-taxonomies.php:167
-#: includes/class-taxonomies.php:169 includes/class-taxonomies.php:171
+#: includes/class-taxonomies.php:111 includes/class-taxonomies.php:113
+#: includes/class-taxonomies.php:115 includes/class-taxonomies.php:183
+#: includes/class-taxonomies.php:185 includes/class-taxonomies.php:187
 msgid "Please complete all required fields."
 msgstr ""
 
-#: includes/class-taxonomies.php:108 includes/class-taxonomies.php:180
-#: includes/class-taxonomies.php:248 includes/class-taxonomies.php:281
-#: includes/class-taxonomies.php:314 includes/class-taxonomies.php:347
+#: includes/class-taxonomies.php:124 includes/class-taxonomies.php:196
+#: includes/class-taxonomies.php:264 includes/class-taxonomies.php:302
+#: includes/class-taxonomies.php:340 includes/class-taxonomies.php:378
 msgid "Search %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:109 includes/class-taxonomies.php:181
-#: includes/class-taxonomies.php:249 includes/class-taxonomies.php:282
-#: includes/class-taxonomies.php:315 includes/class-taxonomies.php:348
+#: includes/class-taxonomies.php:125 includes/class-taxonomies.php:197
+#: includes/class-taxonomies.php:265 includes/class-taxonomies.php:303
+#: includes/class-taxonomies.php:341 includes/class-taxonomies.php:379
 msgid "Popular %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:110 includes/class-taxonomies.php:182
-#: includes/class-taxonomies.php:250 includes/class-taxonomies.php:283
-#: includes/class-taxonomies.php:316 includes/class-taxonomies.php:349
+#: includes/class-taxonomies.php:126 includes/class-taxonomies.php:198
+#: includes/class-taxonomies.php:266 includes/class-taxonomies.php:304
+#: includes/class-taxonomies.php:342 includes/class-taxonomies.php:380
 msgid "All %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:111 includes/class-taxonomies.php:183
-#: includes/class-taxonomies.php:251 includes/class-taxonomies.php:284
-#: includes/class-taxonomies.php:317 includes/class-taxonomies.php:350
+#: includes/class-taxonomies.php:127 includes/class-taxonomies.php:199
+#: includes/class-taxonomies.php:267 includes/class-taxonomies.php:305
+#: includes/class-taxonomies.php:343 includes/class-taxonomies.php:381
 msgid "Edit %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:112 includes/class-taxonomies.php:184
-#: includes/class-taxonomies.php:252 includes/class-taxonomies.php:285
-#: includes/class-taxonomies.php:318 includes/class-taxonomies.php:351
+#: includes/class-taxonomies.php:128 includes/class-taxonomies.php:200
+#: includes/class-taxonomies.php:268 includes/class-taxonomies.php:306
+#: includes/class-taxonomies.php:344 includes/class-taxonomies.php:382
 msgid "Update %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:113 includes/class-taxonomies.php:185
-#: includes/class-taxonomies.php:253 includes/class-taxonomies.php:286
-#: includes/class-taxonomies.php:319 includes/class-taxonomies.php:352
+#: includes/class-taxonomies.php:129 includes/class-taxonomies.php:201
+#: includes/class-taxonomies.php:269 includes/class-taxonomies.php:307
+#: includes/class-taxonomies.php:345 includes/class-taxonomies.php:383
 msgid "Add New %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:114 includes/class-taxonomies.php:186
-#: includes/class-taxonomies.php:254 includes/class-taxonomies.php:287
-#: includes/class-taxonomies.php:320 includes/class-taxonomies.php:353
+#: includes/class-taxonomies.php:130 includes/class-taxonomies.php:202
+#: includes/class-taxonomies.php:270 includes/class-taxonomies.php:308
+#: includes/class-taxonomies.php:346 includes/class-taxonomies.php:384
 msgid "New %s Name"
 msgstr ""
 
-#: includes/class-taxonomies.php:115 includes/class-taxonomies.php:187
-#: includes/class-taxonomies.php:255 includes/class-taxonomies.php:288
-#: includes/class-taxonomies.php:321 includes/class-taxonomies.php:354
+#: includes/class-taxonomies.php:131 includes/class-taxonomies.php:203
+#: includes/class-taxonomies.php:271 includes/class-taxonomies.php:309
+#: includes/class-taxonomies.php:347 includes/class-taxonomies.php:385
 msgid "Add or Remove %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:116 includes/class-taxonomies.php:188
-#: includes/class-taxonomies.php:256 includes/class-taxonomies.php:289
-#: includes/class-taxonomies.php:322 includes/class-taxonomies.php:355
+#: includes/class-taxonomies.php:132 includes/class-taxonomies.php:204
+#: includes/class-taxonomies.php:272 includes/class-taxonomies.php:310
+#: includes/class-taxonomies.php:348 includes/class-taxonomies.php:386
 msgid "Choose from the most used %s"
 msgstr ""
 
-#: includes/class-taxonomies.php:145 includes/class-taxonomies.php:153
+#: includes/class-taxonomies.php:161 includes/class-taxonomies.php:169
 msgid ""
 "Nice try, partner. But that taxonomy doesn't exist. Click back and try "
 "again."
 msgstr ""
 
-#: includes/class-taxonomies.php:215
+#: includes/class-taxonomies.php:231
 msgid "New taxonomy successfully created!"
 msgstr ""
 
-#: includes/class-taxonomies.php:220
+#: includes/class-taxonomies.php:236
 msgid "Taxonomy successfully edited!"
 msgstr ""
 
-#: includes/class-taxonomies.php:225
+#: includes/class-taxonomies.php:241
 msgid "Taxonomy successfully deleted."
 msgstr ""
 
-#: includes/class-taxonomies.php:238 includes/class-taxonomies.php:239
+#: includes/class-taxonomies.php:254 includes/class-taxonomies.php:255
 msgid "Status"
 msgstr ""
 
-#: includes/class-taxonomies.php:259
+#: includes/class-taxonomies.php:273 includes/class-taxonomies.php:311
+#: includes/class-taxonomies.php:349 includes/class-taxonomies.php:387
+msgid "%s list navigation"
+msgstr ""
+
+#: includes/class-taxonomies.php:274 includes/class-taxonomies.php:312
+#: includes/class-taxonomies.php:350 includes/class-taxonomies.php:388
+msgid "%s list"
+msgstr ""
+
+#: includes/class-taxonomies.php:277
 msgid "status"
 msgstr ""
 
-#: includes/class-taxonomies.php:271
+#: includes/class-taxonomies.php:292
 msgid "Property Types"
 msgstr ""
 
-#: includes/class-taxonomies.php:272
+#: includes/class-taxonomies.php:293
 msgid "Property Type"
 msgstr ""
 
-#: includes/class-taxonomies.php:292
+#: includes/class-taxonomies.php:315
 msgid "property-types"
 msgstr ""
 
-#: includes/class-taxonomies.php:304
+#: includes/class-taxonomies.php:330
 msgid "Locations"
 msgstr ""
 
-#: includes/class-taxonomies.php:305
+#: includes/class-taxonomies.php:331
 msgid "Location"
 msgstr ""
 
-#: includes/class-taxonomies.php:325
+#: includes/class-taxonomies.php:353
 msgid "locations"
 msgstr ""
 
-#: includes/class-taxonomies.php:337
+#: includes/class-taxonomies.php:368
 msgid "Features"
 msgstr ""
 
-#: includes/class-taxonomies.php:338
+#: includes/class-taxonomies.php:369
 msgid "Feature"
 msgstr ""
 
-#: includes/class-taxonomies.php:358
+#: includes/class-taxonomies.php:391
 msgid "features"
 msgstr ""
 
-#: includes/class-taxonomies.php:429
+#: includes/class-taxonomies.php:502 includes/class-taxonomies.php:578
+#: includes/class-taxonomies.php:602
+msgid "Image"
+msgstr ""
+
+#: includes/class-taxonomies.php:583 includes/class-taxonomies.php:609
+#: plugin.php:175
+msgid "Set term image"
+msgstr ""
+
+#: includes/class-taxonomies.php:584 includes/class-taxonomies.php:610
+msgid "Remove term image"
+msgstr ""
+
+#: includes/class-taxonomies.php:636
 msgid ""
 "Note: This will only allow you to reorder user-created taxonomies. Default "
 "taxonomies cannot be reordered (Status, Locations, Property Types, "
 "Features)."
 msgstr ""
 
-#: includes/class-taxonomies.php:441
+#: includes/class-taxonomies.php:648
 msgid "Drag and Drop to reorder"
 msgstr ""
 
@@ -390,24 +550,20 @@ msgstr ""
 msgid "Next &rarr;"
 msgstr ""
 
-#: includes/helpers.php:116
-msgid "Listings navigation"
-msgstr ""
-
-#: includes/shortcodes.php:98
+#: includes/shortcodes.php:106
 msgid "Open House"
 msgstr ""
 
-#: includes/shortcodes.php:106
+#: includes/shortcodes.php:114
 msgid "Beds"
 msgstr ""
 
-#: includes/shortcodes.php:106
+#: includes/shortcodes.php:114
 msgid "Baths"
 msgstr ""
 
-#: includes/shortcodes.php:106
-msgid "Sq ft"
+#: includes/shortcodes.php:114
+msgid "Square Feet"
 msgstr ""
 
 #: includes/views/create-tax.php:2
@@ -478,22 +634,48 @@ msgid "Update"
 msgstr ""
 
 #: includes/views/listing-details-metabox.php:26
-msgid ""
-"<p><label>Custom Listing Text (custom text to display as overlay on "
-"featured listing widget)<br />"
+msgid "<h4>Extended Details:</h4>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:27
+#: includes/views/listing-details-metabox.php:44
+msgid "<h4>Price Options</h4>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:45
+msgid ""
+"<p><label>Hide the price from visitors?<br /> <input type=\"checkbox\" "
+"name=\"wp_listings[_listing_hide_price]\" value=\"1\" %s /></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:48
+msgid "<p><label>Text to display instead of price (or leave blank):<br />"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:49
+msgid ""
+"<input type=\"text\" name=\"wp_listings[_listing_price_alt]\" value=\"%s\" "
+"/></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:54
+msgid "<h4>Custom Overlay Text</h4>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:55
+msgid "<p><label>Custom text to display as overlay on featured listings<br />"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:56
 msgid ""
 "<input type=\"text\" name=\"wp_listings[_listing_text]\" value=\"%s\" "
 "/></label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:33
+#: includes/views/listing-details-metabox.php:62
 msgid "<p><label>Photo Gallery (use Add Media button to insert Gallery):<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:54
+#: includes/views/listing-details-metabox.php:83
 msgid ""
 "<p><label>Enter Video or Virtual Tour Embed Code (<a "
 "href=\"https://wordpress.org/plugins/jetpack/\" target=\"_blank\" "
@@ -502,15 +684,40 @@ msgid ""
 "rel=\"nofollow\">video shortcodes</a>.):<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:55
+#: includes/views/listing-details-metabox.php:84
 msgid ""
 "<textarea name=\"wp_listings[_listing_video]\" rows=\"5\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:61
+#: includes/views/listing-details-metabox.php:91
+msgid "<h4>Map Options</h4>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:96
 msgid ""
-"<p><label>Enter Map Embed Code or shortcode from Map plugin (such as <a "
+"<p><label>Automatically insert map based on latitude/longitude? "
+"<strong>Will be overridden if a shortode is entered below.</strong><br /> "
+"<input type=\"radio\" name=\"wp_listings[_listing_automap]\" value=\"y\" "
+"%s>Yes</input> <input type=\"radio\" name=\"wp_listings[_listing_automap]\" "
+"value=\"n\" %s>No</input></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:101
+msgid ""
+"<p><label>Latitude: <br /><input type=\"text\" "
+"name=\"wp_listings[_listing_latitude]\" value=\"%s\" /></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:104
+msgid ""
+"<p><label>Longitude: <br /><input type=\"text\" "
+"name=\"wp_listings[_listing_longitude]\" value=\"%s\" /></label></p>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:107
+msgid ""
+"<p><label>Or enter Map Embed Code or shortcode from Map plugin (such as <a "
 "href=\"http://jetpack.me/support/shortcode-embeds/\" target=\"_blank\" "
 "rel=\"nofollow\">Jetpack Shortcodes</a>, <a "
 "href=\"https://wordpress.org/plugins/simple-google-maps-short-code/\" "
@@ -521,116 +728,207 @@ msgid ""
 "/>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:62
+#: includes/views/listing-details-metabox.php:108
 msgid ""
 "<textarea name=\"wp_listings[_listing_map]\" rows=\"5\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:68
+#: includes/views/listing-details-metabox.php:113
+msgid "<h4>Contact Form</h4>"
+msgstr ""
+
+#: includes/views/listing-details-metabox.php:115
 msgid ""
 "<p><label>If you use a Contact Form plugin, you may enter the Contact Form "
 "shortcode here. Otherwise, the single listing template will use a default "
 "contact form:<br />"
 msgstr ""
 
-#: includes/views/listing-details-metabox.php:69
+#: includes/views/listing-details-metabox.php:116
 msgid ""
 "<textarea name=\"wp_listings[_listing_contact_form]\" rows=\"1\" "
 "cols=\"18\" style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-features-metabox.php:8
+#: includes/views/listing-features-metabox.php:11
 msgid ""
-"<p><label>Home Summary (allows shortcodes):<br /><textarea "
+"<p><label>Featured On:<br /><textarea "
+"name=\"wp_listings[_listing_featured_on]\" rows=\"5\" cols=\"18\" "
+"style=\"%s\">%s</textarea></label></p>"
+msgstr ""
+
+#: includes/views/listing-features-metabox.php:16
+msgid ""
+"<p><label>Home Summary:<br /><textarea "
 "name=\"wp_listings[_listing_home_sum]\" rows=\"3\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-features-metabox.php:15
+#: includes/views/listing-features-metabox.php:21
 msgid ""
-"<p><label>Kitchen Summary (allows shortcodes):<br /><textarea "
+"<p><label>Kitchen Summary:<br /><textarea "
 "name=\"wp_listings[_listing_kitchen_sum]\" rows=\"3\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-features-metabox.php:22
+#: includes/views/listing-features-metabox.php:26
 msgid ""
-"<p><label>Living Room (allows shortcodes):<br /><textarea "
+"<p><label>Living Room:<br /><textarea "
 "name=\"wp_listings[_listing_living_room]\" rows=\"3\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/listing-features-metabox.php:29
+#: includes/views/listing-features-metabox.php:31
 msgid ""
-"<p><label>Master Suite (allows shortcodes):<br /><textarea "
+"<p><label>Master Suite:<br /><textarea "
 "name=\"wp_listings[_listing_master_suite]\" rows=\"3\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
 #: includes/views/listing-features-metabox.php:36
 msgid ""
-"<p><label>School and Neighborhood Info (allows shortcodes):<br /><textarea "
+"<p><label>School and Neighborhood Info:<br /><textarea "
 "name=\"wp_listings[_listing_school_neighborhood]\" rows=\"5\" cols=\"18\" "
 "style=\"%s\">%s</textarea></label></p>"
 msgstr ""
 
-#: includes/views/single-listing.php:102
+#: includes/views/listing-features-metabox.php:41
+msgid ""
+"<p><label>Custom Disclaimer:<br /><textarea "
+"name=\"wp_listings[_listing_custom_disclaimer]\" rows=\"5\" cols=\"18\" "
+"style=\"%s\">%s</textarea></label></p>"
+msgstr ""
+
+#: includes/views/single-listing.php:105
 msgid "View more <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: includes/views/single-listing.php:142
+#: includes/views/single-listing.php:134
+msgid "Zip Code:"
+msgstr ""
+
+#: includes/views/single-listing.php:170
+msgid "Tagged Features:"
+msgstr ""
+
+#: includes/views/single-listing.php:185
 msgid "Home Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:144
+#: includes/views/single-listing.php:191
 msgid "Kitchen Summary"
 msgstr ""
 
-#: includes/views/single-listing.php:146
+#: includes/views/single-listing.php:197
 msgid "Living Room"
 msgstr ""
 
-#: includes/views/single-listing.php:148
+#: includes/views/single-listing.php:203
 msgid "Master Suite"
 msgstr ""
 
-#: includes/views/single-listing.php:364
+#: includes/views/single-listing.php:469
 msgid "Leave a comment"
 msgstr ""
 
-#: includes/views/single-listing.php:364
+#: includes/views/single-listing.php:469
 msgid "1 Comment"
 msgstr ""
 
-#: includes/views/single-listing.php:364
+#: includes/views/single-listing.php:469
 msgid "% Comments"
 msgstr ""
 
-#: includes/views/wp-listings-settings.php:48
+#: includes/views/wp-listings-settings.php:7
 msgid ""
-"<h2>Default State</h2><p>You can enter a default state that will "
+"<strong>Want enhanced listings? Automatically import extra details and "
+"photos with Equity.</strong> <a "
+"href=\"http://www.agentevolution.com/equity/\">Learn how</a>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:12
+msgid "Settings saved."
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:20
+msgid "WP Listings Settings"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:66
+msgid "<h3>Include CSS?</h3>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:67
+msgid ""
+"<p>Here you can deregister the WP Listings CSS files and move to your "
+"theme's css file for ease of customization</p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:73
+msgid ""
+"<h3>Default State</h3><p>You can enter a default state that will "
 "automatically be output on template pages and widgets that show the state. "
 "When you are create a listing and leave the state field empty, the default "
 "entered below will be shown. You can override the default on each listing "
 "by entering a value into the state field.</p>"
 msgstr ""
 
-#: includes/views/wp-listings-settings.php:53
+#: includes/views/wp-listings-settings.php:78
 msgid ""
-"<h2>Default Number of Posts</h2><p>The default number of posts displayed on "
+"<h3>Default Number of Posts</h3><p>The default number of posts displayed on "
 "a listing archive page is 9. Here you can set a custom number. Enter <span "
 "style='color: #f00;font-weight: 700;'>-1</span> to display all listing "
 "posts.<br /><em>If you have more than 20-30 posts, it's not recommended to "
 "show all or your page will load slow.</em></p>"
 msgstr ""
 
-#: includes/views/wp-listings-settings.php:60
+#: includes/views/wp-listings-settings.php:83
+msgid ""
+"<h3>Default Form shortcode</h3><p>If you use a Contact Form plugin, you may "
+"enter the form shortcode here to display on all listings. Additionally, "
+"each listing can use a custom form. If no shortcode is entered, the "
+"template will use a default contact form:</p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:88
+msgid ""
+"<h3>Custom Wrapper</h3><p>If your theme's content HTML ID's and Classes are "
+"different than the included template, you can enter the HTML of your "
+"content wrapper beginning and end:</p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:95
+msgid ""
+"<em>Don't forget to <a href='../wp-admin/options-permalink.php'>reset your "
+"permalinks</a> if you change the slug!</em></p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:98
+msgid ""
+"<hr style=\"margin: 25px 0;\"><h3>IDX Imported Listings</h3><p>These "
+"settings apply to any imported IDX listings. Imported listings are updated "
+"via the latest API response twice daily.</p>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:99
+msgid "<h2>Update Listings</h2>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:104
+msgid "<h2>Sold Listings</h2>"
+msgstr ""
+
+#: includes/views/wp-listings-settings.php:111
 msgid "Save Settings"
 msgstr ""
 
+#: plugin.php:174
+msgid "Set Term Image"
+msgstr ""
+
 #. Plugin Name of the plugin/theme
-msgid "WP Listings"
+msgid "IMPress Listings"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -641,6 +939,10 @@ msgstr ""
 msgid ""
 "Creates a portable real estate listing management system. Designed to work "
 "with any theme using built-in templates."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Agent Evolution"
 msgstr ""
 
 #. Author URI of the plugin/theme

@@ -1,12 +1,12 @@
 <?php
 /*
-	Plugin Name: WP Listings
+	Plugin Name: IMPress Listings
 	Plugin URI: http://wordpress.org/plugins/wp-listings/
 	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 1.3
+	Version: 2.0.0
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -28,6 +28,11 @@ function wp_listings_activation() {
 			$_wp_listings_taxonomies->register_taxonomies();
 		}
 		flush_rewrite_rules();
+
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -39,11 +44,16 @@ register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
 function wp_listings_deactivation() {
 
 		flush_rewrite_rules();
+
+		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+		foreach ($notice_keys as $notice) {
+			delete_user_meta( get_current_user_id(), $notice );
+		}
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
 /**
- * Initialize WP Listings.
+ * Initialize IMPress Listings.
  *
  * Include the libraries, define global variables, instantiate the classes.
  *
@@ -54,7 +64,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '1.2.3' );
+	define( 'WP_LISTINGS_VERSION', '2.0.0' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -65,10 +75,12 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/shortcodes.php' );
 	require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-listing-import.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-template.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
+	require_once( dirname( __FILE__ ) . '/includes/class-admin-notice.php' );
 
 	/** Add theme support for post thumbnails if it does not exist */
 	if(!current_theme_supports('post-thumbnails')) {
@@ -95,7 +107,8 @@ function wp_listings_init() {
 		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css', '', null, 'all');
 
 		/** Register Font Awesome icons but don't enqueue them */
-		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', '', null, 'all');
+		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', '', null, 'all');
+
 
 		/** Register Properticons but don't enqueue them */
 		wp_register_style('properticons', '//s3.amazonaws.com/properticons/css/properticons.css', '', null, 'all');
@@ -134,11 +147,43 @@ function wp_listings_init() {
         }
     }
 
-    /** Add admin styles */
-    function wp_listings_admin_style() {
-        wp_enqueue_style( 'wp_listings_admin_css', plugin_dir_url( __FILE__ ) . '/includes/css/wp-listings-admin.css' );
+    /** Add admin scripts and styles */
+    function wp_listings_admin_scripts_styles() {
+        wp_enqueue_style( 'wp_listings_admin_css', WP_LISTINGS_URL . 'includes/css/wp-listings-admin.css' );
+
+        /** Enqueue Font Awesome in the Admin if IDX Broker is not installed */
+		if (!class_exists( 'Idx_Broker_Plugin' )) {
+			wp_register_style('font-awesome-admin', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', '', null, 'all');
+			wp_enqueue_style('font-awesome-admin');
+			wp_enqueue_style('upgrade-icon', WP_LISTINGS_URL . 'includes/css/wp-listings-upgrade.css');
+		}
+
+        global $wp_version;
+        $nonce_action = 'wp_listings_admin_notice';
+
+		wp_enqueue_style( 'wp-listings-admin-notice', WP_LISTINGS_URL . 'includes/css/wp-listings-admin-notice.css' );
+		wp_enqueue_script( 'wp-listings-admin', WP_LISTINGS_URL . 'includes/js/admin.js', 'media-views' );
+		wp_localize_script( 'wp-listings-admin', 'wp_listings_adminL10n', array(
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'nonce'      => wp_create_nonce( $nonce_action ),
+			'wp_version' => $wp_version,
+			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+		) );
+
+		$localize_script = array(
+			'title'        => __( 'Set Term Image', 'wp_listings' ),
+			'button'       => __( 'Set term image', 'wp_listings' )
+		);
+
+		/* Pass custom variables to the script. */
+		wp_localize_script( 'wp-listings-admin', 'wpl_term_image', $localize_script );
+
+		wp_enqueue_media();
+
 	}
-	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_style' );
+	add_action( 'admin_enqueue_scripts', 'wp_listings_admin_scripts_styles' );
+
+
 
 	/** Instantiate */
 	$_wp_listings = new WP_Listings;
@@ -147,14 +192,31 @@ function wp_listings_init() {
 
 	add_action( 'widgets_init', 'wp_listings_register_widgets' );
 
-	// /** For troubleshooting the loaded template */
-	// add_action('genesis_entry_header', 'echo_template_name');
-	// add_action('genesis_after_post_title', 'echo_template_name');
-	// function echo_template_name() {
-	// 	global $post, $template;
-	// 	echo $template;
-	// 	echo get_post_meta( $post->ID, '_wp_post_template', true );
-	// }
+	/**
+	 * Function to add admin notices
+	 * @param  string  $message    the error messag text
+	 * @param  boolean $error      html class - true for error false for updated
+	 * @param  string  $cap_check  required capability
+	 * @param  boolean $ignore_key ignore key
+	 * @return string              HTML of admin notice
+	 *
+	 * @since  1.3
+	 */
+	function wp_listings_admin_notice( $message,  $error = false, $cap_check = 'activate_plugins', $ignore_key = false ) {
+		$_wp_listings_admin = new WP_Listings_Admin_Notice;
+		return $_wp_listings_admin->notice( $message, $error, $cap_check, $ignore_key );
+	}
+
+	/**
+	 * Admin notice AJAX callback
+	 * @since  1.3
+	 */
+	add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
+	function wp_listings_admin_notice_cb() {
+		$_wp_listings_admin = new WP_Listings_Admin_Notice;
+		return $_wp_listings_admin::ajax_cb();
+	}
+
 }
 
 /**

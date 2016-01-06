@@ -88,9 +88,13 @@ class WP_Listings {
 		add_action( 'admin_menu', array( $this, 'register_meta_boxes' ), 5 );
 		add_action( 'save_post', array( $this, 'metabox_save' ), 1, 2 );
 
+		add_action( 'save_post', array( $this, 'save_post' ), 1, 3 );
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
 		add_action( 'admin_init', array( &$this, 'add_options' ) );
 		add_action( 'admin_menu', array( &$this, 'settings_init' ), 15 );
+
 	}
 
 	/**
@@ -101,7 +105,7 @@ class WP_Listings {
 	}
 
 	/**
-	 * Sets default slug in options
+	 * Sets default slug and default post number in options
 	 */
 	function add_options() {
 
@@ -113,10 +117,11 @@ class WP_Listings {
 		if ( empty($this->options['wp_listings_slug']) && empty($this->options['wp_listings_archive_posts_num']) )  {
 			add_option( 'plugin_wp_listings_settings', $new_options );
 		}
+
 	}
 
 	/**
-	 * Adds settings page in admin menu
+	 * Adds settings page and IDX Import page to admin menu
 	 */
 	function settings_init() {
 		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
@@ -171,10 +176,14 @@ class WP_Listings {
 	}
 
 	function register_meta_boxes() {
-
 		add_meta_box( 'listing_details_metabox', __( 'Property Details', 'wp_listings' ), array( &$this, 'listing_details_metabox' ), 'listing', 'normal', 'high' );
 		add_meta_box( 'listing_features_metabox', __( 'Additional Details', 'wp_listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
-		add_meta_box( 'agentevo_metabox', __( 'Agent Evolution', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
+		if ( !class_exists( 'Idx_Broker_Plugin' ) ) {
+			add_meta_box( 'idx_metabox', __( 'IDX Broker', 'wp_listings' ), array( &$this, 'idx_metabox' ), 'wp-listings-options', 'side', 'core' );
+		}
+		if( !function_exists( 'equity' ) ) {
+			add_meta_box( 'agentevo_metabox', __( 'Equity Framework', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
+		}
 
 	}
 
@@ -188,6 +197,10 @@ class WP_Listings {
 
 	function agentevo_metabox() {
 		include( dirname( __FILE__ ) . '/views/agentevo-metabox.php' );
+	}
+
+	function idx_metabox() {
+		include( dirname( __FILE__ ) . '/views/idx-metabox.php' );
 	}
 
 	function metabox_save( $post_id, $post ) {
@@ -279,6 +292,43 @@ class WP_Listings {
 				break;
 		}
 
+	}
+
+	/**
+	 * Adds query var on saving post to show notice
+	 * @param  [type] $post_id [description]
+	 * @param  [type] $post    [description]
+	 * @param  [type] $update  [description]
+	 * @return [type]          [description]
+	 */
+	function save_post( $post_id, $post, $update ) {
+		add_filter( 'redirect_post_location', array( &$this, 'add_notice_query_var' ), 99 );
+	}
+
+	function add_notice_query_var( $location ) {
+		remove_filter( 'redirect_post_location', array( &$this, 'add_notice_query_var' ), 99 );
+		return add_query_arg( array( 'wp-listings' => 'show-notice' ), $location );
+	}
+
+	/**
+	 * Displays admin notices if show-notice url param exists or edit listing page
+	 * @return object current screen
+	 * @uses  wp_listings_admin_notice
+	 */
+	function admin_notices() {
+
+		$screen = get_current_screen();
+
+		if ( isset( $_GET['wp-listings']) || $screen->id == 'edit-listing' ) {
+			if ( !class_exists( 'Idx_Broker_Plugin') ) {
+				echo wp_listings_admin_notice( __( '<strong>Integrate your MLS Listings into WordPress with IDX Broker!</strong> <a href="http://www.idxbroker.com/features/idx-wordpress-plugin">Find out how</a>', 'wp_listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_idx' : 'wpl_notice_idx' );
+			}
+			if( !function_exists( 'equity' ) ) {
+				echo wp_listings_admin_notice( __( '<strong>Stop filling out forms. Equity automatically enhances your listings with extra details and photos.</strong> <a href="http://www.agentevolution.com/equity/">Find out how</a>', 'wp_listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_equity' : 'wpl_notice_equity' );
+			}
+		}
+
+		return $screen;
 	}
 
 }

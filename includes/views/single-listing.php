@@ -25,7 +25,6 @@ function wp_listings_dnsprefetch() {
 function single_listing_post_content() {
 
 	global $post;
-	$options = get_option('plugin_wp_listings_settings');
 
 	?>
 
@@ -106,7 +105,6 @@ function single_listing_post_content() {
 
 				echo (get_post_meta($post->ID, '_listing_featured_on', true)) ? '<p class="wp_listings_featured_on">' . get_post_meta($post->ID, '_listing_featured_on', true) . '</p>' : '';
 
-				echo (get_post_meta($post->ID, '_listing_custom_disclaimer', true)) ? '<p class="wp_listings_custom_disclaimer">' . get_post_meta($post->ID, '_listing_custom_disclaimer', true) . '</p>' : '';
 				echo (get_post_meta($post->ID, '_listing_disclaimer', true)) ? '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>' : '';
 				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
@@ -270,7 +268,7 @@ function single_listing_post_content() {
 		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
 			
 			<?php
-			
+			$options = get_option('plugin_wp_listings_settings');
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
@@ -393,9 +391,7 @@ function single_listing_post_content() {
 <?php
 }
 
-$options = get_option('plugin_wp_listings_settings');
-
-if (function_exists('equity') && !isset($options['wp_listings_custom_wrapper'])) {
+if (function_exists('equity')) {
 
 	remove_action( 'equity_entry_header', 'equity_post_info', 12 );
 	remove_action( 'equity_entry_footer', 'equity_post_meta' );
@@ -405,7 +401,7 @@ if (function_exists('equity') && !isset($options['wp_listings_custom_wrapper']))
 
 	equity();
 
-} elseif (function_exists('genesis_init') && !isset($options['wp_listings_custom_wrapper'])) {
+} elseif (function_exists('genesis_init')) {
 
 	remove_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );
 	remove_action( 'genesis_entry_header', 'genesis_post_info', 12 ); // HTML5
@@ -424,16 +420,12 @@ if (function_exists('equity') && !isset($options['wp_listings_custom_wrapper']))
 
 } else {
 
-get_header();
+get_header(); ?>
 
-if (isset($options['wp_listings_custom_wrapper']) && $options['wp_listings_start_wrapper'] != null) {
-	echo $options['wp_listings_start_wrapper'];
-} else {
-	echo '
-		<div id="primary" class="content-area container inner">
-			<div id="content" class="site-content" role="main">';
-}
+	<div id="primary" class="content-area container inner">
+		<div id="content" class="site-content" role="main">
 
+			<?php
 				// Start the Loop.
 				while ( have_posts() ) : the_post(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -467,19 +459,15 @@ if (isset($options['wp_listings_custom_wrapper']) && $options['wp_listings_start
 				if ( comments_open() || get_comments_number() ) {
 					comments_template();
 				}
-			endwhile;
-			
-			if ($options['wp_listings_custom_wrapper'] == 1 && $options['wp_listings_end_wrapper'] != null) {
-				echo $options['wp_listings_end_wrapper'];
-			} else {
-				echo '
-					</div><!-- #content -->
-				</div><!-- #primary -->';
-			}
-			
+				endwhile;
+			?>
+
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<?php
 get_sidebar( 'content' );
 get_sidebar();
-
 get_footer();
 
 }
