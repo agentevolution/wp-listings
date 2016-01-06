@@ -13,27 +13,68 @@ Creates a portable real estate listing management system. Designed to work with 
 
 == Description ==
 
-IMPress Listings uses custom post types, taxonomies, templates, and widgets to create a listing management system for WordPress. It includes custom templates and widgets for front end display.
+You’ve got to have a really good reason to change the name of a successful WordPress plugin.
 
+With WP Listings, version 2.0 gave us that reason, IDX integration.
+
+= WP Listings is now IMPress Listings =
+
+Just like WP Listings, the IMPress Listings plugin creates a listing management system for your WordPress site. It still is fully responsive and works with nearly any WordPress theme.
+
+IMPress Listings adds some important new features to what was already a great plugin. Most notably, MLS integration through the use of the [IMPress for IDX Broker]( https://wordpress.org/plugins/idx-broker-platinum/) plugin.
+
+= Demo =
 View a demo of the plugin in action: [IMPress Listings demo](http://demo.wp-listings.com/)
 
-You can use the taxonomy creation tool to create your own way of classifying listings (i.e. bedrooms, bathrooms, locations, price ranges) and use those taxonomies to allow users to search for listings. Also includes ability to reorder the taxonomies as needed.
+> <strong>Importing from your MLS</strong><br>
+> No more typing in listing information that you have already added to your MLS. With IMPress Listings and IMPress for IDX Broker, you can automatically import basic listing details.
+>
+> Want even more listing content imported? Switch to our Equity framework for your WordPress website. A WordPress site running Equity, IMPress Listings and IMPress for IDX Broker can import full listing details.
+>
+> *IDX Broker subscription required.
 
-Default taxonomies (and terms):
+= Default Taxonomies and Terms =
 
 * Status (Active, Sold, Pending, For Rent, Reduced, New)
 * Property Types (Residential, Condo, Townhome, Commercial)
 * Location
 * Features
 
-Also includes a Featured Listings widget to display listings in any taxonomy (Property type, Status, Location, etc.) and display them in a custom number of columns. Plus, a Search widget to allow visitors to search your listings by taxonomy.
+Use the taxonomy creation tool to create your own way of classifying listings (i.e. bedrooms, bathrooms, locations, price ranges) and use those taxonomies to allow users to search for listings. Then, reorder the taxonomies as needed.
 
-If you're using the AgentPress listings plugin, we've made it easy to switch to IMPress Listings. The plugin uses the same post type name and data fields (plus several more) so all your entered listing data will remain in place.
+Find listings by taxonomy using filters in the WordPress admin.
 
-Custom data fields include:
+= Widget =
 
+Includes a Featured Listings widget to display listings in any taxonomy (Property type, Status, Location, etc.). Display them in a custom number of columns.
+
+Also, a Quick Search widget to allow visitors to search your listings by taxonomy.
+
+> <strong>Premium Listing Templates</strong><br>
+> Make your listing pages look like single property websites with our [premium listing templates](http://www.agentevolution.com/plugins/).
+> These templates use their own styling and navigation to look like a unique website without any of the extra work or expense.
+> Install any or all of our premium listing templates and use them for all of your featured listings.
+
+= Migrating from AgentPress Listings =
+
+If you're using the [AgentPress Listings](https://wordpress.org/plugins/agentpress-listings/) plugin, we've made it easy to switch to IMPress Listings. The plugin uses the same post type name and data fields (plus several more) so all your entered listing data will remain in place.
+
+= Automatic Map Insertion =
+
+No more embedding a map into your listing pages. Enter the property’s latitude and longitude and a map is automatically added to the listing page.
+
+Using IMPress for IDX Broker? Longitude and latitude is automatically added for your imported listings.
+
+= Property Display =
+
+Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it will display on the page.
+
+Don’t want to show the price on a listing? Check a box and the price is hidden. That simple.
+
+Supported property fields:
 * Price
 * Address
+* Country
 * MLS Number
 * Year Built
 * Floors
@@ -41,6 +82,8 @@ Custom data fields include:
 * Lot Square Feet
 * Bedrooms
 * Bathrooms
+* Half Baths
+* Garage
 * Pool
 * Open House date and time
 * Photo gallery
@@ -48,15 +91,26 @@ Custom data fields include:
 * Map
 * and more!
 
-Single listings display the custom data automatically with no need to insert shortcodes to display listing data. If it's entered, it will display on the page.
+= Enhanced Theme Compatibility =
 
-Integrates with the [Genesis Agent Profiles](http://wordpress.org/plugins/genesis-agent-profiles/) plugin to display the listing agent(s).
+While we would love for you to use one of our Equity themes with IMPress Listings, we have made it easier to work with your favorite WordPress themes. The plugin now allows custom page wrappers to better fit your theme.
 
-Single listings include a contact form for visitors to inquire about a property, or the form can be replaced with your own form plugin shortcode.
+= Contact Forms =
 
-Allows for any number of custom single listing templates to be created and displayed on a per listing basis.
+Listing pages include a contact form for visitors to inquire about a property, or the form can be replaced with your own form plugin shortcode.
 
-Premium Single Listing Templates available at [agentevolution.com](http://www.agentevolution.com/product-category/listing-templates/).
+Save time by adding a contact form to all listings instead of one at a time.
+
+= Flair for Developers =
+
+A lot of developer goodies came in WordPress 4.4, including API support. Developers looking to use the latest WordPress tools will love IMPress Listings.
+
+We have built in WordPress API support for the listing post type and default taxonomies. This will allow skilled developers to create their own applications around listing content.
+
+There is also support for taxonomy featured images. Assign an image for active properties, solds, featured listings, neighborhoods, or an other taxonomy you should create.
+
+= Integration =
+Integrates with the [Genesis Agent Profiles](https://wordpress.org/plugins/genesis-agent-profiles/) plugin to display the listing agent(s).
 
 Feel free to contribute to this project on [Github](https://github.com/agentevolution/wp-listings).
 
@@ -87,6 +141,10 @@ Example advanced usage:
 This will display all listings in the "Status" taxonomy, assigned to the "Active" term, limited to 10 listings, in 3 columns
 
 == Frequently Asked Questions ==
+
+= Can I import listings from my MLS?
+
+Yes. With an IDX Broker subscription and adding their IMPress for IDX Broker plugin to your site, IMPress Listings can import featured properties from the MLS.
 
 = I already use the AgentPress Listings plugin, can I use this plugin? =
 
@@ -124,8 +182,6 @@ function custom_default_property_type_terms() {
   return $property_type_terms;
 }`
 
-For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-listings/)
-
 == Screenshots ==
 
 1. Listings Admin screen
@@ -144,10 +200,14 @@ For more FAQ's visit [agentevolution.com](http://www.agentevolution.com/shop/wp-
 
 8. Listing archive template display
 
+9. Admin Settings page
+
+10. IDX Listing import page
+
 == Changelog ==
 
 = 2.0 =
-* Added: Listing importer for IDX Broker. Import your listings into WordPress! Import addditional photos and data with [Equity](http://www.agentevolution.com/equity/).
+* Added: Listing importer for IDX Broker. Import your listings into WordPress! Import additional photos and data with [Equity](http://www.agentevolution.com/equity/).
 * Added: listing_meta shortcode to output arbitrary listing meta data. e.g use listing_meta key="price" to output price.
 * Added: Listing meta fields for lat/long, country, half bath, custom disclaimer, and others.
 * Added: Auto-map feature for listings with lat/long available. Option available to turn this off on single listings.
