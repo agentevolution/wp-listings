@@ -73,7 +73,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/helpers.php' );
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 	require_once( dirname( __FILE__ ) . '/includes/shortcodes.php' );
-	//require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
+	require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-import.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
@@ -214,7 +214,7 @@ function wp_listings_init() {
 	add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
 	function wp_listings_admin_notice_cb() {
 		$_wp_listings_admin = new WP_Listings_Admin_Notice;
-		return $_wp_listings_admin::ajax_cb();
+		return $_wp_listings_admin->ajax_cb();
 	}
 
 }
