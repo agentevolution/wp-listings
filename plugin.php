@@ -214,7 +214,7 @@ function wp_listings_init() {
 	add_action( 'wp_ajax_wp_listings_admin_notice', 'wp_listings_admin_notice_cb' );
 	function wp_listings_admin_notice_cb() {
 		$_wp_listings_admin = new WP_Listings_Admin_Notice;
-		return $_wp_listings_admin::ajax_cb();
+		return $_wp_listings_admin->ajax_cb();
 	}
 
 }
