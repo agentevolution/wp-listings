@@ -50,6 +50,7 @@ class WPL_Idx_Listing {
 
 			// Load WP options
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+			$wpl_options = get_option('plugin_wp_listings_settings');
 
 			foreach($properties as $prop) {
 
@@ -85,8 +86,12 @@ class WPL_Idx_Listing {
 						'post_status' => 'publish',
 						'post_type' => 'listing'
 					);
-					$add_post = wp_insert_post($opts);
-					if($add_post) {
+					$add_post = wp_insert_post($opts, true);
+					if (is_wp_error($add_post)) {
+						$error_string = $add_post->get_error_message();
+						add_settings_error('wp_listings_idx_listing_settings_group', 'insert_post_failed', 'WordPress failed to insert the post. Error ' . $error_string, 'error');
+						return;
+					} elseif($add_post) {
 						$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
 						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 						if(class_exists( 'Equity_Idx_Api' )) {
@@ -138,6 +143,7 @@ class WPL_Idx_Listing {
 
 		// Load WP options
 		$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+		$wpl_options = get_option('plugin_wp_listings_settings');
 
 		foreach ( $properties as $prop ) {
 
@@ -167,16 +173,16 @@ class WPL_Idx_Listing {
 
 		}
 
-		// Load and loop throguh Sold properties
+		// Load and loop through Sold properties
 		$sold_properties = $_idx_api->client_properties('soldpending');
 		foreach ( $sold_properties as $prop ) {
 
-			$key = self::get_key($properties, 'listingID', $prop['listingID']);
+			$key = self::get_key($sold_properties, 'listingID', $prop['listingID']);
 
 			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
 
 				// Update property data
-				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
 
 				if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 

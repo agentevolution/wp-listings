@@ -5,7 +5,7 @@ Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 3.7
 Tested up to: 4.4.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,7 @@ Just like WP Listings, the IMPress Listings plugin creates a listing management 
 IMPress Listings adds some important new features to what was already a great plugin. Most notably, MLS integration through the use of the [IMPress for IDX Broker]( https://wordpress.org/plugins/idx-broker-platinum/) plugin.
 
 = Demo =
-View a demo of the plugin in action: [IMPress Listings demo](http://demo.wp-listings.com/)
+View a demo of the plugin in action: [IMPress Listings demo](http://impresslistings.com/)
 
 > <strong>Importing from your MLS</strong><br>
 > No more typing in listing information that you have already added to your MLS. With IMPress Listings and IMPress for IDX Broker, you can automatically import basic listing details.
@@ -205,6 +205,12 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.0.1 =
+* Updated: WP API support
+* Fix: Custom wrapper on single listing template
+* Fix: Fatal error on some web hosts
+* Fix: Some IDX listing import settings not being respected
 
 = 2.0 =
 * Added: Listing importer for IDX Broker. Import your listings into WordPress! Import additional photos and data with [Equity](http://www.agentevolution.com/equity/).
