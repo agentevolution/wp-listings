@@ -236,7 +236,7 @@ function single_listing_post_content() {
 						    position: myLatLng,
 						    icon: \'//s3.amazonaws.com/ae-plugins/wp-listings/images/active.png\'
 						});
-						
+
 						var infoContent = \' ' . $map_info_content . ' \';
 
 						var infowindow = new google.maps.InfoWindow({
@@ -266,7 +266,7 @@ function single_listing_post_content() {
 		?>
 
 		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
-			
+
 			<?php
 			$options = get_option('plugin_wp_listings_settings');
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
@@ -420,52 +420,56 @@ if (function_exists('equity')) {
 
 } else {
 
-get_header(); ?>
+get_header();
+if($options['impress_agents_custom_wrapper'] && $options['impress_agents_start_wrapper']) {
+	echo $options['impress_agents_start_wrapper'];
+} else {
+	echo '<div id="primary" class="content-area container inner">
+		<div id="content" class="site-content" role="main">';
+}
 
-	<div id="primary" class="content-area container inner">
-		<div id="content" class="site-content" role="main">
+	// Start the Loop.
+	while ( have_posts() ) : the_post(); ?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-			<?php
-				// Start the Loop.
-				while ( have_posts() ) : the_post(); ?>
-				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+		<header class="entry-header">
+			<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
+			<small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
+			<div class="entry-meta">
+				<?php
+					if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
+				?>
+				<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'wp_listings' ), __( '1 Comment', 'wp_listings' ), __( '% Comments', 'wp_listings' ) ); ?></span>
+				<?php
+					endif;
 
-					<header class="entry-header">
-						<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
-						<small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
-						<div class="entry-meta">
-							<?php
-								if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
-							?>
-							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'wp_listings' ), __( '1 Comment', 'wp_listings' ), __( '% Comments', 'wp_listings' ) ); ?></span>
-							<?php
-								endif;
-
-								edit_post_link( __( 'Edit', 'wp_listings' ), '<span class="edit-link">', '</span>' );
-							?>
-						</div><!-- .entry-meta -->
-					</header><!-- .entry-header -->
+					edit_post_link( __( 'Edit', 'wp_listings' ), '<span class="edit-link">', '</span>' );
+				?>
+			</div><!-- .entry-meta -->
+		</header><!-- .entry-header -->
 
 
-				<?php single_listing_post_content(); ?>
+	<?php single_listing_post_content(); ?>
 
-				</article><!-- #post-ID -->
-
-			<?php
-				// Previous/next post navigation.
-				wp_listings_post_nav();
-
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) {
-					comments_template();
-				}
-				endwhile;
-			?>
-
-		</div><!-- #content -->
-	</div><!-- #primary -->
+	</article><!-- #post-ID -->
 
 <?php
+	// Previous/next post navigation.
+	wp_listings_post_nav();
+
+	// If comments are open or we have at least one comment, load up the comment template.
+	if ( comments_open() || get_comments_number() ) {
+		comments_template();
+	}
+	endwhile;
+
+if($options['impress_agents_custom_wrapper'] && $options['impress_agents_end_wrapper']) {
+	echo $options['impress_agents_end_wrapper'];
+} else {
+	echo '</div><!-- #content -->
+	</div><!-- #primary -->';
+}
+
 get_sidebar( 'content' );
 get_sidebar();
 get_footer();

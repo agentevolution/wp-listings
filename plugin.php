@@ -6,7 +6,7 @@
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
 
-	Version: 2.0.0
+	Version: 2.0.1
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -64,7 +64,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '2.0.0' );
+	define( 'WP_LISTINGS_VERSION', '2.0.1' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -73,7 +73,6 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/helpers.php' );
 	require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 	require_once( dirname( __FILE__ ) . '/includes/shortcodes.php' );
-	require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listings.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-listing-import.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-taxonomies.php' );
@@ -81,6 +80,7 @@ function wp_listings_init() {
 	require_once( dirname( __FILE__ ) . '/includes/class-listings-search-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-featured-listings-widget.php' );
 	require_once( dirname( __FILE__ ) . '/includes/class-admin-notice.php' );
+	require_once( dirname( __FILE__ ) . '/includes/wp-api.php' );
 
 	/** Add theme support for post thumbnails if it does not exist */
 	if(!current_theme_supports('post-thumbnails')) {
