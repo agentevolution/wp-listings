@@ -262,10 +262,15 @@ function single_listing_post_content() {
 				<div class="connected-agents">';
 				aeprofiles_connected_agents_markup();
 				echo '</div></div><!-- .listing-agent -->';
+			} elseif (function_exists('_p2p_init') && function_exists('impress_agents_init') ) {
+				echo'<div id="listing-agent">
+				<div class="connected-agents">';
+				impa_connected_agents_markup();
+				echo '</div></div><!-- .listing-agent -->';
 			}
 		?>
 
-		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
+		<div id="listing-contact">
 
 			<?php
 			$options = get_option('plugin_wp_listings_settings');
