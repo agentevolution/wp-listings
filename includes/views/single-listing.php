@@ -278,64 +278,86 @@ function single_listing_post_content() {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
 
-			} elseif (isset($options['wp_listings_default_form'])) {
+			} elseif ($options['wp_listings_default_form'] != '') {
 
 				echo do_shortcode($options['wp_listings_default_form']);
 
 			} else {
+
 				echo '<h4>Listing Inquiry</h4>';
 				$nameError = '';
 				$emailError = '';
+				$response = '';
 
 				if(isset($_POST['submitted'])) {
 
-				$url = get_permalink();
-				$listing = get_the_title();
+					$url = get_permalink();
+					$listing = get_the_title();
 
-				if(trim($_POST['contactName']) === '') {
-					$nameError = 'Please enter your name.';
-					$hasError = true;
-				} else {
-					$name = trim($_POST['contactName']);
-				}
-
-				if(trim($_POST['email']) === '')  {
-					$emailError = 'Please enter your email address.';
-					$hasError = true;
-				} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
-					$emailError = 'You entered an invalid email address.';
-					$hasError = true;
-				} else {
-					$email = trim($_POST['email']);
-				}
-
-				$phone = trim($_POST['phone']);
-
-				if(function_exists('stripslashes')) {
-					$comments = stripslashes(trim($_POST['comments']));
-				} else {
-					$comments = trim($_POST['comments']);
-				}
-
-
-				if(isset($_POST['antispam']) && $_POST['antispam'] == '') {
-					if(!isset($hasError)) {
-						$emailTo = get_the_author_meta( 'user_email', $post->post_author );
-						if (!isset($emailTo) || ($emailTo == '') ){
-							$emailTo = get_option('admin_email');
-						}
-						$subject = 'Listing Inquiry from '.$name;
-						$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
-						$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
-
-						wp_mail($emailTo, $subject, $body, $headers);
-						$emailSent = true;
+					if(trim($_POST['contactName']) === '') {
+						$nameError = 'Please enter your name.';
+						$hasError = true;
+					} else {
+						$name = trim($_POST['contactName']);
 					}
-				} else {
-					$emailSent = true; // make spammer think message went through
-				}
 
-			} ?>
+					if(trim($_POST['email']) === '')  {
+						$emailError = 'Please enter your email address.';
+						$hasError = true;
+					} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
+						$emailError = 'You entered an invalid email address.';
+						$hasError = true;
+					} else {
+						$email = trim($_POST['email']);
+					}
+
+					$phone = trim($_POST['phone']);
+
+					if(function_exists('stripslashes')) {
+						$comments = stripslashes(trim($_POST['comments']));
+					} else {
+						$comments = trim($_POST['comments']);
+					}
+
+					if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
+						require_once( WP_LISTINGS_DIR . '/includes/class-recaptcha.php' );
+
+						// your secret key
+						$secret = $options['wp_listings_captcha_secret_key'];
+
+						// empty response
+						$response = null;
+
+						// check secret key
+						$reCaptcha = new ReCaptcha($secret);
+
+						if ($_POST["g-recaptcha-response"]) {
+						    $response = $reCaptcha->verifyResponse(
+						        $_SERVER["REMOTE_ADDR"],
+						        $_POST["g-recaptcha-response"]
+						    );
+						}
+					}
+
+
+					if(isset($_POST['antispam']) && $_POST['antispam'] == '' || $response != null && $response->success) {
+						if(!isset($hasError)) {
+							$emailTo = get_the_author_meta( 'user_email', $post->post_author );
+							if (!isset($emailTo) || ($emailTo == '') ){
+								$emailTo = get_option('admin_email');
+							}
+							$subject = 'Listing Inquiry from '.$name;
+							$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
+							$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
+
+							wp_mail($emailTo, $subject, $body, $headers);
+							$emailSent = true;
+						}
+					} else {
+						$emailSent = true; // make spammer think message went through
+					}
+
+				} ?>
 
 			<?php if(isset($emailSent) && $emailSent == true) {	?>
 				<div class="thanks">
@@ -375,9 +397,16 @@ function single_listing_post_content() {
 							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
 						</li>
 
-						<li>
-							<input style="display: none;" type="text" name="antispam" />
-						</li>
+						<?php
+						if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
+							echo '<div class="g-recaptcha" data-sitekey="'. $options['wp_listings_captcha_site_key'] .'"></div>';
+							echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+						} else {
+							echo '<li>
+									<input style="display: none;" type="text" name="antispam" />
+								</li>';
+						}
+						?>
 
 						<li>
 							<input id="submit" type="submit" value="Send Inquiry"></input>
@@ -426,8 +455,8 @@ if (function_exists('equity')) {
 } else {
 
 get_header();
-if($options['impress_agents_custom_wrapper'] && $options['impress_agents_start_wrapper']) {
-	echo $options['impress_agents_start_wrapper'];
+if($options['wp_listings_custom_wrapper'] && $options['wp_listings_start_wrapper']) {
+	echo $options['wp_listings_start_wrapper'];
 } else {
 	echo '<div id="primary" class="content-area container inner">
 		<div id="content" class="site-content" role="main">';
@@ -468,14 +497,13 @@ if($options['impress_agents_custom_wrapper'] && $options['impress_agents_start_w
 	}
 	endwhile;
 
-if($options['impress_agents_custom_wrapper'] && $options['impress_agents_end_wrapper']) {
-	echo $options['impress_agents_end_wrapper'];
+if($options['wp_listings_custom_wrapper'] && $options['wp_listings_end_wrapper']) {
+	echo $options['wp_listings_end_wrapper'];
 } else {
 	echo '</div><!-- #content -->
 	</div><!-- #primary -->';
 }
 
-get_sidebar( 'content' );
 get_sidebar();
 get_footer();
 
