@@ -220,8 +220,8 @@ add_action( 'pre_get_posts', 'wp_listings_post_number' );
 /**
  * Add Listings to "At a glance" Dashboard widget
  */
-add_filter( 'dashboard_glance_items', 'custom_glance_items', 10, 1 );
-function custom_glance_items( $items = array() ) {
+add_filter( 'dashboard_glance_items', 'impress_listings_glance_items', 10, 1 );
+function impress_listings_glance_items( $items = array() ) {
 
     $post_types = array( 'listing' );
 
@@ -269,6 +269,15 @@ add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_related
  */
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 	new Jetpack_Omnisearch_Posts( 'listing' );
+}
+
+/**
+ * Add Listings to Jetpack sitemap
+ */
+add_filter( 'jetpack_sitemap_post_types', 'wp_listings_jetpack_sitemap' );
+function wp_listings_jetpack_sitemap() {
+	$post_types[] = 'listing';
+	return $post_types;
 }
 
 /**
