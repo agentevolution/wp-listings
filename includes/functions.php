@@ -146,7 +146,7 @@ function wp_listings_get_status($post_id = null, $single = 0) {
 	foreach($listing_status as $term) {
 		if ( $term->name != 'Featured') {
 			$status .= $term->name;
-			if($single == 1) {
+			if($single == 0) {
 				return $status;
 			}
 			$status .= '<br />';

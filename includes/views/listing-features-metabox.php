@@ -10,7 +10,6 @@ echo '<div style="width: 90%; float: left;">';
 echo '</div><br style="clear: both;" />';
 
 // Home Summary
-global $post;
 
 echo '<div style="width: 90%; float: left;">';
 

@@ -3,9 +3,9 @@ Author: Agent Evolution
 Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
-Requires at least: 3.7
+Requires at least: 4.0
 Tested up to: 4.4.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,7 +142,7 @@ This will display all listings in the "Status" taxonomy, assigned to the "Active
 
 == Frequently Asked Questions ==
 
-= Can I import listings from my MLS?
+= Can I import listings from my MLS? =
 
 Yes. With an IDX Broker subscription and adding their IMPress for IDX Broker plugin to your site, IMPress Listings can import featured properties from the MLS.
 
@@ -205,6 +205,13 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.0.2 =
+* Added: Listing post type support added to Jetpack sitemap
+* Added: Connected Agents with IMPress Agents output on single listings
+* Added: Google Recaptcha support for default contact form
+* Fix: HTML class output for statuses
+* Fix: WP API undefined function call
 
 = 2.0.1 =
 * Updated: WP API support

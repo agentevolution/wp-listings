@@ -51,6 +51,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_create_post($listings) {
 		if(class_exists( 'IDX_Broker_Plugin')) {
+			require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
 
 			// Load Equity API if it exists
 			if(class_exists( 'Equity_Idx_Api' )) {
@@ -164,6 +165,8 @@ class WPL_Idx_Listing {
 	 * @return true if success
 	 */
 	public static function wp_listings_update_post() {
+
+		require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
 
 		// Load IDX Broker API Class and retrieve featured properties
 		$_idx_api = new \IDX\Idx_Api();

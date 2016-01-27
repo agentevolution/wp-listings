@@ -192,6 +192,19 @@ function custom_default_property_type_terms() {
 
 ## Changelog ##
 
+### 2.0.2 ###
+* Added: Listing post type support added to Jetpack sitemap
+* Added: Connected Agents with IMPress Agents output on single listings
+* Added: Google Recaptcha support for default contact form
+* Fix: HTML class output for statuses
+* Fix: WP API undefined function call
+
+### 2.0.1 ###
+* Updated: WP API support
+* Fix: Custom wrapper on single listing template
+* Fix: Fatal error on some web hosts
+* Fix: Some IDX listing import settings not being respected
+
 ### 2.0 ###
 * Added: Listing importer for IDX Broker. Import your listings into WordPress! Import additional photos and data with [Equity](http://www.agentevolution.com/equity/).
 * Added: listing_meta shortcode to output arbitrary listing meta data. e.g use listing_meta key="price" to output price.
