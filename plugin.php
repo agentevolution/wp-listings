@@ -64,6 +64,7 @@ function wp_listings_init() {
 	global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
+	define( 'WP_LISTINGS_DIR', plugin_dir_path( __FILE__ ) );
 	define( 'WP_LISTINGS_VERSION', '2.0.2' );
 
 	/** Load textdomain for translation */
