@@ -35,6 +35,8 @@ if( isset($_GET['settings-updated']) ) { ?>
             		'wp_listings_default_state'           => '',
             		'wp_listings_archive_posts_num'       => 9,
             		'wp_listings_slug'                    => 'listings',
+            		'wp_listings_captcha_site_key'        => '',
+            		'wp_listings_captcha_secret_key'      => '',
             		'wp_listings_default_form'            => '',
             		'wp_listings_custom_wrapper'          => 0,
             		'wp_listings_start_wrapper'           => '',
@@ -79,8 +81,12 @@ if( isset($_GET['settings-updated']) ) { ?>
 				    _e('<p>Number of posts on listing archive page: <input name="plugin_wp_listings_settings[wp_listings_archive_posts_num]" id="wp_listings_archive_posts_num" type="text" value="' . $options['wp_listings_archive_posts_num'] . '" size="1" /></p><hr>', 'wp-listings' );
 
 
+					_e("<h3>Forms</h3><h4>Google Recaptcha (anti-spam)</h4><p>With the default contact form, you can choose to add Google Recaptcha to prevent spam, or use a form shortcode plugin with anti-spam protection. To use Google Recaptcha, you must first <a href=\"https://www.google.com/recaptcha/admin\">sign up for a key</a>, then enter the site and secret key below:</p>", 'wp_listings' );
+				    _e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p><hr>', 'wp-listings');
+				    _e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p><hr>', 'wp-listings');
 
-					_e("<h3>Default Form shortcode</h3><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp_listings' );
+
+					_e("<h4>Default Form shortcode</h4><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp_listings' );
 				    _e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p><hr>', 'wp-listings');
 
 

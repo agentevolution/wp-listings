@@ -27,7 +27,7 @@ function archive_listing_loop() {
 			$loop = sprintf( '<div class="listing-widget-thumb"><a href="%s" class="listing-image-link">%s</a>', get_permalink(), get_the_post_thumbnail( $post->ID, 'listings' ) );
 
 			if ( '' != wp_listings_get_status() ) {
-				$loop .= sprintf( '<span class="listing-status %s">%s</span>', strtolower(str_replace(' ', '-', wp_listings_get_status($post->ID, 1))), wp_listings_get_status() );
+				$loop .= sprintf( '<span class="listing-status %s">%s</span>', strtolower(str_replace(' ', '-', wp_listings_get_status())), wp_listings_get_status() );
 			}
 
 			$loop .= sprintf( '<div class="listing-thumb-meta">' );

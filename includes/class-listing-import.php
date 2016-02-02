@@ -12,6 +12,13 @@ class WPL_Idx_Listing {
 	public function __construct() {
 	}
 
+	/**
+	 * Function to get the array key (listingID+mlsID)
+	 * @param  [type] $array  [description]
+	 * @param  [type] $key    [description]
+	 * @param  [type] $needle [description]
+	 * @return [type]         [description]
+	 */
 	public static function get_key($array, $key, $needle) {
 		if(!$array) return false;
 		foreach($array as $index => $value) {
@@ -20,6 +27,13 @@ class WPL_Idx_Listing {
 		return false;
 	}
 
+	/**
+	 * Function to find the key in the array
+	 * @param  [type]  $needle   [description]
+	 * @param  [type]  $haystack [description]
+	 * @param  boolean $strict   [description]
+	 * @return [type]            [description]
+	 */
 	public static function in_array($needle, $haystack, $strict = false) {
 		if(!$haystack) return false;
 		foreach ($haystack as $item) {
@@ -37,6 +51,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_create_post($listings) {
 		if(class_exists( 'IDX_Broker_Plugin')) {
+			require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
 
 			// Load Equity API if it exists
 			if(class_exists( 'Equity_Idx_Api' )) {
@@ -52,21 +67,25 @@ class WPL_Idx_Listing {
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
 			$wpl_options = get_option('plugin_wp_listings_settings');
 
+			// Loop through featured properties
 			foreach($properties as $prop) {
 
 				// Get the listing ID
 				$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
+				// Add options
 				if(!in_array($prop['listingID'], $listings)) {
 					$idx_featured_listing_wp_options[$prop['listingID']]['listingID'] = $prop['listingID'];
 					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = '';
 				}
 
+				// Unset options if they don't exist
 				if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
 					unset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']);
 					unset($idx_featured_listing_wp_options[$prop['listingID']]['status']);
 			 	}
 
+			 	// Add post and update post meta
 				if(in_array($prop['listingID'], $listings) && !isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
 
 					// Get Equity listing API data if available
@@ -80,13 +99,19 @@ class WPL_Idx_Listing {
 						}
 					}
 
+					// Post creation options
 					$opts = array(
 						'post_content' => $properties[$key]['remarksConcat'],
 						'post_title' => $properties[$key]['address'],
 						'post_status' => 'publish',
 						'post_type' => 'listing'
 					);
+
+					// Add the post
 					$add_post = wp_insert_post($opts, true);
+
+					// Show error if wp_insert_post fails
+					// add post meta and update options if success
 					if (is_wp_error($add_post)) {
 						$error_string = $add_post->get_error_message();
 						add_settings_error('wp_listings_idx_listing_settings_group', 'insert_post_failed', 'WordPress failed to insert the post. Error ' . $error_string, 'error');
@@ -101,13 +126,15 @@ class WPL_Idx_Listing {
 						}
 					}
 				}
+				// Change status to publish if it's not already
 				elseif( in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] != 'publish' ) {
 					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'publish');
 					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 				}
+				// Change post status or delete post based on options
 				elseif( !in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
 
-					// change to draft or delete listing if the post exists but is not in the listing array based on settings
+					// Change to draft or delete listing if the post exists but is not in the listing array based on settings
 					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
 						// Change to draft
@@ -126,6 +153,8 @@ class WPL_Idx_Listing {
 					}
 				}
 			}
+
+			// Lastly update our options
 			update_option('wp_listings_idx_featured_listing_wp_options', $idx_featured_listing_wp_options);
 			return $idx_featured_listing_wp_options;
 		}
@@ -136,6 +165,8 @@ class WPL_Idx_Listing {
 	 * @return true if success
 	 */
 	public static function wp_listings_update_post() {
+
+		require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
 
 		// Load IDX Broker API Class and retrieve featured properties
 		$_idx_api = new \IDX\Idx_Api();

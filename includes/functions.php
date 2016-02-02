@@ -146,7 +146,7 @@ function wp_listings_get_status($post_id = null, $single = 0) {
 	foreach($listing_status as $term) {
 		if ( $term->name != 'Featured') {
 			$status .= $term->name;
-			if($single == 1) {
+			if($single == 0) {
 				return $status;
 			}
 			$status .= '<br />';
@@ -220,8 +220,8 @@ add_action( 'pre_get_posts', 'wp_listings_post_number' );
 /**
  * Add Listings to "At a glance" Dashboard widget
  */
-add_filter( 'dashboard_glance_items', 'custom_glance_items', 10, 1 );
-function custom_glance_items( $items = array() ) {
+add_filter( 'dashboard_glance_items', 'impress_listings_glance_items', 10, 1 );
+function impress_listings_glance_items( $items = array() ) {
 
     $post_types = array( 'listing' );
 
@@ -269,6 +269,15 @@ add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_related
  */
 if ( class_exists( 'Jetpack_Omnisearch_Posts' ) ) {
 	new Jetpack_Omnisearch_Posts( 'listing' );
+}
+
+/**
+ * Add Listings to Jetpack sitemap
+ */
+add_filter( 'jetpack_sitemap_post_types', 'wp_listings_jetpack_sitemap' );
+function wp_listings_jetpack_sitemap() {
+	$post_types[] = 'listing';
+	return $post_types;
 }
 
 /**

@@ -262,10 +262,15 @@ function single_listing_post_content() {
 				<div class="connected-agents">';
 				aeprofiles_connected_agents_markup();
 				echo '</div></div><!-- .listing-agent -->';
+			} elseif (function_exists('_p2p_init') && function_exists('impress_agents_init') ) {
+				echo'<div id="listing-agent">
+				<div class="connected-agents">';
+				impa_connected_agents_markup();
+				echo '</div></div><!-- .listing-agent -->';
 			}
 		?>
 
-		<div id="listing-contact" <?php if(!function_exists('aeprofiles_connected_agents_markup')) { echo 'style="width: 100%;"'; }; ?>>
+		<div id="listing-contact">
 
 			<?php
 			$options = get_option('plugin_wp_listings_settings');
@@ -273,64 +278,86 @@ function single_listing_post_content() {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
 
-			} elseif (isset($options['wp_listings_default_form'])) {
+			} elseif (isset($options['wp_listings_default_form']) && $options['wp_listings_default_form'] != '') {
 
 				echo do_shortcode($options['wp_listings_default_form']);
 
 			} else {
+
 				echo '<h4>Listing Inquiry</h4>';
 				$nameError = '';
 				$emailError = '';
+				$response = '';
 
 				if(isset($_POST['submitted'])) {
 
-				$url = get_permalink();
-				$listing = get_the_title();
+					$url = get_permalink();
+					$listing = get_the_title();
 
-				if(trim($_POST['contactName']) === '') {
-					$nameError = 'Please enter your name.';
-					$hasError = true;
-				} else {
-					$name = trim($_POST['contactName']);
-				}
-
-				if(trim($_POST['email']) === '')  {
-					$emailError = 'Please enter your email address.';
-					$hasError = true;
-				} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
-					$emailError = 'You entered an invalid email address.';
-					$hasError = true;
-				} else {
-					$email = trim($_POST['email']);
-				}
-
-				$phone = trim($_POST['phone']);
-
-				if(function_exists('stripslashes')) {
-					$comments = stripslashes(trim($_POST['comments']));
-				} else {
-					$comments = trim($_POST['comments']);
-				}
-
-
-				if(isset($_POST['antispam']) && $_POST['antispam'] == '') {
-					if(!isset($hasError)) {
-						$emailTo = get_the_author_meta( 'user_email', $post->post_author );
-						if (!isset($emailTo) || ($emailTo == '') ){
-							$emailTo = get_option('admin_email');
-						}
-						$subject = 'Listing Inquiry from '.$name;
-						$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
-						$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
-
-						wp_mail($emailTo, $subject, $body, $headers);
-						$emailSent = true;
+					if(trim($_POST['contactName']) === '') {
+						$nameError = 'Please enter your name.';
+						$hasError = true;
+					} else {
+						$name = esc_html(trim($_POST['contactName']));
 					}
-				} else {
-					$emailSent = true; // make spammer think message went through
-				}
 
-			} ?>
+					if(trim($_POST['email']) === '')  {
+						$emailError = 'Please enter your email address.';
+						$hasError = true;
+					} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
+						$emailError = 'You entered an invalid email address.';
+						$hasError = true;
+					} else {
+						$email = esc_html(trim($_POST['email']));
+					}
+
+					$phone = esc_html(trim($_POST['phone']));
+
+					if(function_exists('stripslashes')) {
+						$comments = esc_html(stripslashes(trim($_POST['comments'])));
+					} else {
+						$comments = esc_html(trim($_POST['comments']));
+					}
+
+					if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
+						require_once( WP_LISTINGS_DIR . '/includes/class-recaptcha.php' );
+
+						// your secret key
+						$secret = $options['wp_listings_captcha_secret_key'];
+
+						// empty response
+						$response = null;
+
+						// check secret key
+						$reCaptcha = new ReCaptcha($secret);
+
+						if ($_POST["g-recaptcha-response"]) {
+						    $response = $reCaptcha->verifyResponse(
+						        $_SERVER["REMOTE_ADDR"],
+						        $_POST["g-recaptcha-response"]
+						    );
+						}
+					}
+
+
+					if(isset($_POST['antispam']) && $_POST['antispam'] == '' || $response != null && $response->success) {
+						if(!isset($hasError)) {
+							$emailTo = get_the_author_meta( 'user_email', $post->post_author );
+							if (!isset($emailTo) || ($emailTo == '') ){
+								$emailTo = get_option('admin_email');
+							}
+							$subject = 'Listing Inquiry from '.$name;
+							$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
+							$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
+
+							wp_mail($emailTo, $subject, $body, $headers);
+							$emailSent = true;
+						}
+					} else {
+						$emailSent = true; // make spammer think message went through
+					}
+
+				} ?>
 
 			<?php if(isset($emailSent) && $emailSent == true) {	?>
 				<div class="thanks">
@@ -347,7 +374,7 @@ function single_listing_post_content() {
 					<ul class="inquiry-form">
 						<li class="contactName">
 							<label for="contactName">Name: <span class="required">*</span></label>
-							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="required requiredField" />
+							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo esc_html($_POST['contactName']);?>" class="required requiredField" />
 							<?php if($nameError != '') { ?>
 								<label class="error"><?=$nameError;?></label>
 							<?php } ?>
@@ -355,7 +382,7 @@ function single_listing_post_content() {
 
 						<li class="contactEmail">
 							<label for="email">Email: <span class="required">*</span></label>
-							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="required requiredField email" />
+							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo esc_html($_POST['email']);?>" class="required requiredField email" />
 							<?php if($emailError != '') { ?>
 								<label class="error"><?=$emailError;?></label>
 							<?php } ?>
@@ -363,16 +390,23 @@ function single_listing_post_content() {
 
 						<li class="contactPhone">
 							<label for="phone">Phone:</label>
-							<input type="text" name="phone" id="phone" value="<?php if(isset($_POST['phone']))  echo $_POST['phone'];?>" />
+							<input type="text" name="phone" id="phone" value="<?php if(isset($_POST['phone']))  echo esc_html($_POST['phone']);?>" />
 						</li>
 
 						<li class="contactComments"><label for="commentsText">Message:</label>
-							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) echo esc_html($_POST['comments']); ?></textarea>
 						</li>
 
-						<li>
-							<input style="display: none;" type="text" name="antispam" />
-						</li>
+						<?php
+						if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
+							echo '<div class="g-recaptcha" data-sitekey="'. $options['wp_listings_captcha_site_key'] .'"></div>';
+							echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+						} else {
+							echo '<li>
+									<input style="display: none;" type="text" name="antispam" />
+								</li>';
+						}
+						?>
 
 						<li>
 							<input id="submit" type="submit" value="Send Inquiry"></input>
@@ -421,8 +455,8 @@ if (function_exists('equity')) {
 } else {
 
 get_header();
-if($options['impress_agents_custom_wrapper'] && $options['impress_agents_start_wrapper']) {
-	echo $options['impress_agents_start_wrapper'];
+if($options['wp_listings_custom_wrapper'] && $options['wp_listings_start_wrapper']) {
+	echo $options['wp_listings_start_wrapper'];
 } else {
 	echo '<div id="primary" class="content-area container inner">
 		<div id="content" class="site-content" role="main">';
@@ -463,14 +497,13 @@ if($options['impress_agents_custom_wrapper'] && $options['impress_agents_start_w
 	}
 	endwhile;
 
-if($options['impress_agents_custom_wrapper'] && $options['impress_agents_end_wrapper']) {
-	echo $options['impress_agents_end_wrapper'];
+if($options['wp_listings_custom_wrapper'] && $options['wp_listings_end_wrapper']) {
+	echo $options['wp_listings_end_wrapper'];
 } else {
 	echo '</div><!-- #content -->
 	</div><!-- #primary -->';
 }
 
-get_sidebar( 'content' );
 get_sidebar();
 get_footer();
 
