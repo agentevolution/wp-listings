@@ -278,7 +278,7 @@ function single_listing_post_content() {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
 
-			} elseif ($options['wp_listings_default_form'] != '') {
+			} elseif (isset($options['wp_listings_default_form']) && $options['wp_listings_default_form'] != '') {
 
 				echo do_shortcode($options['wp_listings_default_form']);
 
@@ -298,7 +298,7 @@ function single_listing_post_content() {
 						$nameError = 'Please enter your name.';
 						$hasError = true;
 					} else {
-						$name = trim($_POST['contactName']);
+						$name = esc_html(trim($_POST['contactName']));
 					}
 
 					if(trim($_POST['email']) === '')  {
@@ -308,15 +308,15 @@ function single_listing_post_content() {
 						$emailError = 'You entered an invalid email address.';
 						$hasError = true;
 					} else {
-						$email = trim($_POST['email']);
+						$email = esc_html(trim($_POST['email']));
 					}
 
-					$phone = trim($_POST['phone']);
+					$phone = esc_html(trim($_POST['phone']));
 
 					if(function_exists('stripslashes')) {
-						$comments = stripslashes(trim($_POST['comments']));
+						$comments = esc_html(stripslashes(trim($_POST['comments'])));
 					} else {
-						$comments = trim($_POST['comments']);
+						$comments = esc_html(trim($_POST['comments']));
 					}
 
 					if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
@@ -374,7 +374,7 @@ function single_listing_post_content() {
 					<ul class="inquiry-form">
 						<li class="contactName">
 							<label for="contactName">Name: <span class="required">*</span></label>
-							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo $_POST['contactName'];?>" class="required requiredField" />
+							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo esc_html($_POST['contactName']);?>" class="required requiredField" />
 							<?php if($nameError != '') { ?>
 								<label class="error"><?=$nameError;?></label>
 							<?php } ?>
@@ -382,7 +382,7 @@ function single_listing_post_content() {
 
 						<li class="contactEmail">
 							<label for="email">Email: <span class="required">*</span></label>
-							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo $_POST['email'];?>" class="required requiredField email" />
+							<input type="text" name="email" id="email" value="<?php if(isset($_POST['email']))  echo esc_html($_POST['email']);?>" class="required requiredField email" />
 							<?php if($emailError != '') { ?>
 								<label class="error"><?=$emailError;?></label>
 							<?php } ?>
@@ -390,11 +390,11 @@ function single_listing_post_content() {
 
 						<li class="contactPhone">
 							<label for="phone">Phone:</label>
-							<input type="text" name="phone" id="phone" value="<?php if(isset($_POST['phone']))  echo $_POST['phone'];?>" />
+							<input type="text" name="phone" id="phone" value="<?php if(isset($_POST['phone']))  echo esc_html($_POST['phone']);?>" />
 						</li>
 
 						<li class="contactComments"><label for="commentsText">Message:</label>
-							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) { if(function_exists('stripslashes')) { echo stripslashes($_POST['comments']); } else { echo $_POST['comments']; } } ?></textarea>
+							<textarea name="comments" id="commentsText" rows="6" cols="20"><?php if(isset($_POST['comments'])) echo esc_html($_POST['comments']); ?></textarea>
 						</li>
 
 						<?php
