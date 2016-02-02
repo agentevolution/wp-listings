@@ -6,12 +6,14 @@
 /**
  * Add the listing meta field keys to WP 4.4+ REST API responses for GET and POST
  */
-add_action( 'rest_api_init', 'wp_listings_register_listing_meta' );
+if(function_exists('register_rest_field')) {
+	add_action( 'rest_api_init', 'wp_listings_register_listing_meta' );
+}
 function wp_listings_register_listing_meta() {
 
 	$allowed_meta_keys = allowed_meta_keys();
 	foreach($allowed_meta_keys as $listing_meta_key) {
-	    register_api_field( 'listing',
+	    register_rest_field( 'listing',
 	        $listing_meta_key,
 	    	array(
 	            'get_callback'    => 'wp_listings_get_listing_meta',
