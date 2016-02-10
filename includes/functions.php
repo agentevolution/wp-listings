@@ -17,8 +17,6 @@ function wp_listings_template_include( $template ) {
 		if ( file_exists(get_stylesheet_directory() . '/search-' . $post_type . '.php') ) {
 			$template = get_stylesheet_directory() . '/search-' . $post_type . '.php';
 			return $template;
-		} elseif ( file_exists(get_stylesheet_directory() . '/search.php' ) ) {
-			return get_stylesheet_directory() . '/search.php';
 		} else {
 			return dirname( __FILE__ ) . '/views/archive-' . $post_type . '.php';
 		}
