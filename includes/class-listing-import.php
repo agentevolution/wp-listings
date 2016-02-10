@@ -206,27 +206,27 @@ class WPL_Idx_Listing {
 
 		// Load and loop through Sold properties
 		$sold_properties = $_idx_api->client_properties('soldpending');
-		foreach ( $sold_properties as $prop ) {
+		foreach ( $sold_properties as $sold_prop ) {
 
-			$key = self::get_key($sold_properties, 'listingID', $prop['listingID']);
+			$key = self::get_key($sold_properties, 'listingID', $sold_prop['listingID']);
 
-			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+			if( isset($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id']) ) {
 
 				// Update property data
-				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
 
 				if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
 					// Change to draft
-					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], 'draft');
 				} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
 
 					// Delete featured image
-					$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+					$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'] );
 					wp_delete_attachment( $post_featured_image_id );
 
 					//Delete post
-					wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+					wp_delete_post( $idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'] );
 				}
 			}
 
@@ -400,8 +400,19 @@ function wp_listings_idx_listing_register_menu_page() {
 }
 
 function wp_listings_idx_listing_register_settings() {
-	register_setting('wp_listings_idx_listing_settings_group', 'wp_listings_idx_featured_listing_options', array('WPL_Idx_Listing', 'wp_listings_idx_create_post'));
+	register_setting('wp_listings_idx_listing_settings_group', 'wp_listings_idx_featured_listing_options', 'wp_listings_idx_create_post_cron');
 }
+
+/**
+ * Do wp_cron job for importing listings
+ */
+function wp_listings_idx_create_post_cron($listings) {
+	wp_schedule_single_event( time(), 'wp_listings_idx_create_post_cron_hook', array($listings) );
+
+	add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_create_cron', 'The listings you selected are being imported in the background. Be patient as this could take some time. Check back here or on the Listings page momentarily to view the imported listings.', 'updated');
+	settings_errors('wp_listings_idx_listing_settings_group');
+}
+add_action('wp_listings_idx_create_post_cron_hook', array('WPL_Idx_Listing', 'wp_listings_idx_create_post'));
 
 add_action( 'admin_enqueue_scripts', 'wp_listings_idx_listing_scripts' );
 function wp_listings_idx_listing_scripts() {
@@ -476,7 +487,7 @@ function wp_listings_idx_listing_setting_page() {
 				return;
 			}
 
-			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_options');
+			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
 
 			settings_fields( 'wp_listings_idx_listing_settings_group' );
 			do_settings_sections( 'wp_listings_idx_listing_settings_group' );
