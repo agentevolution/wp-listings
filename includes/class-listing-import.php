@@ -66,6 +66,7 @@ class WPL_Idx_Listing {
 			// Load WP options
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
 			$wpl_options = get_option('plugin_wp_listings_settings');
+			update_option('wp_listings_import_progress', true);
 
 			// Loop through featured properties
 			foreach($properties as $prop) {
@@ -99,6 +100,13 @@ class WPL_Idx_Listing {
 						}
 					}
 
+					if ($properties[$key]['address'] == '' || $properties[$key]['address'] == null) {
+						$properties[$key]['address'] = 'Address unlisted';
+					}
+					if ($properties[$key]['remarksConcat'] == '' || $properties[$key]['remarksConcat'] == null) {
+						$properties[$key]['remarksConcat'] = $properties[$key]['listingID'];
+					}
+
 					// Post creation options
 					$opts = array(
 						'post_content' => $properties[$key]['remarksConcat'],
@@ -115,7 +123,6 @@ class WPL_Idx_Listing {
 					if (is_wp_error($add_post)) {
 						$error_string = $add_post->get_error_message();
 						add_settings_error('wp_listings_idx_listing_settings_group', 'insert_post_failed', 'WordPress failed to insert the post. Error ' . $error_string, 'error');
-						return;
 					} elseif($add_post) {
 						$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
 						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
@@ -156,6 +163,7 @@ class WPL_Idx_Listing {
 
 			// Lastly update our options
 			update_option('wp_listings_idx_featured_listing_wp_options', $idx_featured_listing_wp_options);
+			delete_option('wp_listings_import_progress');
 			return $idx_featured_listing_wp_options;
 		}
 	}
@@ -258,7 +266,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true) {
 
-		if (class_exists( 'Equity_Idx_Api' ) && $update == false && $update_image == true) {
+		if (class_exists( 'Equity_Idx_Api' ) && $update == false || class_exists( 'Equity_Idx_Api' ) && $update_image == true) {
 			$imgs = '';
 			$featured_image = $idx_featured_listing_data['images']['1']['url'];
 
@@ -408,9 +416,6 @@ function wp_listings_idx_listing_register_settings() {
  */
 function wp_listings_idx_create_post_cron($listings) {
 	wp_schedule_single_event( time(), 'wp_listings_idx_create_post_cron_hook', array($listings) );
-
-	add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_create_cron', 'The listings you selected are being imported in the background. Be patient as this could take some time. Check back here or on the Listings page momentarily to view the imported listings.', 'updated');
-	settings_errors('wp_listings_idx_listing_settings_group');
 }
 add_action('wp_listings_idx_create_post_cron_hook', array('WPL_Idx_Listing', 'wp_listings_idx_create_post'));
 
@@ -441,6 +446,9 @@ function wp_listings_idx_listing_delete(){
 }
 
 function wp_listings_idx_listing_setting_page() {
+	if( get_option('wp_listings_import_progress') == true ) {
+		add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_import_progress', 'Your listings are being imported in the background. This notice will dismiss when all selected listings have been imported.', 'updated');
+	}
 
 	?>
 			<h1>Import IDX Listings</h1>
