@@ -21,7 +21,7 @@ echo '<div style="width: 45%; float: right;">';
 
 echo '</div><br style="clear: both;" />';
 
-$pattern = '<p><label>%s<br /><textarea type="text" name="wp_listings[%s]" value="%s" rows="2" cols="40">%s</textarea></label></p>';
+$pattern = '<p><label>%s<br /><textarea type="text" name="wp_listings[%s]" value="%s" rows="2" style="width: 100&#37;;">%s</textarea></label></p>';
 
 _e('<h4>Extended Details:</h4>', 'wp_listings');
 echo '<div style="width: 45%; float: left">';
@@ -50,7 +50,7 @@ echo '<div style="width: 45%; float: left">';
 echo '</div>';
 
 echo '<div style="width: 90%; float: left;">';
-	
+
 	_e('<h4>Custom Overlay Text</h4>', 'wp_listings');
 	_e('<p><label>Custom text to display as overlay on featured listings<br />', 'wp_listings');
 	printf( __( '<input type="text" name="wp_listings[_listing_text]" value="%s" /></label></p>', 'wp_listings' ), htmlentities( get_post_meta( $post->ID, '_listing_text', true) ) );
