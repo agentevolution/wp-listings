@@ -1,5 +1,10 @@
 jQuery(document).ready(function($) {
 	/* === Begin listing importer JS. === */
+
+	jQuery(function() {
+		jQuery("img.lazy").lazyload();
+	});
+
 	jQuery('.grid').masonry({
 		columnWidth: '.grid-sizer',
 		itemSelector: '.grid-item'
