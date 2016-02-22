@@ -421,8 +421,9 @@ add_action('wp_listings_idx_create_post_cron_hook', array('WPL_Idx_Listing', 'wp
 
 add_action( 'admin_enqueue_scripts', 'wp_listings_idx_listing_scripts' );
 function wp_listings_idx_listing_scripts() {
-	wp_enqueue_script( 'wp_listings_idx_listing_delete_script', WP_LISTINGS_URL . 'includes/js/admin-listing-import.js', array( 'jquery' ), true );
 	wp_enqueue_script( 'jquery-masonry' );
+	wp_enqueue_script( 'wp_listings_idx_listing_lazyload', WP_LISTINGS_URL . 'includes/js/jquery.lazyload.min.js', array( 'jquery' ), true );
+	wp_enqueue_script( 'wp_listings_idx_listing_delete_script', WP_LISTINGS_URL . 'includes/js/admin-listing-import.js', array( 'jquery' ), true );
 	wp_localize_script( 'wp_listings_idx_listing_delete_script', 'DeleteListingAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	wp_enqueue_style( 'wp_listings_idx_listing_style', WP_LISTINGS_URL . 'includes/css/wp-listings-import.css' );
 }
@@ -525,7 +526,7 @@ function wp_listings_idx_listing_setting_page() {
 					 );
 				}
 
-				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing" src="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p><span class="price">%s</span><br/><span class="address">%s</span><br/><span class="mls">MLS#: </span>%s</p>%s</li></label></div>',
+				printf('<div class="grid-item post"><label for="%s" class="idx-listing"><li class="%s"><img class="listing lazy" data-original="%s"><input type="checkbox" id="%s" class="checkbox" name="wp_listings_idx_featured_listing_options[]" value="%s" %s />%s<p><span class="price">%s</span><br/><span class="address">%s</span><br/><span class="mls">MLS#: </span>%s</p>%s</li></label></div>',
 					$prop['listingID'],
 					isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) ? ($idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ? "imported" : '') : '',
 					isset($prop['image']['0']['url']) ? $prop['image']['0']['url'] : '//mlsphotos.idxbroker.com/defaultNoPhoto/noPhotoFull.png',
