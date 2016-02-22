@@ -11,7 +11,7 @@
 
 **Tested up to:** 4.4.1
 
-**Stable tag:** 2.0.0
+**Stable tag:** 2.0.3
 
 **License:** GPLv2 or later
 
@@ -191,6 +191,11 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.0.3 ###
+* Fix: Update Listing importer to account for API change
+* Fix: Listing importer update to use wp_cron to reduce immediate server load
+* Added: Lazy Load added to Listing importer to reduce load times with many property images
 
 ### 2.0.2 ###
 * Added: Listing post type support added to Jetpack sitemap
