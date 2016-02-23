@@ -326,6 +326,9 @@ class WP_Listings {
 			if( !function_exists( 'equity' ) ) {
 				echo wp_listings_admin_notice( __( '<strong>Stop filling out forms. Equity automatically enhances your listings with extra details and photos.</strong> <a href="http://www.agentevolution.com/equity/">Find out how</a>', 'wp_listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_equity' : 'wpl_notice_equity' );
 			}
+			if( get_option('wp_listings_import_progress') == true ) {
+				echo wp_listings_admin_notice( __( '<strong>Your listings are being imported in the background. This notice will dismiss when all selected listings have been imported.</strong>', 'wp_listings' ), false, 'activate_plugins', 'wpl_notice_import_progress' );
+			}
 		}
 
 		return $screen;

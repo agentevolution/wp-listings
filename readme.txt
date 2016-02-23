@@ -5,7 +5,7 @@ Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
 Tested up to: 4.4.1
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,11 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.0.3 =
+* Fix: Update Listing importer to account for API change
+* Fix: Listing importer update to use wp_cron to reduce immediate server load
+* Added: Lazy Load added to Listing importer to reduce load times with many property images
 
 = 2.0.2 =
 * Added: Listing post type support added to Jetpack sitemap
