@@ -25,6 +25,7 @@ function wp_listings_dnsprefetch() {
 function single_listing_post_content() {
 
 	global $post;
+	$options = get_option('plugin_wp_listings_settings');
 
 	?>
 
@@ -105,7 +106,12 @@ function single_listing_post_content() {
 
 				echo (get_post_meta($post->ID, '_listing_featured_on', true)) ? '<p class="wp_listings_featured_on">' . get_post_meta($post->ID, '_listing_featured_on', true) . '</p>' : '';
 
-				echo (get_post_meta($post->ID, '_listing_disclaimer', true)) ? '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>' : '';
+				if( get_post_meta($post->ID, '_listing_disclaimer', true) ) {
+					echo '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>';
+				} elseif ($options['wp_listings_global_disclaimer'] != '' && $options['wp_listings_global_disclaimer'] != null) {
+					echo '<p class="wp_listings_disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
+				}
+
 				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
 				?>
@@ -273,7 +279,7 @@ function single_listing_post_content() {
 		<div id="listing-contact">
 
 			<?php
-			$options = get_option('plugin_wp_listings_settings');
+
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );

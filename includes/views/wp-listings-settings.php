@@ -34,6 +34,7 @@ if( isset($_GET['settings-updated']) ) { ?>
             		'wp_listings_widgets_stylesheet_load' => 0,
             		'wp_listings_default_state'           => '',
             		'wp_listings_archive_posts_num'       => 9,
+            		'wp_listings_global_disclaimer'       => '',
             		'wp_listings_slug'                    => 'listings',
             		'wp_listings_captcha_site_key'        => '',
             		'wp_listings_captcha_secret_key'      => '',
@@ -80,9 +81,11 @@ if( isset($_GET['settings-updated']) ) { ?>
 					_e("<h3>Default Number of Posts</h3><p>The default number of posts displayed on a listing archive page is 9. Here you can set a custom number. Enter <span style='color: #f00;font-weight: 700;'>-1</span> to display all listing posts.<br /><em>If you have more than 20-30 posts, it's not recommended to show all or your page will load slow.</em></p>", 'wp_listings' );
 				    _e('<p>Number of posts on listing archive page: <input name="plugin_wp_listings_settings[wp_listings_archive_posts_num]" id="wp_listings_archive_posts_num" type="text" value="' . $options['wp_listings_archive_posts_num'] . '" size="1" /></p><hr>', 'wp-listings' );
 
+				    _e("<h3>Global Disclaimer</h3><p>Optionally enter a disclaimer to show on single listings. This can be overridden on individual listings.</p>", 'wp_listings' );
+				    _e('<p><textarea name="plugin_wp_listings_settings[wp_listings_global_disclaimer]" id="wp_listings_global_disclaimer" type="text" value="' . $options['wp_listings_global_disclaimer'] . '" rows="4" style="width: 80%"></textarea></p><hr>', 'wp-listings' );
 
 					_e("<h3>Forms</h3><h4>Google Recaptcha (anti-spam)</h4><p>With the default contact form, you can choose to add Google Recaptcha to prevent spam, or use a form shortcode plugin with anti-spam protection. To use Google Recaptcha, you must first <a href=\"https://www.google.com/recaptcha/admin\">sign up for a key</a>, then enter the site and secret key below:</p>", 'wp_listings' );
-				    _e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p><hr>', 'wp-listings');
+				    _e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p>', 'wp-listings');
 				    _e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p><hr>', 'wp-listings');
 
 

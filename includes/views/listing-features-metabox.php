@@ -44,3 +44,10 @@ echo '<div style="width: 90%; float: left;">';
 	printf( __( '<p><label>School and Neighborhood Info (allows shortcodes):<br /><textarea name="wp_listings[_listing_school_neighborhood]" rows="5" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_school_neighborhood', true) ) );
 
 echo '</div><br style="clear: both;" />';
+
+// Disclaimer
+echo '<div style="width: 90%; float: left;">';
+
+	printf( __( '<p><label>Disclaimer:<br /><textarea name="wp_listings[_listing_disclaimer]" rows="3" cols="18" style="%s">%s</textarea></label></p>', 'wp_listings' ), 'width: 99%;', htmlentities( get_post_meta( $post->ID, '_listing_disclaimer', true) ) );
+
+echo '</div><br style="clear: both;" />';
