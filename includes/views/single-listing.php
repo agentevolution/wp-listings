@@ -47,7 +47,7 @@ function single_listing_post_content() {
 		if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
 			$listing_meta .= (get_post_meta($post->ID, '_listing_price_alt', true)) ? sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price_alt', true ) ) : '';
 		} else {
-			$listing_meta .= sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price', true ) );
+			$listing_meta .= sprintf( '<li class="listing-price">%s%s %s</li>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '' );
 		}
 
 		if ( '' != wp_listings_get_property_types() ) {
@@ -128,8 +128,11 @@ function single_listing_post_content() {
                     echo '<tbody class="left">';
                     if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
                     	echo (get_post_meta($post->ID, '_listing_price_alt', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price_alt', true) .'</td></tr>' : '';
-                	} else {
-                    	echo (get_post_meta($post->ID, '_listing_price', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price', true) .'</td></tr>' : '';
+                	} elseif(get_post_meta($post->ID, '_listing_price', true)) {
+                    	echo '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>' . $options['wp_listings_currency_symbol'];
+                    	echo get_post_meta( $post->ID, '_listing_price', true) . ' ';
+                    	echo (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '';
+                    	echo '</td></tr>';
                 	}
                     echo '<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
                     echo (get_post_meta($post->ID, '_listing_address', true)) ? '<tr class="wp_listings_listing_address"><td class="label">' . __('Address:', 'wp_listings') . '</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>' : '';
