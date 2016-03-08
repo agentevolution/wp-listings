@@ -56,6 +56,8 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 		extract( $args );
 
+		$options = get_option('plugin_wp_listings_settings');
+
 		$column_class = $instance['use_columns'] ? $this->get_column_class($instance['number_columns']) : '';
 
 		echo $before_widget;
@@ -105,7 +107,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				}
 
 				if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
-					$loop .= sprintf( '<span class="listing-price">%s</span>', get_post_meta( $post->ID, '_listing_price', true ) );
+					$loop .= sprintf( '<span class="listing-price"><span class="currency-symbol">%s</span>%s <span class="currency-code">%s</span></span>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '' );
 				}
 
 				$loop .= sprintf( '</div><!-- .listing-thumb-meta --></div><!-- .listing-widget-thumb -->' );
@@ -149,7 +151,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		$instance = array();
 		$instance['title']          = strip_tags( $new_instance['title'] );
 		$instance['posts_per_page'] = (int) $new_instance['posts_per_page'];
-		$instance['image_size'] 	= strip_tags($new_instance['image_size'] );	
+		$instance['image_size'] 	= strip_tags($new_instance['image_size'] );
 		$instance['use_columns']    = (int) $new_instance['use_columns'];
 		$instance['number_columns'] = (int) $new_instance['number_columns'];
 		$instance['posts_term']     = strip_tags( $new_instance['posts_term'] );
