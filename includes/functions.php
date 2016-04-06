@@ -244,11 +244,11 @@ function impress_listings_glance_items( $items = array() ) {
 function wp_listings_jetpack_relatedposts( $headline ) {
   if ( is_singular( 'listing' ) ) {
     $headline = sprintf(
-            '<h3 class="jp-relatedposts-headline"><em>%s</em></h3>',
-            esc_html( 'Similar Listings' )
-            );
-    return $headline;
+        '<h3 class="jp-relatedposts-headline"><em>%s</em></h3>',
+        esc_html( 'Similar Listings' )
+        );
   }
+  return $headline;
 }
 add_filter( 'jetpack_relatedposts_filter_headline', 'wp_listings_jetpack_relatedposts' );
 
