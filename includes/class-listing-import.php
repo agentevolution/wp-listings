@@ -139,7 +139,7 @@ class WPL_Idx_Listing {
 					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 				}
 				// Change post status or delete post based on options
-				elseif( !in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
+				elseif( !in_array($prop['listingID'], $listings) && isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
 
 					// Change to draft or delete listing if the post exists but is not in the listing array based on settings
 					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
@@ -403,7 +403,7 @@ class WPL_Idx_Listing {
  */
 add_action( 'admin_menu', 'wp_listings_idx_listing_register_menu_page');
 function wp_listings_idx_listing_register_menu_page() {
-	add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp_listings' ), __( 'Import IDX Listings', 'wp_listings' ), 'manage_options', 'wplistings-idx-listing', 'wp_listings_idx_listing_setting_page' );
+	add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp-listings' ), __( 'Import IDX Listings', 'wp-listings' ), 'manage_options', 'wplistings-idx-listing', 'wp_listings_idx_listing_setting_page' );
 	add_action( 'admin_init', 'wp_listings_idx_listing_register_settings' );
 }
 

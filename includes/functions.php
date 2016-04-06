@@ -68,14 +68,14 @@ function wp_listings_template_include( $template ) {
 /**
  * Controls output of default state for the state custom field if there is one set
  */
-function wp_listings_get_state() {
-
+function wp_listings_get_state($post_id = null) {
 	$options = get_option('plugin_wp_listings_settings');
+	if ( null == $post_id ) {
+		global $post;
+		$post_id = $post->ID;
+	}
 
-	global $post;
-
-	$state = get_post_meta($post->ID, '_listing_state', true);
-
+	$state = get_post_meta($post_id, '_listing_state', true);
 	if (isset($options['wp_listings_default_state'])) {
 		$default_state = $options['wp_listings_default_state'];
 	}
@@ -90,57 +90,53 @@ function wp_listings_get_state() {
 
 	return $state;
 }
-
 /**
  * Controls output of city name
  */
-function wp_listings_get_city() {
+function wp_listings_get_city($post_id = null) {
+	if ( null == $post_id ) {
+		global $post;
+		$post_id = $post->ID;
+	}
 
-	global $post;
-
-	$city = get_post_meta($post->ID, '_listing_city', true);
-
+	$city = get_post_meta($post_id, '_listing_city', true);
 	if ( '' == $city ) {
 		$city = 'Cityname';
 	}
 
 	return $city;
 }
-
 /**
  * Controls output of address
  */
 function wp_listings_get_address($post_id = null) {
+	if ( null == $post_id ) {
+		global $post;
+		$post_id = $post->ID;
+	}
 
-	global $post;
-
-	$address = get_post_meta($post->ID, '_listing_address', true);
-
+	$address = get_post_meta($post_id, '_listing_address', true);
 	if ( '' == $address ) {
 		$address = 'Address Unavailable';
 	}
 
 	return $address;
 }
-
 /**
  * Displays the status (active, pending, sold, for rent) of a listing
  */
 function wp_listings_get_status($post_id = null, $single = 0) {
-
 	if ( null == $post_id ) {
 		global $post;
 		$post_id = $post->ID;
 	}
 
 	$listing_status = wp_get_object_terms($post_id, 'status');
-
 	if ( empty($listing_status) || is_wp_error($listing_status) ) {
 		return;
 	}
 
 	$status = null;
-
 	foreach($listing_status as $term) {
 		if ( $term->name != 'Featured') {
 			$status .= $term->name;
@@ -153,19 +149,16 @@ function wp_listings_get_status($post_id = null, $single = 0) {
 
 	return $status;
 }
-
 /**
  * Displays the property type (residential, condo, comemrcial, etc) of a listing
  */
 function wp_listings_get_property_types($post_id = null) {
-
 	if ( null == $post_id ) {
 		global $post;
 		$post_id = $post->ID;
 	}
 
 	$listing_property_types = wp_get_object_terms($post_id, 'property-types');
-
 	if ( empty($listing_property_types) || is_wp_error($listing_property_types) ) {
 		return;
 	}
@@ -174,19 +167,16 @@ function wp_listings_get_property_types($post_id = null) {
 		return $type->name;
 	}
 }
-
 /**
  * Displays the location term of a listing
  */
 function wp_listings_get_locations($post_id = null) {
-
 	if ( null == $post_id ) {
 		global $post;
 		$post_id = $post->ID;
 	}
 
 	$listing_locations = wp_get_object_terms($post_id, 'locations');
-
 	if ( empty($listing_locations) || is_wp_error($listing_locations) ) {
 		return;
 	}
@@ -234,7 +224,7 @@ function impress_listings_glance_items( $items = array() ) {
             $published = intval( $num_posts->publish );
             $post_type = get_post_type_object( $type );
 
-            $text = _n( '%s ' . $post_type->labels->singular_name, '%s ' . $post_type->labels->name, $published, 'wp_listings' );
+            $text = _n( '%s ' . $post_type->labels->singular_name, '%s ' . $post_type->labels->name, $published, 'wp-listings' );
             $text = sprintf( $text, number_format_i18n( $published ) );
 
             if ( current_user_can( $post_type->cap->edit_posts ) ) {
