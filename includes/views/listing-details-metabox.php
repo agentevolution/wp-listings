@@ -70,7 +70,7 @@ echo '<div style="width: 100%; float: left;">';
 			'editor_class'		=> 'wplistings_gallery',
 			'textarea_rows'		=> 20,
 			'tinymce'			=> true,
-			'quicktags'			=> false,
+			'quicktags'			=> true,
 			'drag_drop_upload'	=> true
 		);
 
