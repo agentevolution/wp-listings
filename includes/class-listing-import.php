@@ -190,9 +190,7 @@ class WPL_Idx_Listing {
 
 			$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
-			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && $idx_featured_listing_wp_options[$prop['listingID']]['listingID'] != $prop['listingID'] ) {
-				self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-			} elseif( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
 				// Update property data
 				if(class_exists( 'Equity_Idx_Api' )) {
 					require_once(ABSPATH . 'wp-content/themes/equity/lib/idx/class.Equity_Idx_Api.inc.php');
