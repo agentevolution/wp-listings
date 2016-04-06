@@ -56,8 +56,8 @@ class WP_Listings_Taxonomies {
 
 	function settings_init() {
 
-		add_submenu_page( 'edit.php?post_type=listing', __( 'Register Taxonomies', 'wp_listings' ), __( 'Register Taxonomies', 'wp_listings' ), 'manage_options', $this->menu_page, array( &$this, 'admin' ) );
-		add_submenu_page( 'edit.php?post_type=listing', __( 'Reorder Taxonomies', 'wp_listings' ), __( 'Reorder Taxonomies', 'wp_listings' ), 'manage_options', $this->reorder_page, array( &$this, 'tax_reorder' ) );
+		add_submenu_page( 'edit.php?post_type=listing', __( 'Register Taxonomies', 'wp-listings' ), __( 'Register Taxonomies', 'wp-listings' ), 'manage_options', $this->menu_page, array( &$this, 'admin' ) );
+		add_submenu_page( 'edit.php?post_type=listing', __( 'Reorder Taxonomies', 'wp-listings' ), __( 'Reorder Taxonomies', 'wp-listings' ), 'manage_options', $this->reorder_page, array( &$this, 'tax_reorder' ) );
 
 	}
 
@@ -109,11 +109,11 @@ class WP_Listings_Taxonomies {
 
 		/** No empty fields */
 		if ( ! isset( $args['id'] ) || empty( $args['id'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 		if ( ! isset( $args['name'] ) || empty( $args['name'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 		if ( ! isset( $args['singular_name'] ) || empty( $args['singular_name'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 
 		extract( $args );
 
@@ -122,15 +122,15 @@ class WP_Listings_Taxonomies {
 			'singular_name' 		=> strip_tags( $singular_name ),
 			'menu_name'				=> strip_tags( $name ),
 
-			'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-			'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-			'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-			'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-			'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+			'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+			'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+			'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+			'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+			'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 		);
 
 		$args = array(
@@ -159,7 +159,7 @@ class WP_Listings_Taxonomies {
 
 		/** No empty ID */
 		if ( ! isset( $id ) || empty( $id ) )
-			wp_die( __( "Nice try, partner. But that taxonomy doesn't exist. Click back and try again.", 'wp_listings' ) );
+			wp_die( __( "Nice try, partner. But that taxonomy doesn't exist. Click back and try again.", 'wp-listings' ) );
 
 		$options = get_option( $this->settings_field );
 
@@ -167,7 +167,7 @@ class WP_Listings_Taxonomies {
 		if ( array_key_exists( $id, (array) $options ) ) {
 			unset( $options[$id] );
 		} else {
-			wp_die( __( "Nice try, partner. But that taxonomy doesn't exist. Click back and try again.", 'wp_listings' ) );
+			wp_die( __( "Nice try, partner. But that taxonomy doesn't exist. Click back and try again.", 'wp-listings' ) );
 		}
 
 		/** Update the DB */
@@ -181,11 +181,11 @@ class WP_Listings_Taxonomies {
 
 		/** No empty fields */
 		if ( ! isset( $args['id'] ) || empty( $args['id'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 		if ( ! isset( $args['name'] ) || empty( $args['name'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 		if ( ! isset( $args['singular_name'] ) || empty( $args['singular_name'] ) )
-			wp_die( __( 'Please complete all required fields.', 'wp_listings' ) );
+			wp_die( __( 'Please complete all required fields.', 'wp-listings' ) );
 
 		extract( $args );
 
@@ -194,15 +194,15 @@ class WP_Listings_Taxonomies {
 			'singular_name' 		=> strip_tags( $singular_name ),
 			'menu_name'				=> strip_tags( $name ),
 
-			'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-			'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-			'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-			'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-			'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-			'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+			'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+			'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+			'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+			'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+			'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+			'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 		);
 
 		$args = array(
@@ -229,17 +229,17 @@ class WP_Listings_Taxonomies {
 		$format = '<div id="message" class="updated"><p><strong>%s</strong></p></div>';
 
 		if ( isset( $_REQUEST['created'] ) && 'true' == $_REQUEST['created'] ) {
-			printf( $format, __('New taxonomy successfully created!', 'wp_listings') );
+			printf( $format, __('New taxonomy successfully created!', 'wp-listings') );
 			return;
 		}
 
 		if ( isset( $_REQUEST['edited'] ) && 'true' == $_REQUEST['edited'] ) {
-			printf( $format, __('Taxonomy successfully edited!', 'wp_listings') );
+			printf( $format, __('Taxonomy successfully edited!', 'wp-listings') );
 			return;
 		}
 
 		if ( isset( $_REQUEST['deleted'] ) && 'true' == $_REQUEST['deleted'] ) {
-			printf( $format, __('Taxonomy successfully deleted.', 'wp_listings') );
+			printf( $format, __('Taxonomy successfully deleted.', 'wp-listings') );
 			return;
 		}
 
@@ -252,8 +252,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function listing_status_taxonomy() {
 
-		$name = __( 'Status', 'wp_listings' );
-		$singular_name = __( 'Status', 'wp_listings' );
+		$name = __( 'Status', 'wp-listings' );
+		$singular_name = __( 'Status', 'wp-listings' );
 
 		return array(
 			'status' => array(
@@ -262,18 +262,18 @@ class WP_Listings_Taxonomies {
 					'singular_name' 		=> strip_tags( $singular_name ),
 					'menu_name'				=> strip_tags( $name ),
 
-					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+					'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+					'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+					'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+					'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite'  => array( __( 'status', 'wp_listings' ), 'with_front' => false ),
+				'rewrite'  => array( __( 'status', 'wp-listings' ), 'with_front' => false ),
 				'editable' => 0,
 				'show_in_rest'  => true,
 				'rest_base'     => 'status',
@@ -288,8 +288,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function property_type_taxonomy() {
 
-		$name = __( 'Property Types', 'wp_listings' );
-		$singular_name = __( 'Property Type', 'wp_listings' );
+		$name = __( 'Property Types', 'wp-listings' );
+		$singular_name = __( 'Property Type', 'wp-listings' );
 
 		return array(
 			'property-types' => array(
@@ -298,18 +298,18 @@ class WP_Listings_Taxonomies {
 					'singular_name' 		=> strip_tags( $singular_name ),
 					'menu_name'				=> strip_tags( $name ),
 
-					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+					'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+					'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+					'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+					'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite'  => array( __( 'property-types', 'wp_listings' ), 'with_front' => false ),
+				'rewrite'  => array( __( 'property-types', 'wp-listings' ), 'with_front' => false ),
 				'editable' => 0,
 				'show_in_rest'  => true,
 				'rest_base'     => 'property-types',
@@ -324,8 +324,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function listing_location_taxonomy() {
 
-		$name = __( 'Locations', 'wp_listings' );
-		$singular_name = __( 'Location', 'wp_listings' );
+		$name = __( 'Locations', 'wp-listings' );
+		$singular_name = __( 'Location', 'wp-listings' );
 
 		return array(
 			'locations' => array(
@@ -334,18 +334,18 @@ class WP_Listings_Taxonomies {
 					'singular_name' 		=> strip_tags( $singular_name ),
 					'menu_name'				=> strip_tags( $name ),
 
-					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+					'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+					'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+					'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+					'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => true,
-				'rewrite' => array( __( 'locations', 'wp_listings' ), 'with_front' => false ),
+				'rewrite' => array( __( 'locations', 'wp-listings' ), 'with_front' => false ),
 				'editable' => 0,
 				'show_in_rest'  => true,
 				'rest_base'     => 'locations',
@@ -360,8 +360,8 @@ class WP_Listings_Taxonomies {
 	 */
 	function property_features_taxonomy() {
 
-		$name = __( 'Features', 'wp_listings' );
-		$singular_name = __( 'Feature', 'wp_listings' );
+		$name = __( 'Features', 'wp-listings' );
+		$singular_name = __( 'Feature', 'wp-listings' );
 
 		return array(
 			'features' => array(
@@ -370,18 +370,18 @@ class WP_Listings_Taxonomies {
 					'singular_name' 		=> strip_tags( $singular_name ),
 					'menu_name'				=> strip_tags( $name ),
 
-					'search_items'			=> sprintf( __( 'Search %s', 'wp_listings' ), strip_tags( $name ) ),
-					'popular_items'			=> sprintf( __( 'Popular %s', 'wp_listings' ), strip_tags( $name ) ),
-					'all_items'				=> sprintf( __( 'All %s', 'wp_listings' ), strip_tags( $name ) ),
-					'edit_item'				=> sprintf( __( 'Edit %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'update_item'			=> sprintf( __( 'Update %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp_listings' ), strip_tags( $singular_name ) ),
-					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp_listings' ), strip_tags( $name ) ),
-					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp_listings' ), strip_tags( $name ) )
+					'search_items'			=> sprintf( __( 'Search %s', 'wp-listings' ), strip_tags( $name ) ),
+					'popular_items'			=> sprintf( __( 'Popular %s', 'wp-listings' ), strip_tags( $name ) ),
+					'all_items'				=> sprintf( __( 'All %s', 'wp-listings' ), strip_tags( $name ) ),
+					'edit_item'				=> sprintf( __( 'Edit %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'update_item'			=> sprintf( __( 'Update %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_new_item'			=> sprintf( __( 'Add New %s', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'new_item_name'			=> sprintf( __( 'New %s Name', 'wp-listings' ), strip_tags( $singular_name ) ),
+					'add_or_remove_items'	=> sprintf( __( 'Add or Remove %s', 'wp-listings' ), strip_tags( $name ) ),
+					'choose_from_most_used'	=> sprintf( __( 'Choose from the most used %s', 'wp-listings' ), strip_tags( $name ) )
 				),
 				'hierarchical' => 0,
-				'rewrite' => array( __( 'features', 'wp_listings' ),  'with_front' => false ),
+				'rewrite' => array( __( 'features', 'wp-listings' ),  'with_front' => false ),
 				'editable' => 0,
 				'show_in_rest'  => true,
 				'rest_base'     => 'features',
@@ -492,7 +492,7 @@ class WP_Listings_Taxonomies {
 	
 	function wp_listings_edit_term_columns( $columns ) {
 
-	    $columns['wpl_term_image'] = __( 'Image', 'wp_listings' );
+	    $columns['wpl_term_image'] = __( 'Image', 'wp-listings' );
 
 	    return $columns;
 	}
@@ -567,13 +567,13 @@ class WP_Listings_Taxonomies {
 	    wp_nonce_field( basename( __FILE__ ), 'wpl_term_image_nonce' ); ?>
 
 	    <div class="form-field wpl-term-image-wrap">
-	        <label for="wpl-term-image"><?php _e( 'Image', 'wp_listings' ); ?></label>
+	        <label for="wpl-term-image"><?php _e( 'Image', 'wp-listings' ); ?></label>
 	        <!-- Begin term image -->
 			<p>
 				<input type="hidden" name="wpl-term-image" id="wpl-term-image" value="<?php echo esc_attr( $image_id ); ?>" />
 				<a href="#" class="wpl-add-media wpl-add-media-img"><img class="wpl-term-image-url" src="" style="max-width: 100%; max-height: 200px; height: auto; display: block;" /></a>
-				<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp_listings' ); ?></a>
-				<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp_listings' ); ?></a>
+				<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp-listings' ); ?></a>
+				<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp-listings' ); ?></a>
 			</p>
 			<!-- End term image -->
 	    </div>
@@ -591,15 +591,15 @@ class WP_Listings_Taxonomies {
 	    	$image_url = ''; ?>
 
 	    <tr class="form-field wpl-term-image-wrap">
-	        <th scope="row"><label for="wpl-term-image"><?php _e( 'Image', 'wp_listings' ); ?></label></th>
+	        <th scope="row"><label for="wpl-term-image"><?php _e( 'Image', 'wp-listings' ); ?></label></th>
 	        <td>
 	            <?php wp_nonce_field( basename( __FILE__ ), 'wpl_term_image_nonce' ); ?>
 	            <!-- Begin term image -->
 				<p>
 					<input type="hidden" name="wpl-term-image" id="wpl-term-image" value="<?php echo esc_attr( $image_id ); ?>" />
 					<a href="#" class="wpl-add-media wpl-add-media-img"><img class="wpl-term-image-url" src="<?php echo esc_url( $image_url ); ?>" style="max-width: 100%; max-height: 200px; height: auto; display: block;" /></a>
-					<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp_listings' ); ?></a>
-					<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp_listings' ); ?></a>
+					<a href="#" class="wpl-add-media wpl-add-media-text"><?php _e( 'Set term image', 'wp-listings' ); ?></a>
+					<a href="#" class="wpl-remove-media"><?php _e( 'Remove term image', 'wp-listings' ); ?></a>
 				</p>
 				<!-- End term image -->
 	        </td>
@@ -623,9 +623,9 @@ class WP_Listings_Taxonomies {
 			update_option('wp_listings_taxonomies', $wp_listings_taxes_reordered);
 
 		}?>
-	<h2><?php _e( 'Reorder Taxonomies', 'wp_listings' ); ?></h2>
+	<h2><?php _e( 'Reorder Taxonomies', 'wp-listings' ); ?></h2>
 	<div id="col-container">
-		<div class="updated"><?php _e('Note: This will only allow you to reorder user-created taxonomies. Default taxonomies cannot be reordered (Status, Locations, Property Types, Features).', 'wp_listings' ); ?> </div>
+		<div class="updated"><?php _e('Note: This will only allow you to reorder user-created taxonomies. Default taxonomies cannot be reordered (Status, Locations, Property Types, Features).', 'wp-listings' ); ?> </div>
 		<style>
 #sortable{list-style-type:none;margin:10px 0;padding:0}#sortable li .item{-moz-border-radius:6px 6px 6px 6px;border:1px solid #e6e6e6;font-weight:bold;height:auto;line-height:35px;overflow:hidden;padding-left:10px;position:relative;text-shadow:0 1px 0 white;width:auto;word-wrap:break-word;cursor:move;background:none repeat-x scroll left top #dfdfdf;-moz-box-shadow:2px 2px 3px #888;-webkit-box-shadow:2px 2px 3px #888;box-shadow:2px 2px 3px #888}#sortable li span{position:absolute;margin-left:-1.3em}.ui-state-highlight{background:#e6e6e6;border:1px #666 dashed}.wplistings-submit{padding:5px 10px}.wplistings-submit:hover{background:#eaf2fa;font-weight:bold}
 		</style>
@@ -637,7 +637,7 @@ class WP_Listings_Taxonomies {
 		</script>
 		<div id="col-left">
 		<div class="col-wrap">
-	    <p><?php _e('Drag and Drop to reorder', 'wp_listings'); ?></p>
+	    <p><?php _e('Drag and Drop to reorder', 'wp-listings'); ?></p>
 		<form method="post">
 		<ul id="sortable">
 	    	<?php foreach($wp_listings_taxes as $wp_listings_tax_key => $wp_listings_tax_value) { ?>

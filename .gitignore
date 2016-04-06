@@ -230,3 +230,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#Composer
+composer.json

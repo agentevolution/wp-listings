@@ -5,6 +5,7 @@
 	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
+	Text Domain: wp-listings
 
 	Version: 2.0.3
 
@@ -20,19 +21,19 @@ register_activation_hook( __FILE__, 'wp_listings_activation' );
  */
 function wp_listings_activation() {
 
-		/** Flush rewrite rules */
-		if ( ! post_type_exists( 'listing' ) ) {
-			wp_listings_init();
-			global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
-			$_wp_listings->create_post_type();
-			$_wp_listings_taxonomies->register_taxonomies();
-		}
-		flush_rewrite_rules();
+	/** Flush rewrite rules */
+	if ( ! post_type_exists( 'listing' ) ) {
+		wp_listings_init();
+		global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
+		$_wp_listings->create_post_type();
+		$_wp_listings_taxonomies->register_taxonomies();
+	}
+	flush_rewrite_rules();
 
-		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
-		foreach ($notice_keys as $notice) {
-			delete_user_meta( get_current_user_id(), $notice );
-		}
+	$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+	foreach ($notice_keys as $notice) {
+		delete_user_meta( get_current_user_id(), $notice );
+	}
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -43,12 +44,12 @@ register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
  */
 function wp_listings_deactivation() {
 
-		flush_rewrite_rules();
+	flush_rewrite_rules();
 
-		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
-		foreach ($notice_keys as $notice) {
-			delete_user_meta( get_current_user_id(), $notice );
-		}
+	$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+	foreach ($notice_keys as $notice) {
+		delete_user_meta( get_current_user_id(), $notice );
+	}
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
@@ -168,12 +169,12 @@ function wp_listings_init() {
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 			'nonce'      => wp_create_nonce( $nonce_action ),
 			'wp_version' => $wp_version,
-			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+			'dismiss'    => __( 'Dismiss this notice', 'wp-listings' ),
 		) );
 
 		$localize_script = array(
-			'title'        => __( 'Set Term Image', 'wp_listings' ),
-			'button'       => __( 'Set term image', 'wp_listings' )
+			'title'        => __( 'Set Term Image', 'wp-listings' ),
+			'button'       => __( 'Set term image', 'wp-listings' )
 		);
 
 		/* Pass custom variables to the script. */
