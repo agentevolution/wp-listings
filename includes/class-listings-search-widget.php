@@ -8,16 +8,16 @@
 class WP_Listings_Search_Widget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp_listings' ) );
+		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp-listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
-		parent::__construct( 'listings-search', __( 'WP Listings - Search', 'wp_listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'listings-search', __( 'WP Listings - Search', 'wp-listings' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
 
 		$instance = wp_parse_args( (array) $instance, array(
 			'title'			=> '',
-			'button_text'	=> __( 'Search Listings', 'wp_listings' )
+			'button_text'	=> __( 'Search Listings', 'wp-listings' )
 		) );
 
 		global $_wp_listings_taxonomies;
@@ -65,7 +65,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, array(
 			'title'			=> '',
-			'button_text'	=> __( 'Search Listings', 'wp_listings' )
+			'button_text'	=> __( 'Search Listings', 'wp-listings' )
 		) );
 
 		global $_wp_listings_taxonomies;
@@ -73,9 +73,9 @@ class WP_Listings_Search_Widget extends WP_Widget {
 		$listings_taxonomies = $_wp_listings_taxonomies->get_taxonomies();
 		$new_widget = empty( $instance );
 
-		printf( '<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" style="%s" /></p>', $this->get_field_id( 'title' ), __( 'Title:', 'wp_listings' ), $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), esc_attr( $instance['title'] ), 'width: 95%;' );
+		printf( '<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" style="%s" /></p>', $this->get_field_id( 'title' ), __( 'Title:', 'wp-listings' ), $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), esc_attr( $instance['title'] ), 'width: 95%;' );
 		?>
-		<h5><?php _e( 'Include these taxonomies in the search widget', 'wp_listings' ); ?></h5>
+		<h5><?php _e( 'Include these taxonomies in the search widget', 'wp-listings' ); ?></h5>
 		<?php
 		foreach ( (array) $listings_taxonomies as $tax => $data ) {
 			$terms = get_terms( $tax );
@@ -88,6 +88,6 @@ class WP_Listings_Search_Widget extends WP_Widget {
 
 		}
 
-		printf( '<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" style="%s" /></p>', $this->get_field_id( 'button_text' ), __( 'Button Text:', 'wp_listings' ), $this->get_field_id( 'button_text' ), $this->get_field_name( 'button_text' ), esc_attr( $instance['button_text'] ), 'width: 95%;' );
+		printf( '<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" style="%s" /></p>', $this->get_field_id( 'button_text' ), __( 'Button Text:', 'wp-listings' ), $this->get_field_id( 'button_text' ), $this->get_field_name( 'button_text' ), esc_attr( $instance['button_text'] ), 'width: 95%;' );
 	}
 }

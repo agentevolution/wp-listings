@@ -117,7 +117,7 @@ class WP_Listings_Admin_Notice {
 		wp_localize_script( 'wp-listings-admin', 'wp_listings_adminL10n', array(
 			'nonce'      => wp_create_nonce( self::$nonce_action ),
 			'wp_version' => $wp_version,
-			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+			'dismiss'    => __( 'Dismiss this notice', 'wp-listings' ),
 		) );
 	}
 
