@@ -33,6 +33,7 @@ class WP_Listings {
 			    __( 'Price:', 'wp-listings' ) 					=> '_listing_price',
 			    __( 'Address:', 'wp-listings' )					=> '_listing_address',
 			    __( 'City:', 'wp-listings' )					=> '_listing_city',
+			    __( 'County:', 'wp-listings' )					=> '_listing_county',
 			    __( 'State:', 'wp-listings' )					=> '_listing_state',
 			    __( 'Country:', 'wp-listings' )					=> '_listing_country',
 			    __( 'ZIP:', 'wp-listings' )						=> '_listing_zip',
