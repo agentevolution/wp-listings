@@ -466,7 +466,7 @@ if (function_exists('equity')) {
 	$options = get_option('plugin_wp_listings_settings');
 
 	get_header();
-	if($options['wp_listings_custom_wrapper'] && $options['wp_listings_start_wrapper']) {
+	if(isset($options['wp_listings_custom_wrapper']) && isset($options['wp_listings_start_wrapper']) && $options['wp_listings_start_wrapper'] != '') {
 		echo $options['wp_listings_start_wrapper'];
 	} else {
 		echo '<div id="primary" class="content-area container inner">
@@ -508,7 +508,7 @@ if (function_exists('equity')) {
 		}
 		endwhile;
 
-	if($options['wp_listings_custom_wrapper'] && $options['wp_listings_end_wrapper']) {
+	if(isset($options['wp_listings_custom_wrapper']) && isset($options['wp_listings_end_wrapper']) && $options['wp_listings_end_wrapper'] != '') {
 		echo $options['wp_listings_end_wrapper'];
 	} else {
 		echo '</div><!-- #content -->
