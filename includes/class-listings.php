@@ -66,7 +66,7 @@ class WP_Listings {
 				__( 'Heat/Cool:', 'wp-listings' ) 				=> '_listing_heatcool'
 			),
 			'col2' => array(
-				__( 'Lot size:', 'wp-listings' ) 				=> '_listing_lostize',
+				__( 'Lot size:', 'wp-listings' ) 				=> '_listing_lotsize',
 				__( 'Location:', 'wp-listings' ) 				=> '_listing_location',
 				__( 'Scenery:', 'wp-listings' )					=> '_listing_scenery',
 				__( 'Community:', 'wp-listings' )				=> '_listing_community',
