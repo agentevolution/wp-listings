@@ -206,7 +206,7 @@ function single_listing_post_content() {
 			<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
 			<div id="listing-video">
 				<div class="iframe-wrap">
-				<?php echo get_post_meta( $post->ID, '_listing_video', true); ?>
+				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_video', true)); ?>
 				</div>
 			</div><!-- #listing-video -->
 			<?php } ?>
