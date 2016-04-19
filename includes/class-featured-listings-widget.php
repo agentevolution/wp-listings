@@ -8,9 +8,9 @@
 class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops  = array( 'classname' => 'wplistings-featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp_listings' ) );
+		$widget_ops  = array( 'classname' => 'wplistings-featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp-listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350 );
-		parent::__construct( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp_listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp-listings' ), $widget_ops, $control_ops );
 	}
 
 	/**
@@ -126,7 +126,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 
 				$loop .= sprintf('</div><!-- .listing-widget-details -->');
 
-				$loop .= sprintf( '<a href="%s" class="button btn-primary more-link">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
+				$loop .= sprintf( '<a href="%s" class="button btn-primary more-link">%s</a>', get_permalink(), __( 'View Listing', 'wp-listings' ) );
 
 				/** wrap in div with possible column class, and output **/
 				printf( '<div class="listing %s post-%s"><div class="listing-wrap">%s</div></div>', $column_class . $first_class, $post->ID, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );
@@ -173,7 +173,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		printf(
 			'<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" style="%s" /></p>',
 			$this->get_field_id('title'),
-			__( 'Title:', 'wp_listings' ),
+			__( 'Title:', 'wp-listings' ),
 			$this->get_field_id('title'),
 			$this->get_field_name('title'),
 			esc_attr( $instance['title'] ),
@@ -181,7 +181,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		); ?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size', 'wp_listings' ); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Image Size', 'wp-listings' ); ?>:</label>
 			<select id="<?php echo $this->get_field_id( 'image_size' ); ?>" class="wp-listings-image-size-selector" name="<?php echo $this->get_field_name( 'image_size' ); ?>">
 				<option value="thumbnail">thumbnail (<?php echo absint( get_option( 'thumbnail_size_w' ) ); ?>x<?php echo absint( get_option( 'thumbnail_size_h' ) ); ?>)</option>
 				<?php
@@ -195,7 +195,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		<?php
 		printf(
 			'<p>%s <input type="text" name="%s" value="%s" size="3" /></p>',
-			__( 'How many results should be returned?', 'wp_listings' ),
+			__( 'How many results should be returned?', 'wp-listings' ),
 			$this->get_field_name('posts_per_page'),
 			esc_attr( $instance['posts_per_page'] )
 		);
@@ -203,7 +203,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 		echo '<p><label for="'. $this->get_field_id( 'posts_term' ) .'">Display by term:</label>
 
 		<select id="'. $this->get_field_id( 'posts_term' ) .'" name="'. $this->get_field_name( 'posts_term' ) .'">
-			<option style="padding-right:10px;" value="" '. selected( '', $instance['posts_term'], false ) .'>'. __( 'All Taxonomies and Terms', 'wp_listings' ) .'</option>';
+			<option style="padding-right:10px;" value="" '. selected( '', $instance['posts_term'], false ) .'>'. __( 'All Taxonomies and Terms', 'wp-listings' ) .'</option>';
 
 			$taxonomies = get_object_taxonomies('listing');
 
