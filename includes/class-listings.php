@@ -30,53 +30,54 @@ class WP_Listings {
 
 		$this->property_details = apply_filters( 'wp_listings_property_details', array(
 			'col1' => array(
-			    __( 'Price:', 'wp_listings' ) 					=> '_listing_price',
-			    __( 'Address:', 'wp_listings' )					=> '_listing_address',
-			    __( 'City:', 'wp_listings' )					=> '_listing_city',
-			    __( 'State:', 'wp_listings' )					=> '_listing_state',
-			    __( 'Country:', 'wp_listings' )					=> '_listing_country',
-			    __( 'ZIP:', 'wp_listings' )						=> '_listing_zip',
-			    __( 'MLS #:', 'wp_listings' ) 					=> '_listing_mls',
-				__( 'Open House Time & Date:', 'wp_listings' ) 	=> '_listing_open_house'
+			    __( 'Price:', 'wp-listings' ) 					=> '_listing_price',
+			    __( 'Address:', 'wp-listings' )					=> '_listing_address',
+			    __( 'City:', 'wp-listings' )					=> '_listing_city',
+			    __( 'County:', 'wp-listings' )					=> '_listing_county',
+			    __( 'State:', 'wp-listings' )					=> '_listing_state',
+			    __( 'Country:', 'wp-listings' )					=> '_listing_country',
+			    __( 'ZIP:', 'wp-listings' )						=> '_listing_zip',
+			    __( 'MLS #:', 'wp-listings' ) 					=> '_listing_mls',
+				__( 'Open House Time & Date:', 'wp-listings' ) 	=> '_listing_open_house'
 			),
 			'col2' => array(
-			    __( 'Year Built:', 'wp_listings' ) 				=> '_listing_year_built',
-			    __( 'Floors:', 'wp_listings' ) 					=> '_listing_floors',
-			    __( 'Square Feet:', 'wp_listings' )				=> '_listing_sqft',
-				__( 'Lot Square Feet:', 'wp_listings' )			=> '_listing_lot_sqft',
-			    __( 'Bedrooms:', 'wp_listings' )				=> '_listing_bedrooms',
-			    __( 'Bathrooms:', 'wp_listings' )				=> '_listing_bathrooms',
-			    __( 'Half Bathrooms:', 'wp_listings' )			=> '_listing_half_bath',
-			    __( 'Garage:', 'wp_listings' )					=> '_listing_garage',
-			    __( 'Pool:', 'wp_listings' )					=> '_listing_pool'
+			    __( 'Year Built:', 'wp-listings' ) 				=> '_listing_year_built',
+			    __( 'Floors:', 'wp-listings' ) 					=> '_listing_floors',
+			    __( 'Square Feet:', 'wp-listings' )				=> '_listing_sqft',
+				__( 'Lot Square Feet:', 'wp-listings' )			=> '_listing_lot_sqft',
+			    __( 'Bedrooms:', 'wp-listings' )				=> '_listing_bedrooms',
+			    __( 'Bathrooms:', 'wp-listings' )				=> '_listing_bathrooms',
+			    __( 'Half Bathrooms:', 'wp-listings' )			=> '_listing_half_bath',
+			    __( 'Garage:', 'wp-listings' )					=> '_listing_garage',
+			    __( 'Pool:', 'wp-listings' )					=> '_listing_pool'
 			),
 		) );
 
 		$this->extended_property_details = apply_filters( 'wp_listings_extended_property_details', array(
 			'col1' => array(
-			    __( 'Property Type:', 'wp_listings' ) 			=> '_listing_proptype',
-			    __( 'Condo:', 'wp_listings' )					=> '_listing_condo',
-			    __( 'Financial:', 'wp_listings' )				=> '_listing_financial',
-			    __( 'Condition:', 'wp_listings' )				=> '_listing_condition',
-			    __( 'Construction:', 'wp_listings' )			=> '_listing_construction',
-			    __( 'Exterior:', 'wp_listings' )				=> '_listing_exterior',
-			    __( 'Fencing:', 'wp_listings' ) 				=> '_listing_fencing',
-				__( 'Interior:', 'wp_listings' ) 				=> '_listing_interior',
-				__( 'Flooring:', 'wp_listings' ) 				=> '_listing_flooring',
-				__( 'Heat/Cool:', 'wp_listings' ) 				=> '_listing_heatcool'
+			    __( 'Property Type:', 'wp-listings' ) 			=> '_listing_proptype',
+			    __( 'Condo:', 'wp-listings' )					=> '_listing_condo',
+			    __( 'Financial:', 'wp-listings' )				=> '_listing_financial',
+			    __( 'Condition:', 'wp-listings' )				=> '_listing_condition',
+			    __( 'Construction:', 'wp-listings' )			=> '_listing_construction',
+			    __( 'Exterior:', 'wp-listings' )				=> '_listing_exterior',
+			    __( 'Fencing:', 'wp-listings' ) 				=> '_listing_fencing',
+				__( 'Interior:', 'wp-listings' ) 				=> '_listing_interior',
+				__( 'Flooring:', 'wp-listings' ) 				=> '_listing_flooring',
+				__( 'Heat/Cool:', 'wp-listings' ) 				=> '_listing_heatcool'
 			),
 			'col2' => array(
-				__( 'Lot size:', 'wp_listings' ) 				=> '_listing_lostize',
-				__( 'Location:', 'wp_listings' ) 				=> '_listing_location',
-				__( 'Scenery:', 'wp_listings' )					=> '_listing_scenery',
-				__( 'Community:', 'wp_listings' )				=> '_listing_community',
-				__( 'Recreation:', 'wp_listings' )				=> '_listing_recreation',
-				__( 'General:', 'wp_listings' )					=> '_listing_general',
-				__( 'Inclusions:', 'wp_listings' )				=> '_listing_inclusions',
-				__( 'Parking:', 'wp_listings' )					=> '_listing_parking',
-				__( 'Rooms:', 'wp_listings' )					=> '_listing_rooms',
-				__( 'Laundry:', 'wp_listings' )					=> '_listing_laundry',
-				__( 'Utilities:', 'wp_listings' )				=> '_listing_utilities'
+				__( 'Lot size:', 'wp-listings' ) 				=> '_listing_lotsize',
+				__( 'Location:', 'wp-listings' ) 				=> '_listing_location',
+				__( 'Scenery:', 'wp-listings' )					=> '_listing_scenery',
+				__( 'Community:', 'wp-listings' )				=> '_listing_community',
+				__( 'Recreation:', 'wp-listings' )				=> '_listing_recreation',
+				__( 'General:', 'wp-listings' )					=> '_listing_general',
+				__( 'Inclusions:', 'wp-listings' )				=> '_listing_inclusions',
+				__( 'Parking:', 'wp-listings' )					=> '_listing_parking',
+				__( 'Rooms:', 'wp-listings' )					=> '_listing_rooms',
+				__( 'Laundry:', 'wp-listings' )					=> '_listing_laundry',
+				__( 'Utilities:', 'wp-listings' )				=> '_listing_utilities'
 			),
 		) );
 
@@ -124,7 +125,7 @@ class WP_Listings {
 	 * Adds settings page and IDX Import page to admin menu
 	 */
 	function settings_init() {
-		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp_listings' ), __( 'Settings', 'wp_listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
+		add_submenu_page( 'edit.php?post_type=listing', __( 'Settings', 'wp-listings' ), __( 'Settings', 'wp-listings' ), 'manage_options', $this->settings_page, array( &$this, 'settings_page' ) );
 	}
 
 	/**
@@ -142,21 +143,21 @@ class WP_Listings {
 		$args = apply_filters( 'wp_listings_post_type_args',
 			array(
 				'labels' => array(
-					'name'					=> __( 'Listings', 'wp_listings' ),
-					'singular_name'			=> __( 'Listing', 'wp_listings' ),
-					'add_new'				=> __( 'Add New', 'wp_listings' ),
-					'add_new_item'			=> __( 'Add New Listing', 'wp_listings' ),
-					'edit'					=> __( 'Edit', 'wp_listings' ),
-					'edit_item'				=> __( 'Edit Listing', 'wp_listings' ),
-					'new_item'				=> __( 'New Listing', 'wp_listings' ),
-					'view'					=> __( 'View Listing', 'wp_listings' ),
-					'view_item'				=> __( 'View Listing', 'wp_listings' ),
-					'search_items'			=> __( 'Search Listings', 'wp_listings' ),
-					'not_found'				=> __( 'No listings found', 'wp_listings' ),
-					'not_found_in_trash'	=> __( 'No listings found in Trash', 'wp_listings' ),
-					'filter_items_list'     => __( 'Filter Listings', 'wp_listings' ),
-					'items_list_navigation' => __( 'Listings navigation', 'wp_listings' ),
-					'items_list'            => __( 'Listings list', 'wp_listings' )
+					'name'					=> __( 'Listings', 'wp-listings' ),
+					'singular_name'			=> __( 'Listing', 'wp-listings' ),
+					'add_new'				=> __( 'Add New', 'wp-listings' ),
+					'add_new_item'			=> __( 'Add New Listing', 'wp-listings' ),
+					'edit'					=> __( 'Edit', 'wp-listings' ),
+					'edit_item'				=> __( 'Edit Listing', 'wp-listings' ),
+					'new_item'				=> __( 'New Listing', 'wp-listings' ),
+					'view'					=> __( 'View Listing', 'wp-listings' ),
+					'view_item'				=> __( 'View Listing', 'wp-listings' ),
+					'search_items'			=> __( 'Search Listings', 'wp-listings' ),
+					'not_found'				=> __( 'No listings found', 'wp-listings' ),
+					'not_found_in_trash'	=> __( 'No listings found in Trash', 'wp-listings' ),
+					'filter_items_list'     => __( 'Filter Listings', 'wp-listings' ),
+					'items_list_navigation' => __( 'Listings navigation', 'wp-listings' ),
+					'items_list'            => __( 'Listings list', 'wp-listings' )
 				),
 				'public'		=> true,
 				'query_var'		=> true,
@@ -176,13 +177,13 @@ class WP_Listings {
 	}
 
 	function register_meta_boxes() {
-		add_meta_box( 'listing_details_metabox', __( 'Property Details', 'wp_listings' ), array( &$this, 'listing_details_metabox' ), 'listing', 'normal', 'high' );
-		add_meta_box( 'listing_features_metabox', __( 'Additional Details', 'wp_listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
+		add_meta_box( 'listing_details_metabox', __( 'Property Details', 'wp-listings' ), array( &$this, 'listing_details_metabox' ), 'listing', 'normal', 'high' );
+		add_meta_box( 'listing_features_metabox', __( 'Additional Details', 'wp-listings' ), array( &$this, 'listing_features_metabox' ), 'listing', 'normal', 'high' );
 		if ( !class_exists( 'Idx_Broker_Plugin' ) ) {
-			add_meta_box( 'idx_metabox', __( 'IDX Broker', 'wp_listings' ), array( &$this, 'idx_metabox' ), 'wp-listings-options', 'side', 'core' );
+			add_meta_box( 'idx_metabox', __( 'IDX Broker', 'wp-listings' ), array( &$this, 'idx_metabox' ), 'wp-listings-options', 'side', 'core' );
 		}
 		if( !function_exists( 'equity' ) ) {
-			add_meta_box( 'agentevo_metabox', __( 'Equity Framework', 'wp_listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
+			add_meta_box( 'agentevo_metabox', __( 'Equity Framework', 'wp-listings' ), array( &$this, 'agentevo_metabox' ), 'wp-listings-options', 'side', 'core' );
 		}
 
 	}
@@ -247,10 +248,10 @@ class WP_Listings {
 
 		$columns = array(
 			'cb'					=> '<input type="checkbox" />',
-			'listing_thumbnail'		=> __( 'Thumbnail', 'wp_listings' ),
-			'title'					=> __( 'Listing Title', 'wp_listings' ),
-			'listing_details'		=> __( 'Details', 'wp_listings' ),
-			'listing_tags'			=> __( 'Tags', 'wp_listings' )
+			'listing_thumbnail'		=> __( 'Thumbnail', 'wp-listings' ),
+			'title'					=> __( 'Listing Title', 'wp-listings' ),
+			'listing_details'		=> __( 'Details', 'wp-listings' ),
+			'listing_tags'			=> __( 'Tags', 'wp-listings' )
 		);
 
 		return $columns;
@@ -285,10 +286,10 @@ class WP_Listings {
 				}
 				break;
 			case "listing_tags":
-				_e('<b>Status</b>: ' . get_the_term_list( $post->ID, 'status', '', ', ', '' ) . '<br />', 'wp_listings');
-				_e('<b>Property Type:</b> ' . get_the_term_list( $post->ID, 'property-types', '', ', ', '' ) . '<br />', 'wp_listings');
-				_e('<b>Location:</b> ' . get_the_term_list( $post->ID, 'locations', '', ', ', '' ) . '<br />', 'wp_listings');
-				_e('<b>Features:</b> ' . get_the_term_list( $post->ID, 'features', '', ', ', '' ), 'wp_listings');
+				_e('<b>Status</b>: ' . get_the_term_list( $post->ID, 'status', '', ', ', '' ) . '<br />', 'wp-listings');
+				_e('<b>Property Type:</b> ' . get_the_term_list( $post->ID, 'property-types', '', ', ', '' ) . '<br />', 'wp-listings');
+				_e('<b>Location:</b> ' . get_the_term_list( $post->ID, 'locations', '', ', ', '' ) . '<br />', 'wp-listings');
+				_e('<b>Features:</b> ' . get_the_term_list( $post->ID, 'features', '', ', ', '' ), 'wp-listings');
 				break;
 		}
 
@@ -321,13 +322,13 @@ class WP_Listings {
 
 		if ( isset( $_GET['wp-listings']) || $screen->id == 'edit-listing' ) {
 			if ( !class_exists( 'Idx_Broker_Plugin') ) {
-				echo wp_listings_admin_notice( __( '<strong>Integrate your MLS Listings into WordPress with IDX Broker!</strong> <a href="http://www.idxbroker.com/features/idx-wordpress-plugin">Find out how</a>', 'wp_listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_idx' : 'wpl_notice_idx' );
+				echo wp_listings_admin_notice( __( '<strong>Integrate your MLS Listings into WordPress with IDX Broker!</strong> <a href="http://www.idxbroker.com/features/idx-wordpress-plugin">Find out how</a>', 'wp-listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_idx' : 'wpl_notice_idx' );
 			}
 			if( !function_exists( 'equity' ) ) {
-				echo wp_listings_admin_notice( __( '<strong>Stop filling out forms. Equity automatically enhances your listings with extra details and photos.</strong> <a href="http://www.agentevolution.com/equity/">Find out how</a>', 'wp_listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_equity' : 'wpl_notice_equity' );
+				echo wp_listings_admin_notice( __( '<strong>Stop filling out forms. Equity automatically enhances your listings with extra details and photos.</strong> <a href="http://www.agentevolution.com/equity/">Find out how</a>', 'wp-listings' ), false, 'activate_plugins', (isset( $_GET['wp-listings'])) ? 'wpl_listing_notice_equity' : 'wpl_notice_equity' );
 			}
 			if( get_option('wp_listings_import_progress') == true ) {
-				echo wp_listings_admin_notice( __( '<strong>Your listings are being imported in the background. This notice will dismiss when all selected listings have been imported.</strong>', 'wp_listings' ), false, 'activate_plugins', 'wpl_notice_import_progress' );
+				echo wp_listings_admin_notice( __( '<strong>Your listings are being imported in the background. This notice will dismiss when all selected listings have been imported.</strong>', 'wp-listings' ), false, 'activate_plugins', 'wpl_notice_import_progress' );
 			}
 		}
 

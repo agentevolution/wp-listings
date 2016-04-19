@@ -58,7 +58,7 @@ function archive_listing_loop() {
 
 			$loop .= sprintf('</div><!-- .listing-widget-details -->');
 
-			$loop .= sprintf( '<a href="%s" class="button btn-primary more-link">%s</a>', get_permalink(), __( 'View Listing', 'wp_listings' ) );
+			$loop .= sprintf( '<a href="%s" class="button btn-primary more-link">%s</a>', get_permalink(), __( 'View Listing', 'wp-listings' ) );
 
 			/** wrap in div with column class, and output **/
 			printf( '<article id="post-%s" class="listing entry one-third %s"><div class="listing-wrap">%s</div><!-- .listing-wrap --></article><!-- article#post-## -->', get_the_id(), $first, apply_filters( 'wp_listings_featured_listings_widget_loop', $loop ) );

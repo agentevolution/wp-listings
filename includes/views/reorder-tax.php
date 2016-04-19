@@ -14,7 +14,7 @@
 
 add_action('admin_menu', 'wp_listings_tax_reorder_init', 20);
 function wp_listings_tax_reorder_init() {
-	add_submenu_page( 'edit.php?post_type=listing', __( 'Reorder Taxonomies', 'wp_listings' ), __( 'Reorder Taxonomies', 'wp_listings' ), 'manage_options', 'wplistings-tax-reorder', 'wp_listings_tax_reorder');
+	add_submenu_page( 'edit.php?post_type=listing', __( 'Reorder Taxonomies', 'wp-listings' ), __( 'Reorder Taxonomies', 'wp-listings' ), 'manage_options', 'wplistings-tax-reorder', 'wp_listings_tax_reorder');
 }
 
 add_action( 'admin_enqueue_scripts', 'wp_listings_tax_reorder_enqueue' );
@@ -37,7 +37,7 @@ function wp_listings_tax_reorder() {
 		
 	}
 screen_icon( 'themes' ); ?>
-<h2><?php _e( 'Reorder Taxonomies', 'wp_listings' ); ?></h2>
+<h2><?php _e( 'Reorder Taxonomies', 'wp-listings' ); ?></h2>
 <div id="col-container">
 <style>
 	#sortable { list-style-type: none; margin: 10px 0 ; padding: 0; }

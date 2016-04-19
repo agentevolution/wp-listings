@@ -121,6 +121,7 @@ function allowed_meta_keys() {
 		'_listing_price',
 	    '_listing_address',
 	    '_listing_city',
+	    '_listing_county',
 	    '_listing_state',
 	    '_listing_zip',
 	    '_listing_country',
