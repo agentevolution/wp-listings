@@ -4,8 +4,8 @@ Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
-Tested up to: 4.4.1
-Stable tag: 2.0.3
+Tested up to: 4.5
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,22 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.1.0 =
+Released: 04-21-16
+* Added: Global disclaimer
+* Added: Currency symbol and currency code support
+* Added: Meta field for county
+* Added: Video field shortcode support
+* Fixed: Imported listings reverting to draft
+* Fixed: Text domain added/changed for better translation support
+* Fixed: PHP warning for unset options
+* Fixed; PHP error when importing but return is empty
+* Fixed: Spelling for lot size field
+* Fixed: Label on settings page float issue
+* Fixed: Jetpack Related Posts not showing on non-listing post types
+* Updated: Support Text mode on gallery editor
+* Updated: Helper functions
 
 = 2.0.3 =
 * Fix: Update Listing importer to account for API change
