@@ -25,6 +25,7 @@ function wp_listings_dnsprefetch() {
 function single_listing_post_content() {
 
 	global $post;
+	$options = get_option('plugin_wp_listings_settings');
 
 	?>
 
@@ -46,7 +47,7 @@ function single_listing_post_content() {
 		if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
 			$listing_meta .= (get_post_meta($post->ID, '_listing_price_alt', true)) ? sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price_alt', true ) ) : '';
 		} else {
-			$listing_meta .= sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price', true ) );
+			$listing_meta .= sprintf( '<li class="listing-price"><span class="currency-symbol">%s</span>%s <span class="currency-code">%s</span></li>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '' );
 		}
 
 		if ( '' != wp_listings_get_property_types() ) {
@@ -101,11 +102,16 @@ function single_listing_post_content() {
 			</ul>
 
 			<div id="listing-description" itemprop="description">
-				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp_listings' ) );
+				<?php the_content( __( 'View more <span class="meta-nav">&rarr;</span>', 'wp-listings' ) );
 
 				echo (get_post_meta($post->ID, '_listing_featured_on', true)) ? '<p class="wp_listings_featured_on">' . get_post_meta($post->ID, '_listing_featured_on', true) . '</p>' : '';
 
-				echo (get_post_meta($post->ID, '_listing_disclaimer', true)) ? '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>' : '';
+				if( get_post_meta($post->ID, '_listing_disclaimer', true) ) {
+					echo '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>';
+				} elseif ($options['wp_listings_global_disclaimer'] != '' && $options['wp_listings_global_disclaimer'] != null) {
+					echo '<p class="wp_listings_disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
+				}
+
 				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
 				?>
@@ -121,15 +127,19 @@ function single_listing_post_content() {
 
                     echo '<tbody class="left">';
                     if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
-                    	echo (get_post_meta($post->ID, '_listing_price_alt', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price_alt', true) .'</td></tr>' : '';
-                	} else {
-                    	echo (get_post_meta($post->ID, '_listing_price', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp_listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price', true) .'</td></tr>' : '';
+                    	echo (get_post_meta($post->ID, '_listing_price_alt', true)) ? '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp-listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_price_alt', true) .'</td></tr>' : '';
+                	} elseif(get_post_meta($post->ID, '_listing_price', true)) {
+                    	echo '<tr class="wp_listings_listing_price"><td class="label">' . __('Price:', 'wp-listings') . '</td><td><span class="currency-symbol">' . $options['wp_listings_currency_symbol'] . '</span>';
+                    	echo get_post_meta( $post->ID, '_listing_price', true) . ' ';
+                    	echo (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? '<span class="currency-code">' . $options['wp_listings_currency_code'] . '</span>' : '';
+                    	echo '</td></tr>';
                 	}
                     echo '<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">';
-                    echo (get_post_meta($post->ID, '_listing_address', true)) ? '<tr class="wp_listings_listing_address"><td class="label">' . __('Address:', 'wp_listings') . '</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>' : '';
-                    echo (get_post_meta($post->ID, '_listing_city', true)) ? '<tr class="wp_listings_listing_city"><td class="label">' . __('City:', 'wp_listings') . '</td><td itemprop="addressLocality">'.get_post_meta( $post->ID, '_listing_city', true) .'</td></tr>' : '';
-                    echo (get_post_meta($post->ID, '_listing_state', true)) ? '<tr class="wp_listings_listing_state"><td class="label">' . __('State:', 'wp_listings') . '</td><td itemprop="addressRegion">'.get_post_meta( $post->ID, '_listing_state', true) .'</td></tr>' : '';
-                    echo (get_post_meta($post->ID, '_listing_zip', true)) ? '<tr class="wp_listings_listing_zip"><td class="label">' . __('Zip Code:', 'wp_listings') . '</td><td itemprop="postalCode">'.get_post_meta( $post->ID, '_listing_zip', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_address', true)) ? '<tr class="wp_listings_listing_address"><td class="label">' . __('Address:', 'wp-listings') . '</td><td itemprop="streetAddress">'.get_post_meta( $post->ID, '_listing_address', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_city', true)) ? '<tr class="wp_listings_listing_city"><td class="label">' . __('City:', 'wp-listings') . '</td><td itemprop="addressLocality">'.get_post_meta( $post->ID, '_listing_city', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_county', true)) ? '<tr class="wp_listings_listing_county"><td class="label">' . __('County:', 'wp-listings') . '</td><td>'.get_post_meta( $post->ID, '_listing_county', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_state', true)) ? '<tr class="wp_listings_listing_state"><td class="label">' . __('State:', 'wp-listings') . '</td><td itemprop="addressRegion">'.get_post_meta( $post->ID, '_listing_state', true) .'</td></tr>' : '';
+                    echo (get_post_meta($post->ID, '_listing_zip', true)) ? '<tr class="wp_listings_listing_zip"><td class="label">' . __('Zip Code:', 'wp-listings') . '</td><td itemprop="postalCode">'.get_post_meta( $post->ID, '_listing_zip', true) .'</td></tr>' : '';
                     echo '</div>';
                     echo (get_post_meta($post->ID, '_listing_mls', true)) ? '<tr class="wp_listings_listing_mls"><td class="label">MLS:</td><td>'.get_post_meta( $post->ID, '_listing_mls', true) .'</td></tr>' : '';
                     echo '</tbody>';
@@ -165,7 +175,7 @@ function single_listing_post_content() {
 					echo '</table>';
 
 				if(get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' ) != null) {
-					echo '<h5>' . __('Tagged Features:', 'wp_listings') . '</h5><ul class="tagged-features">';
+					echo '<h5>' . __('Tagged Features:', 'wp-listings') . '</h5><ul class="tagged-features">';
 					echo get_the_term_list( get_the_ID(), 'features', '<li>', '</li><li>', '</li>' );
 					echo '</ul><!-- .tagged-features -->';
 				}
@@ -173,13 +183,13 @@ function single_listing_post_content() {
 				if ( get_post_meta( $post->ID, '_listing_home_sum', true) != '' || get_post_meta( $post->ID, '_listing_kitchen_sum', true) != '' || get_post_meta( $post->ID, '_listing_living_room', true) != '' || get_post_meta( $post->ID, '_listing_master_suite', true) != '') { ?>
 					<div class="additional-features">
 						<h4>Additional Features</h4>
-						<h6 class="label"><?php _e("Home Summary", 'wp_listings'); ?></h6>
+						<h6 class="label"><?php _e("Home Summary", 'wp-listings'); ?></h6>
 						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_home_sum', true)); ?></p>
-						<h6 class="label"><?php _e("Kitchen Summary", 'wp_listings'); ?></h6>
+						<h6 class="label"><?php _e("Kitchen Summary", 'wp-listings'); ?></h6>
 						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_kitchen_sum', true)); ?></p>
-						<h6 class="label"><?php _e("Living Room", 'wp_listings'); ?></h6>
+						<h6 class="label"><?php _e("Living Room", 'wp-listings'); ?></h6>
 						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_living_room', true)); ?></p>
-						<h6 class="label"><?php _e("Master Suite", 'wp_listings'); ?></h6>
+						<h6 class="label"><?php _e("Master Suite", 'wp-listings'); ?></h6>
 						<p class="value"><?php echo do_shortcode(get_post_meta( $post->ID, '_listing_master_suite', true)); ?></p>
 					</div><!-- .additional-features -->
 				<?php
@@ -196,7 +206,7 @@ function single_listing_post_content() {
 			<?php if (get_post_meta( $post->ID, '_listing_video', true) != '') { ?>
 			<div id="listing-video">
 				<div class="iframe-wrap">
-				<?php echo get_post_meta( $post->ID, '_listing_video', true); ?>
+				<?php echo do_shortcode(get_post_meta( $post->ID, '_listing_video', true)); ?>
 				</div>
 			</div><!-- #listing-video -->
 			<?php } ?>
@@ -273,7 +283,7 @@ function single_listing_post_content() {
 		<div id="listing-contact">
 
 			<?php
-			$options = get_option('plugin_wp_listings_settings');
+
 			if (get_post_meta( $post->ID, '_listing_contact_form', true) != '') {
 
 				echo do_shortcode(get_post_meta( $post->ID, '_listing_contact_form', true) );
@@ -454,57 +464,59 @@ if (function_exists('equity')) {
 
 } else {
 
-get_header();
-if($options['wp_listings_custom_wrapper'] && $options['wp_listings_start_wrapper']) {
-	echo $options['wp_listings_start_wrapper'];
-} else {
-	echo '<div id="primary" class="content-area container inner">
-		<div id="content" class="site-content" role="main">';
-}
+	$options = get_option('plugin_wp_listings_settings');
 
-	// Start the Loop.
-	while ( have_posts() ) : the_post(); ?>
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-		<header class="entry-header">
-			<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
-			<small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
-			<div class="entry-meta">
-				<?php
-					if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
-				?>
-				<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'wp_listings' ), __( '1 Comment', 'wp_listings' ), __( '% Comments', 'wp_listings' ) ); ?></span>
-				<?php
-					endif;
-
-					edit_post_link( __( 'Edit', 'wp_listings' ), '<span class="edit-link">', '</span>' );
-				?>
-			</div><!-- .entry-meta -->
-		</header><!-- .entry-header -->
-
-
-	<?php single_listing_post_content(); ?>
-
-	</article><!-- #post-ID -->
-
-<?php
-	// Previous/next post navigation.
-	wp_listings_post_nav();
-
-	// If comments are open or we have at least one comment, load up the comment template.
-	if ( comments_open() || get_comments_number() ) {
-		comments_template();
+	get_header();
+	if(isset($options['wp_listings_custom_wrapper']) && isset($options['wp_listings_start_wrapper']) && $options['wp_listings_start_wrapper'] != '') {
+		echo $options['wp_listings_start_wrapper'];
+	} else {
+		echo '<div id="primary" class="content-area container inner">
+			<div id="content" class="site-content" role="main">';
 	}
-	endwhile;
 
-if($options['wp_listings_custom_wrapper'] && $options['wp_listings_end_wrapper']) {
-	echo $options['wp_listings_end_wrapper'];
-} else {
-	echo '</div><!-- #content -->
-	</div><!-- #primary -->';
-}
+		// Start the Loop.
+		while ( have_posts() ) : the_post(); ?>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-get_sidebar();
-get_footer();
+			<header class="entry-header">
+				<?php the_title( '<h1 class="entry-title" itemprop="name">', '</h1>' ); ?>
+				<small><?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?></small>
+				<div class="entry-meta">
+					<?php
+						if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
+					?>
+					<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'wp-listings' ), __( '1 Comment', 'wp-listings' ), __( '% Comments', 'wp-listings' ) ); ?></span>
+					<?php
+						endif;
+
+						edit_post_link( __( 'Edit', 'wp-listings' ), '<span class="edit-link">', '</span>' );
+					?>
+				</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+
+		<?php single_listing_post_content(); ?>
+
+		</article><!-- #post-ID -->
+
+	<?php
+		// Previous/next post navigation.
+		wp_listings_post_nav();
+
+		// If comments are open or we have at least one comment, load up the comment template.
+		if ( comments_open() || get_comments_number() ) {
+			comments_template();
+		}
+		endwhile;
+
+	if(isset($options['wp_listings_custom_wrapper']) && isset($options['wp_listings_end_wrapper']) && $options['wp_listings_end_wrapper'] != '') {
+		echo $options['wp_listings_end_wrapper'];
+	} else {
+		echo '</div><!-- #content -->
+		</div><!-- #primary -->';
+	}
+
+	get_sidebar();
+	get_footer();
 
 }

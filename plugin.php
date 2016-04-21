@@ -2,11 +2,12 @@
 /*
 	Plugin Name: IMPress Listings
 	Plugin URI: http://wordpress.org/plugins/wp-listings/
-	Description: Creates a portable real estate listing management system. Designed to work with any theme using built-in templates.
+	Description: Creates a real estate listing management system. Designed to work with any theme using built-in templates.
 	Author: Agent Evolution
 	Author URI: http://agentevolution.com
+	Text Domain: wp-listings
 
-	Version: 2.0.3
+	Version: 2.1.0
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -20,19 +21,19 @@ register_activation_hook( __FILE__, 'wp_listings_activation' );
  */
 function wp_listings_activation() {
 
-		/** Flush rewrite rules */
-		if ( ! post_type_exists( 'listing' ) ) {
-			wp_listings_init();
-			global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
-			$_wp_listings->create_post_type();
-			$_wp_listings_taxonomies->register_taxonomies();
-		}
-		flush_rewrite_rules();
+	/** Flush rewrite rules */
+	if ( ! post_type_exists( 'listing' ) ) {
+		wp_listings_init();
+		global $_wp_listings, $_wp_listings_taxonomies, $_wp_listings_templates;
+		$_wp_listings->create_post_type();
+		$_wp_listings_taxonomies->register_taxonomies();
+	}
+	flush_rewrite_rules();
 
-		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
-		foreach ($notice_keys as $notice) {
-			delete_user_meta( get_current_user_id(), $notice );
-		}
+	$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+	foreach ($notice_keys as $notice) {
+		delete_user_meta( get_current_user_id(), $notice );
+	}
 }
 
 register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
@@ -43,12 +44,12 @@ register_deactivation_hook( __FILE__, 'wp_listings_deactivation' );
  */
 function wp_listings_deactivation() {
 
-		flush_rewrite_rules();
+	flush_rewrite_rules();
 
-		$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
-		foreach ($notice_keys as $notice) {
-			delete_user_meta( get_current_user_id(), $notice );
-		}
+	$notice_keys = array('wpl_notice_idx', 'wpl_listing_notice_idx', 'wpl_notice_equity');
+	foreach ($notice_keys as $notice) {
+		delete_user_meta( get_current_user_id(), $notice );
+	}
 }
 
 add_action( 'after_setup_theme', 'wp_listings_init' );
@@ -65,7 +66,7 @@ function wp_listings_init() {
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WP_LISTINGS_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '2.0.3' );
+	define( 'WP_LISTINGS_VERSION', '2.1.0' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp_listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -168,12 +169,12 @@ function wp_listings_init() {
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 			'nonce'      => wp_create_nonce( $nonce_action ),
 			'wp_version' => $wp_version,
-			'dismiss'    => __( 'Dismiss this notice', 'wp_listings' ),
+			'dismiss'    => __( 'Dismiss this notice', 'wp-listings' ),
 		) );
 
 		$localize_script = array(
-			'title'        => __( 'Set Term Image', 'wp_listings' ),
-			'button'       => __( 'Set term image', 'wp_listings' )
+			'title'        => __( 'Set Term Image', 'wp-listings' ),
+			'button'       => __( 'Set term image', 'wp-listings' )
 		);
 
 		/* Pass custom variables to the script. */

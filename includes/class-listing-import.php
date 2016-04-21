@@ -68,95 +68,97 @@ class WPL_Idx_Listing {
 			$wpl_options = get_option('plugin_wp_listings_settings');
 			update_option('wp_listings_import_progress', true);
 
-			// Loop through featured properties
-			foreach($properties as $prop) {
+			if( is_array($listings) && is_array($properties) ) {
+				// Loop through featured properties
+				foreach($properties as $prop) {
 
-				// Get the listing ID
-				$key = self::get_key($properties, 'listingID', $prop['listingID']);
+					// Get the listing ID
+					$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
-				// Add options
-				if(!in_array($prop['listingID'], $listings)) {
-					$idx_featured_listing_wp_options[$prop['listingID']]['listingID'] = $prop['listingID'];
-					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = '';
-				}
-
-				// Unset options if they don't exist
-				if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
-					unset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']);
-					unset($idx_featured_listing_wp_options[$prop['listingID']]['status']);
-			 	}
-
-			 	// Add post and update post meta
-				if(in_array($prop['listingID'], $listings) && !isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
-
-					// Get Equity listing API data if available
-					if(class_exists( 'Equity_Idx_Api' )) {
-						$equity_properties = $_equity_idx->equity_listing_ID($prop['idxID'], $prop['listingID']);
-
-						if($equity_properties == false) {
-							add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_empty', 'The Equity API returned no data for property ' . $prop['listingID'] . '. This is usually caused by your WordPress domain not matching the approved domain in your IDX account. Only some data has been imported.', 'error');
-							$equity_properties = $properties[$key];
-							delete_transient('equity_listing_' . $prop['listingID']);
-						}
+					// Add options
+					if(!in_array($prop['listingID'], $listings)) {
+						$idx_featured_listing_wp_options[$prop['listingID']]['listingID'] = $prop['listingID'];
+						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = '';
 					}
 
-					if ($properties[$key]['address'] == '' || $properties[$key]['address'] == null) {
-						$properties[$key]['address'] = 'Address unlisted';
-					}
-					if ($properties[$key]['remarksConcat'] == '' || $properties[$key]['remarksConcat'] == null) {
-						$properties[$key]['remarksConcat'] = $properties[$key]['listingID'];
-					}
+					// Unset options if they don't exist
+					if(isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && !get_post($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
+						unset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']);
+						unset($idx_featured_listing_wp_options[$prop['listingID']]['status']);
+				 	}
 
-					// Post creation options
-					$opts = array(
-						'post_content' => $properties[$key]['remarksConcat'],
-						'post_title' => $properties[$key]['address'],
-						'post_status' => 'publish',
-						'post_type' => 'listing'
-					);
+				 	// Add post and update post meta
+					if(in_array($prop['listingID'], $listings) && !isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id'])) {
 
-					// Add the post
-					$add_post = wp_insert_post($opts, true);
-
-					// Show error if wp_insert_post fails
-					// add post meta and update options if success
-					if (is_wp_error($add_post)) {
-						$error_string = $add_post->get_error_message();
-						add_settings_error('wp_listings_idx_listing_settings_group', 'insert_post_failed', 'WordPress failed to insert the post. Error ' . $error_string, 'error');
-					} elseif($add_post) {
-						$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
-						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
+						// Get Equity listing API data if available
 						if(class_exists( 'Equity_Idx_Api' )) {
-							self::wp_listings_idx_insert_post_meta($add_post, $equity_properties);
-						} else {
-							self::wp_listings_idx_insert_post_meta($add_post, $properties[$key]);
+							$equity_properties = $_equity_idx->equity_listing_ID($prop['idxID'], $prop['listingID']);
+
+							if($equity_properties == false) {
+								add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_empty', 'The Equity API returned no data for property ' . $prop['listingID'] . '. This is usually caused by your WordPress domain not matching the approved domain in your IDX account. Only some data has been imported.', 'error');
+								$equity_properties = $properties[$key];
+								delete_transient('equity_listing_' . $prop['listingID']);
+							}
+						}
+
+						if ($properties[$key]['address'] == '' || $properties[$key]['address'] == null) {
+							$properties[$key]['address'] = 'Address unlisted';
+						}
+						if ($properties[$key]['remarksConcat'] == '' || $properties[$key]['remarksConcat'] == null) {
+							$properties[$key]['remarksConcat'] = $properties[$key]['listingID'];
+						}
+
+						// Post creation options
+						$opts = array(
+							'post_content' => $properties[$key]['remarksConcat'],
+							'post_title' => $properties[$key]['address'],
+							'post_status' => 'publish',
+							'post_type' => 'listing'
+						);
+
+						// Add the post
+						$add_post = wp_insert_post($opts, true);
+
+						// Show error if wp_insert_post fails
+						// add post meta and update options if success
+						if (is_wp_error($add_post)) {
+							$error_string = $add_post->get_error_message();
+							add_settings_error('wp_listings_idx_listing_settings_group', 'insert_post_failed', 'WordPress failed to insert the post. Error ' . $error_string, 'error');
+						} elseif($add_post) {
+							$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
+							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
+							if(class_exists( 'Equity_Idx_Api' )) {
+								self::wp_listings_idx_insert_post_meta($add_post, $equity_properties);
+							} else {
+								self::wp_listings_idx_insert_post_meta($add_post, $properties[$key]);
+							}
 						}
 					}
-				}
-				// Change status to publish if it's not already
-				elseif( in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] != 'publish' ) {
-					self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'publish');
-					$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
-				}
-				// Change post status or delete post based on options
-				elseif( !in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
+					// Change status to publish if it's not already
+					elseif( in_array($prop['listingID'], $listings) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] != 'publish' ) {
+						self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'publish');
+						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
+					}
+					// Change post status or delete post based on options
+					elseif( !in_array($prop['listingID'], $listings) && isset($idx_featured_listing_wp_options[$prop['listingID']]['status']) && $idx_featured_listing_wp_options[$prop['listingID']]['status'] == 'publish' ) {
 
-					// Change to draft or delete listing if the post exists but is not in the listing array based on settings
-					if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
+						// Change to draft or delete listing if the post exists but is not in the listing array based on settings
+						if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
-						// Change to draft
-						self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'draft';
-					} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
+							// Change to draft
+							self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
+							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'draft';
+						} elseif(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-delete') {
 
-						$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'deleted';
+							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'deleted';
 
-						// Delete featured image
-						$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
-						wp_delete_attachment( $post_featured_image_id );
+							// Delete featured image
+							$post_featured_image_id = get_post_thumbnail_id( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+							wp_delete_attachment( $post_featured_image_id );
 
-						//Delete post
-						wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+							//Delete post
+							wp_delete_post( $idx_featured_listing_wp_options[$prop['listingID']]['post_id'] );
+						}
 					}
 				}
 			}
@@ -188,9 +190,7 @@ class WPL_Idx_Listing {
 
 			$key = self::get_key($properties, 'listingID', $prop['listingID']);
 
-			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) && $idx_featured_listing_wp_options[$prop['listingID']]['listingID'] != $prop['listingID'] ) {
-				self::wp_listings_idx_change_post_status($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], 'draft');
-			} elseif( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
+			if( isset($idx_featured_listing_wp_options[$prop['listingID']]['post_id']) ) {
 				// Update property data
 				if(class_exists( 'Equity_Idx_Api' )) {
 					require_once(ABSPATH . 'wp-content/themes/equity/lib/idx/class.Equity_Idx_Api.inc.php');
@@ -403,7 +403,7 @@ class WPL_Idx_Listing {
  */
 add_action( 'admin_menu', 'wp_listings_idx_listing_register_menu_page');
 function wp_listings_idx_listing_register_menu_page() {
-	add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp_listings' ), __( 'Import IDX Listings', 'wp_listings' ), 'manage_options', 'wplistings-idx-listing', 'wp_listings_idx_listing_setting_page' );
+	add_submenu_page( 'edit.php?post_type=listing', __( 'Import IDX Listings', 'wp-listings' ), __( 'Import IDX Listings', 'wp-listings' ), 'manage_options', 'wplistings-idx-listing', 'wp_listings_idx_listing_setting_page' );
 	add_action( 'admin_init', 'wp_listings_idx_listing_register_settings' );
 }
 
