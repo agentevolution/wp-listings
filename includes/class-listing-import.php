@@ -342,11 +342,18 @@ class WPL_Idx_Listing {
 				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
 				update_post_meta($id, '_listing_disclaimer', $disclaimer_combined);
 			}
+			if(in_array('widget', $disclaimer)) {
+				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				update_post_meta($id, '_listing_disclaimer_widget', $disclaimer_combined);
+			}
 		}
 
 		foreach($idx_featured_listing_data['courtesy'] as $courtesy) {
 			if(in_array('details', $courtesy)) {
 				update_post_meta($id, '_listing_courtesy', $courtesy['text']);
+			}
+			if(in_array('widget', $courtesy)) {
+				update_post_meta($id, '_listing_courtesy_widget', $courtesy['text']);
 			}
 		}
 
