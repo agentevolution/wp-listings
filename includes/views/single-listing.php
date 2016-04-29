@@ -78,6 +78,8 @@ function single_listing_post_content() {
 
 		echo $listing_meta;
 
+		echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
+
 		?>
 
 		<div id="listing-tabs" class="listing-data">
@@ -111,8 +113,6 @@ function single_listing_post_content() {
 				} elseif ($options['wp_listings_global_disclaimer'] != '' && $options['wp_listings_global_disclaimer'] != null) {
 					echo '<p class="wp_listings_disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
 				}
-
-				echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
 				?>
 			</div><!-- #listing-description -->
