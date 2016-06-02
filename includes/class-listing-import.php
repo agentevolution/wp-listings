@@ -61,7 +61,7 @@ class WPL_Idx_Listing {
 
 			// Load IDX Broker API Class and retrieve featured properties
 			$_idx_api = new \IDX\Idx_Api();
-			$properties = $_idx_api->client_properties('featured');
+			$properties = $_idx_api->client_properties('featured?disclaimers=true');
 
 			// Load WP options
 			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
@@ -180,7 +180,7 @@ class WPL_Idx_Listing {
 
 		// Load IDX Broker API Class and retrieve featured properties
 		$_idx_api = new \IDX\Idx_Api();
-		$properties = $_idx_api->client_properties('featured');
+		$properties = $_idx_api->client_properties('featured?disclaimers=true');
 
 		// Load WP options
 		$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
@@ -297,6 +297,7 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_price', $idx_featured_listing_data['listingPrice']);
 		update_post_meta($id, '_listing_address', $idx_featured_listing_data['address']);
 		update_post_meta($id, '_listing_city', $idx_featured_listing_data['cityName']);
+		update_post_meta($id, '_listing_county', $idx_featured_listing_data['countyName']);
 		update_post_meta($id, '_listing_state', $idx_featured_listing_data['state']);
 		update_post_meta($id, '_listing_zip', $idx_featured_listing_data['zipcode']);
 		update_post_meta($id, '_listing_mls', $idx_featured_listing_data['listingID']);
@@ -305,6 +306,7 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_bedrooms', $idx_featured_listing_data['bedrooms']);
 		update_post_meta($id, '_listing_bathrooms', $idx_featured_listing_data['totalBaths']);
 		update_post_meta($id, '_listing_half_bath', $idx_featured_listing_data['partialBaths']);
+
 		if ($update == false || $update_image == true) {
 			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
 		}
@@ -322,7 +324,7 @@ class WPL_Idx_Listing {
 					update_post_meta($id, '_listing_' . strtolower($metakey), $metavalue);
 				} elseif(isset( $metavalue ) && is_array( $metavalue )) {
 					foreach ($metavalue as $key => $value) {
-						if(get_post_meta($id, '_listing_' . strtolower($metakey)) && $metakey != 'images') {
+						if(get_post_meta($id, '_listing_' . strtolower($metakey)) && $metakey != 'images' && $metakey != 'disclaimer' && $metakey != 'courtesy') {
 							$oldvalue = get_post_meta($id, '_listing_' . strtolower($metakey), true);
 							$newvalue = $value . ', ' . $oldvalue;
 							update_post_meta($id, '_listing_' . strtolower($metakey), $newvalue);
@@ -331,6 +333,27 @@ class WPL_Idx_Listing {
 						}
 					}
 				}
+			}
+		}
+
+		// Add disclaimers and courtesies
+		foreach($idx_featured_listing_data['disclaimer'] as $disclaimer) {
+			if(in_array('details', $disclaimer)) {
+				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				update_post_meta($id, '_listing_disclaimer', $disclaimer_combined);
+			}
+			if(in_array('widget', $disclaimer)) {
+				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				update_post_meta($id, '_listing_disclaimer_widget', $disclaimer_combined);
+			}
+		}
+
+		foreach($idx_featured_listing_data['courtesy'] as $courtesy) {
+			if(in_array('details', $courtesy)) {
+				update_post_meta($id, '_listing_courtesy', $courtesy['text']);
+			}
+			if(in_array('widget', $courtesy)) {
+				update_post_meta($id, '_listing_courtesy_widget', $courtesy['text']);
 			}
 		}
 
