@@ -288,9 +288,9 @@ class WPL_Idx_Listing {
 		}
 
 		// Add or reset taxonomies for property-types, locations, and status
-		wp_set_object_terms($id, $idx_featured_listing_data['idxPropType'], 'property-types');
-		wp_set_object_terms($id, $idx_featured_listing_data['cityName'], 'locations');
-		wp_set_object_terms($id, $propstatus, 'status');
+		wp_set_object_terms($id, $idx_featured_listing_data['idxPropType'], 'property-types', true);
+		wp_set_object_terms($id, $idx_featured_listing_data['cityName'], 'locations', true);
+		wp_set_object_terms($id, $propstatus, 'status', true);
 
 		// Add post meta for existing WPL fields
 		update_post_meta($id, '_listing_lot_sqft', $idx_featured_listing_data['acres'].' acres');
