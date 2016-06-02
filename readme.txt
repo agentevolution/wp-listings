@@ -5,7 +5,7 @@ Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
 Tested up to: 4.5
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,12 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.1.1 =
+Released 06-02-16
+* Fixed: Imported listings will not reset taxonomy terms on update
+* Fixed: MLS compliance photo adjacent courtesy display
+* Fixed: Disclaimer and courtesy parsing due to IDX API change
 
 = 2.1.0 =
 Released: 04-21-16
