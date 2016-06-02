@@ -11,7 +11,7 @@
 
 **Tested up to:** 4.5
 
-**Stable tag:** 2.1.0
+**Stable tag:** 2.1.1
 
 **License:** GPLv2 or later
 
@@ -191,6 +191,12 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.1.1 ###
+Released 06-02-16
+* Fixed: Imported listings will not reset taxonomy terms on update
+* Fixed: MLS compliance photo adjacent courtesy display
+* Fixed: Disclaimer and courtesy parsing due to IDX API change
 
 ### 2.1.0 ###
 Released: 04-21-16
