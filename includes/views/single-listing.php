@@ -47,7 +47,7 @@ function single_listing_post_content() {
 		if ( get_post_meta($post->ID, '_listing_hide_price', true) == 1 ) {
 			$listing_meta .= (get_post_meta($post->ID, '_listing_price_alt', true)) ? sprintf( '<li class="listing-price">%s</li>', get_post_meta( $post->ID, '_listing_price_alt', true ) ) : '';
 		} else {
-			$listing_meta .= sprintf( '<li class="listing-price"><span class="currency-symbol">%s</span>%s <span class="currency-code">%s</span></li>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '' );
+			$listing_meta .= sprintf( '<li class="listing-price">%s %s %s</li>', '<span class="currency-symbol">' . $options['wp_listings_currency_symbol'] . '</span>', get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? '<span class="currency-code">' . $options['wp_listings_currency_code'] . '</span>' : '' );
 		}
 
 		if ( '' != wp_listings_get_property_types() ) {
@@ -78,7 +78,7 @@ function single_listing_post_content() {
 
 		echo $listing_meta;
 
-		echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp_listings_courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
+		echo (get_post_meta($post->ID, '_listing_courtesy', true)) ? '<p class="wp-listings-courtesy">' . get_post_meta($post->ID, '_listing_courtesy', true) . '</p>' : '';
 
 		?>
 
@@ -109,9 +109,9 @@ function single_listing_post_content() {
 				echo (get_post_meta($post->ID, '_listing_featured_on', true)) ? '<p class="wp_listings_featured_on">' . get_post_meta($post->ID, '_listing_featured_on', true) . '</p>' : '';
 
 				if( get_post_meta($post->ID, '_listing_disclaimer', true) ) {
-					echo '<p class="wp_listings_disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>';
+					echo '<p class="wp-listings-disclaimer">' . get_post_meta($post->ID, '_listing_disclaimer', true) . '</p>';
 				} elseif ($options['wp_listings_global_disclaimer'] != '' && $options['wp_listings_global_disclaimer'] != null) {
-					echo '<p class="wp_listings_disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
+					echo '<p class="wp-listings-disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
 				}
 
 				?>
@@ -330,27 +330,26 @@ function single_listing_post_content() {
 					}
 
 					if($options['wp_listings_captcha_site_key'] != '' && $options['wp_listings_captcha_secret_key'] != '') {
-						require_once( WP_LISTINGS_DIR . '/includes/class-recaptcha.php' );
+						require_once( WP_LISTINGS_DIR . '/includes/recaptcha.php' );
 
 						// your secret key
 						$secret = $options['wp_listings_captcha_secret_key'];
 
-						// empty response
-						$response = null;
+						$gRecaptchaResponse = $_POST["g-recaptcha-response"];
+						$remoteIp = $_SERVER["REMOTE_ADDR"];
 
-						// check secret key
-						$reCaptcha = new ReCaptcha($secret);
-
-						if ($_POST["g-recaptcha-response"]) {
-						    $response = $reCaptcha->verifyResponse(
-						        $_SERVER["REMOTE_ADDR"],
-						        $_POST["g-recaptcha-response"]
-						    );
+						$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+						$resp = $recaptcha->verify($gRecaptchaResponse, $remoteIp);
+						if ($resp->isSuccess()) {
+						    // verified!
+						    $emailSent = true;
+						} else {
+						    $errors = $resp->getErrorCodes();
+						    $emailSent = true;
 						}
 					}
 
-
-					if(isset($_POST['antispam']) && $_POST['antispam'] == '' || $response != null && $response->success) {
+					if(isset($_POST['antispam']) && $_POST['antispam'] == '' || $resp != null && $resp->isSuccess()) {
 						if(!isset($hasError)) {
 							$emailTo = get_the_author_meta( 'user_email', $post->post_author );
 							if (!isset($emailTo) || ($emailTo == '') ){
