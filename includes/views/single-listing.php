@@ -231,7 +231,9 @@ function single_listing_post_content() {
 
 				$map_info_content = sprintf('<p style="font-size: 14px; margin-bottom: 0;">%s<br />%s %s, %s</p>', get_post_meta( $post->ID, '_listing_address', true), get_post_meta( $post->ID, '_listing_city', true), get_post_meta( $post->ID, '_listing_state', true), get_post_meta( $post->ID, '_listing_zip', true));
 
-				echo '<script src="https://maps.googleapis.com/maps/api/js"></script>
+				($options['wp_listings_gmaps_api_key']) ? $map_key = $options['wp_listings_gmaps_api_key'] : $map_key = '';
+
+				echo '<script src="https://maps.googleapis.com/maps/api/js?key=' . $map_key . '"></script>
 				<script>
 					function initialize() {
 						var mapCanvas = document.getElementById(\'map-canvas\');
