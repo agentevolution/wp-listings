@@ -4,8 +4,8 @@ Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 2.1.1
+Tested up to: 4.6
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,12 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.1.2 =
+Released 08-18-16
+* Fixed: Added Google Maps API key field in Settings
+* Fixed: Notice query arg showing on incorrect post types
+* Updated: Recaptcha class for PHP7 compatibility
 
 = 2.1.1 =
 Released 06-02-16
