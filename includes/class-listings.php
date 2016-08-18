@@ -303,6 +303,9 @@ class WP_Listings {
 	 * @return [type]          [description]
 	 */
 	function save_post( $post_id, $post, $update ) {
+		if ( 'listing' != $post->post_type )
+			return;
+
 		add_filter( 'redirect_post_location', array( &$this, 'add_notice_query_var' ), 99 );
 	}
 
