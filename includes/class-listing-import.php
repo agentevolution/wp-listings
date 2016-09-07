@@ -320,7 +320,7 @@ class WPL_Idx_Listing {
 				if ($update == true) {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
 				}
-				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '') {
+				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '' && $metakey != 'price') {
 					update_post_meta($id, '_listing_' . strtolower($metakey), $metavalue);
 				} elseif(isset( $metavalue ) && is_array( $metavalue )) {
 					foreach ($metavalue as $key => $value) {
