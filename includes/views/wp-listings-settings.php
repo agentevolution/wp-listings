@@ -17,7 +17,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 ?>
 <div id="icon-options-general" class="icon32"></div>
 <div class="wrap">
-	<h1><?php _e('WP Listings Settings', 'wp-listings'); ?></h1>
+	<h1><?php _e('IMPress Listings Settings', 'wp-listings'); ?></h1>
 	<hr>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
@@ -71,10 +71,10 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 
 					_e('<h3>Include CSS?</h3>', 'wp-listings');
-					_e('<p>Here you can deregister the WP Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister WP Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
+					_e('<p>Here you can deregister the IMPress Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister IMPress Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
 
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister WP Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister IMPress Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
 
 
 					_e("<h3>Default State</h3><p>You can enter a default state that will automatically be output on template pages and widgets that show the state. When you are create a listing and leave the state field empty, the default entered below will be shown. You can override the default on each listing by entering a value into the state field.</p>", 'wp-listings' );
