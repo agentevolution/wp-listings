@@ -317,7 +317,7 @@ class WPL_Idx_Listing {
 				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_imported_gallery', $imgs));
 			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
-				if ($update == true) {
+				if ($update == true && $metakey != 'price') {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
 				}
 				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '' && $metakey != 'price') {
