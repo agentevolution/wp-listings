@@ -9,9 +9,9 @@
 
 **Requires at least:** 3.7
 
-**Tested up to:** 4.6
+**Tested up to:** 4.6.1
 
-**Stable tag:** 2.1.2
+**Stable tag:** 2.1.3
 
 **License:** GPLv2 or later
 
@@ -191,6 +191,11 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.1.3 ###
+Released 09-13-16
+* Fixed: Imported listings - Image markup only included if it exists in disclaimer
+* Fixed: Imported listings - Ensure price is pulled from listingPrice field
 
 ### 2.1.2 ###
 Released 08-18-16
