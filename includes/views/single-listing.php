@@ -270,15 +270,19 @@ function single_listing_post_content() {
 
 		<?php
 			if (function_exists('_p2p_init') && function_exists('agent_profiles_init') ) {
-				echo'<div id="listing-agent">
-				<div class="connected-agents">';
-				aeprofiles_connected_agents_markup();
-				echo '</div></div><!-- .listing-agent -->';
+				if(impa_has_listings($post->ID)) {
+					echo'<div id="listing-agent">
+					<div class="connected-agents">';
+					aeprofiles_connected_agents_markup();
+					echo '</div></div><!-- .listing-agent -->';
+				}
 			} elseif (function_exists('_p2p_init') && function_exists('impress_agents_init') ) {
-				echo'<div id="listing-agent">
-				<div class="connected-agents">';
-				impa_connected_agents_markup();
-				echo '</div></div><!-- .listing-agent -->';
+				if(impa_has_listings($post->ID)) {
+					echo'<div id="listing-agent">
+					<div class="connected-agents">';
+					impa_connected_agents_markup();
+					echo '</div></div><!-- .listing-agent -->';
+				}
 			}
 		?>
 
