@@ -15,21 +15,6 @@ function enqueue_single_listing_scripts() {
 	wp_enqueue_script( 'wp-listings-single', array('jquery, jquery-ui-tabs', 'jquery-validate'), true, true );
 }
 
-/** Set DNS Prefetch to improve performance on single listings templates */
-add_filter('wp_head','wp_listings_dnsprefetch', 0);
-function wp_listings_dnsprefetch() {
-    echo "\n<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />\n"; // Loads FontAwesome
-    echo "<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />\n"; // Loads FitVids
-}
-
-function wpl_is_email_valid($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL)
-    	&& preg_match('/@.+\./', $email)
-        && !preg_match('/@\[/', $email)
-        && !preg_match('/".+@/', $email)
-        && !preg_match('/=.+@/', $email);
-}
-
 function single_listing_post_content() {
 
 	global $post;
@@ -336,7 +321,7 @@ function single_listing_post_content() {
 					if(trim($_POST['email']) === '')  {
 						$emailError = 'Please enter your email address.';
 						$hasError = true;
-					} else if (wpl_is_email_valid(trim($_POST['email'])) == false) {
+					} else if (is_email($email)) {
 						$emailError = 'You entered an invalid email address.';
 						$hasError = true;
 					} else {
@@ -426,8 +411,8 @@ function single_listing_post_content() {
 										}
 
 										// Loop through leads to match email address
-										foreach($all_leads as $lead) {
-											if(in_array($email, $lead)) {
+										foreach($all_leads as $leads => $lead) {
+											if($lead['email'] == $email) {
 												$api_url = 'https://api.idxbroker.com/leads/note/' . $lead['id'];
 												$args = array_replace($args, array('method' => 'PUT', 'body' => http_build_query($note)));
 												$response = wp_remote_request($api_url, $args);
@@ -453,8 +438,8 @@ function single_listing_post_content() {
 					} else {
 						$emailSent = true; // make spammer think message went through
 					}
-
-				} ?>
+				}
+				?>
 
 			<?php if(isset($emailSent) && $emailSent == true) {	?>
 				<div class="thanks">
