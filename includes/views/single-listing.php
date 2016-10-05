@@ -22,6 +22,14 @@ function wp_listings_dnsprefetch() {
     echo "<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />\n"; // Loads FitVids
 }
 
+function wpl_is_email_valid($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL)
+    	&& preg_match('/@.+\./', $email)
+        && !preg_match('/@\[/', $email)
+        && !preg_match('/".+@/', $email)
+        && !preg_match('/=.+@/', $email);
+}
+
 function single_listing_post_content() {
 
 	global $post;
@@ -328,7 +336,7 @@ function single_listing_post_content() {
 					if(trim($_POST['email']) === '')  {
 						$emailError = 'Please enter your email address.';
 						$hasError = true;
-					} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
+					} else if (wpl_is_email_valid(trim($_POST['email'])) == false) {
 						$emailError = 'You entered an invalid email address.';
 						$hasError = true;
 					} else {
