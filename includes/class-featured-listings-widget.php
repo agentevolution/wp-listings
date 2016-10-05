@@ -10,7 +10,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 	function __construct() {
 		$widget_ops  = array( 'classname' => 'wplistings-featured-listings clearfix', 'description' => __( 'Display grid-style featured listings', 'wp-listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350 );
-		parent::__construct( 'wplistings-featured-listings', __( 'WP Listings - Featured Listings', 'wp-listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'wplistings-featured-listings', __( 'IMPress Listings - Featured Listings', 'wp-listings' ), $widget_ops, $control_ops );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class WP_Listings_Featured_Listings_Widget extends WP_Widget {
 				}
 
 				if ( '' != get_post_meta( $post->ID, '_listing_price', true ) ) {
-					$loop .= sprintf( '<span class="listing-price"><span class="currency-symbol">%s</span>%s <span class="currency-code">%s</span></span>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? $options['wp_listings_currency_code'] : '' );
+					$loop .= sprintf( '<span class="listing-price"><span class="currency-symbol">%s</span>%s %s</span>', $options['wp_listings_currency_symbol'], get_post_meta( $post->ID, '_listing_price', true ), (isset($options['wp_listings_display_currency_code']) && $options['wp_listings_display_currency_code'] == 1) ? '<span class="currency-code">' . $options['wp_listings_currency_code'] . '</span>': '' );
 				}
 
 				$loop .= sprintf( '</div><!-- .listing-thumb-meta --></div><!-- .listing-widget-thumb -->' );

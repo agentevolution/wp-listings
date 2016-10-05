@@ -10,7 +10,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp-listings' ) );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
-		parent::__construct( 'listings-search', __( 'WP Listings - Search', 'wp-listings' ), $widget_ops, $control_ops );
+		parent::__construct( 'listings-search', __( 'IMPress Listings - Search', 'wp-listings' ), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -81,7 +81,7 @@ class WP_Listings_Search_Widget extends WP_Widget {
 			$terms = get_terms( $tax );
 			if ( empty( $terms ) )
 				continue;
-			
+
 			$checked = isset( $instance[ $tax ] ) && $instance[ $tax ];
 
 			printf( '<p><label><input id="%s" type="checkbox" name="%s" value="1" %s />%s</label></p>', $this->get_field_id( 'tax' ), $this->get_field_name( $tax ), checked( 1, $checked, 0 ), esc_html( $data['labels']['name'] ) );
