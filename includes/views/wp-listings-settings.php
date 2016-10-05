@@ -17,7 +17,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 ?>
 <div id="icon-options-general" class="icon32"></div>
 <div class="wrap">
-	<h1><?php _e('WP Listings Settings', 'wp-listings'); ?></h1>
+	<h1><?php _e('IMPress Listings Settings', 'wp-listings'); ?></h1>
 	<hr>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
@@ -48,7 +48,8 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_end_wrapper'				=> '',
 					'wp_listings_idx_lead_form'				=> 1,
 					'wp_listings_idx_update'				=> 'update-all',
-					'wp_listings_idx_sold'					=> 'sold-keep'
+					'wp_listings_idx_sold'					=> 'sold-keep',
+					'wp_listings_uninstall_delete'			=> 0
 					);
 
 				foreach($defaults as $name => $value) {
@@ -311,6 +312,11 @@ if( isset($_GET['settings-updated']) ) { ?>
 						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div><hr style="clear: both;">', 'wp-listings' );
 
 					}
+
+					_e('<h3>Delete data on uninstall?</h3>', 'wp-listings');
+					_e('<p>Checking this option will delete <strong>all</strong> plugin data when uninstalling the plugin.</p>', 'wp-listings');
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_uninstall_delete]" id="wp_listings_uninstall_delete" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_uninstall_delete'], false ) . ' /> <strong style="color: red;">Delete plugin data on uninstall</strong></p><hr>', 'wp-listings' );
+
 					?>
 
 					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" />
