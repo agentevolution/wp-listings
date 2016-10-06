@@ -321,7 +321,7 @@ function single_listing_post_content() {
 					if(trim($_POST['email']) === '')  {
 						$emailError = 'Please enter your email address.';
 						$hasError = true;
-					} else if (is_email($email)) {
+					} else if (!is_email($email)) {
 						$emailError = 'You entered an invalid email address.';
 						$hasError = true;
 					} else {
