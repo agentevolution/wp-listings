@@ -14,10 +14,9 @@
 	display: block;
 	width: 100%;
 	max-width: 100%;
-}
-
-.wplistings-single-listing .listing-image-wrap img {
 	height: auto;
+	margin: 0;
+	padding: 0;
 }
 
 .listing-meta,
@@ -33,11 +32,6 @@
 .wplistings-single-listing .listing-image-wrap {
 	position: relative;
 	overflow: hidden;
-}
-
-.wplistings-single-listing .listing-image-wrap img {
-	margin: 0;
-	padding: 0;
 }
 
 .wplistings-single-listing .listing-image-wrap span {
@@ -286,12 +280,14 @@
 	width: 100%;
 }
 
+#listing-contact li.firstName,
+#listing-contact li.lastName,
 #listing-contact li.contactEmail,
 #listing-contact li.contactPhone {
 	width: 48.9%;
 	float: left;
 }
-
+#listing-contact li.lastName,
 #listing-contact li.contactPhone {
 	margin-left: 2%;
 }

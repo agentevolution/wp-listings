@@ -317,7 +317,7 @@ class WPL_Idx_Listing {
 				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_imported_gallery', $imgs));
 			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
-				if ($update == true) {
+				if ($update == true && $metakey != 'price') {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
 				}
 				if(isset($metavalue) && !is_array($metavalue) && $metavalue != '' && $metakey != 'price') {
@@ -338,29 +338,22 @@ class WPL_Idx_Listing {
 
 		// Add disclaimers and courtesies
 		foreach($idx_featured_listing_data['disclaimer'] as $disclaimer) {
-			if(is_array($disclaimer)) {
-				if(in_array('details', $disclaimer)) {
-
-					$disclaimer_logo = ($disclaimer['logoURL']) ? '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />' : '';
-					$disclaimer_combined = $disclaimer['text'] . $disclaimer_logo;
-					update_post_meta($id, '_listing_disclaimer', $disclaimer_combined);
-				}
-				if(in_array('widget', $disclaimer)) {
-					$disclaimer_logo = ($disclaimer['logoURL']) ? '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />' : '';
-					$disclaimer_combined = $disclaimer['text'] . $disclaimer_logo;
-					update_post_meta($id, '_listing_disclaimer_widget', $disclaimer_combined);
-				}
+			if(in_array('details', $disclaimer)) {
+				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				update_post_meta($id, '_listing_disclaimer', $disclaimer_combined);
+			}
+			if(in_array('widget', $disclaimer)) {
+				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				update_post_meta($id, '_listing_disclaimer_widget', $disclaimer_combined);
 			}
 		}
 
 		foreach($idx_featured_listing_data['courtesy'] as $courtesy) {
-			if(is_array($courtesy)) {
-				if(in_array('details', $courtesy)) {
-					update_post_meta($id, '_listing_courtesy', $courtesy['text']);
-				}
-				if(in_array('widget', $courtesy)) {
-					update_post_meta($id, '_listing_courtesy_widget', $courtesy['text']);
-				}
+			if(in_array('details', $courtesy)) {
+				update_post_meta($id, '_listing_courtesy', $courtesy['text']);
+			}
+			if(in_array('widget', $courtesy)) {
+				update_post_meta($id, '_listing_courtesy_widget', $courtesy['text']);
 			}
 		}
 
@@ -455,6 +448,7 @@ function wp_listings_idx_listing_scripts() {
 	wp_enqueue_script( 'wp_listings_idx_listing_lazyload', WP_LISTINGS_URL . 'includes/js/jquery.lazyload.min.js', array( 'jquery' ), true );
 	wp_enqueue_script( 'wp_listings_idx_listing_delete_script', WP_LISTINGS_URL . 'includes/js/admin-listing-import.js', array( 'jquery' ), true );
 	wp_localize_script( 'wp_listings_idx_listing_delete_script', 'DeleteListingAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	wp_localize_script( 'wp_listings_idx_listing_delete_script', 'DeleteAllListingAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	wp_enqueue_style( 'wp_listings_idx_listing_style', WP_LISTINGS_URL . 'includes/css/wp-listings-import.css' );
 }
 add_action( 'wp_ajax_wp_listings_idx_listing_delete', 'wp_listings_idx_listing_delete' );
@@ -476,19 +470,59 @@ function wp_listings_idx_listing_delete(){
 	die();
 }
 
+add_action( 'wp_ajax_wp_listings_idx_listing_delete_all', 'wp_listings_idx_listing_delete_all' );
+function wp_listings_idx_listing_delete_all(){
+
+	$permission = check_ajax_referer( 'wp_listings_idx_listing_delete_all_nonce', 'nonce', false );
+	if( $permission == false ) {
+		echo 'error';
+	}
+	else {
+		// Get listings
+		$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
+
+		foreach($idx_featured_listing_wp_options as $prop) {
+			if(isset($prop['post_id'])) {
+				// Delete featured image
+				$post_featured_image_id = get_post_thumbnail_id( $prop['post_id'] );
+				wp_delete_attachment( $post_featured_image_id );
+
+				//Delete post
+				wp_delete_post( $prop['post_id'] );
+			}
+		}
+		
+		echo 'success';
+	}
+	die();
+}
+
 function wp_listings_idx_listing_setting_page() {
 	if( get_option('wp_listings_import_progress') == true ) {
 		add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_import_progress', 'Your listings are being imported in the background. This notice will dismiss when all selected listings have been imported.', 'updated');
 	}
+	$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
 
 	?>
 			<h1>Import IDX Listings</h1>
 			<p>Select the listings to import.</p>
 			<form id="wplistings-idx-listing-import" method="post" action="options.php">
-				<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
-				<?php submit_button('Import Listings'); ?>
-
+			<label for="selectall"><input type="checkbox" id="selectall"/>Select/Deselect All<br/><em>If importing all listings, it may take some time. <strong class="error">Please be patient.</strong></em></label>
+			
 			<?php
+			if ($idx_featured_listing_wp_options) {
+				foreach($idx_featured_listing_wp_options as $prop) {
+					if(isset($prop['post_id'])) {
+						$nonce_all = wp_create_nonce('wp_listings_idx_listing_delete_all_nonce');
+						echo '<a class="delete-all" href="admin-ajax.php?action=wp_listings_idx_delete_all&nonce=' . $nonce_all . '" data-nonce="' . $nonce_all .'">Delete All Imported Listings</a>';
+						break;
+					}
+				}
+			}
+
+			submit_button('Import Listings');
+
+
 			// Show popup if IDX Broker plugin not active or installed
 			if( !class_exists( 'IDX_Broker_Plugin') ) {
 				// thickbox like content
@@ -525,8 +559,6 @@ function wp_listings_idx_listing_setting_page() {
 			} else {
 				return;
 			}
-
-			$idx_featured_listing_wp_options = get_option('wp_listings_idx_featured_listing_wp_options');
 
 			settings_fields( 'wp_listings_idx_listing_settings_group' );
 			do_settings_sections( 'wp_listings_idx_listing_settings_group' );
