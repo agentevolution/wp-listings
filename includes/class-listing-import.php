@@ -339,11 +339,13 @@ class WPL_Idx_Listing {
 		// Add disclaimers and courtesies
 		foreach($idx_featured_listing_data['disclaimer'] as $disclaimer) {
 			if(in_array('details', $disclaimer)) {
-				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				$disclaimer_logo = ($disclaimer['logoURL']) ? '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />' : '';
+				$disclaimer_combined = $disclaimer['text'] . $disclaimer_logo;
 				update_post_meta($id, '_listing_disclaimer', $disclaimer_combined);
 			}
 			if(in_array('widget', $disclaimer)) {
-				$disclaimer_combined = $disclaimer['text'] . '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />';
+				$disclaimer_logo = ($disclaimer['logoURL']) ? '<br /><img src="' . $disclaimer['logoURL'] . '" style="opacity: 1 !important; position: static !important;" />' : '';
+				$disclaimer_combined = $disclaimer['text'] . $disclaimer_logo;
 				update_post_meta($id, '_listing_disclaimer_widget', $disclaimer_combined);
 			}
 		}
