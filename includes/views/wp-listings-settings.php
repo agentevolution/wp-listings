@@ -17,7 +17,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 ?>
 <div id="icon-options-general" class="icon32"></div>
 <div class="wrap">
-	<h1><?php _e('IMPress Listings Settings', 'wp-listings'); ?></h1>
+	<h1><?php _e('WP Listings Settings', 'wp-listings'); ?></h1>
 	<hr>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
@@ -30,24 +30,25 @@ if( isset($_GET['settings-updated']) ) { ?>
 				<?php $options = get_option('plugin_wp_listings_settings');
 
 				$defaults = array(
-					'wp_listings_stylesheet_load'         => 0,
-					'wp_listings_widgets_stylesheet_load' => 0,
-					'wp_listings_default_state'           => '',
-					'wp_listings_currency_symbol'         => '',
-					'wp_listings_currency_code'           => '',
-					'wp_listings_display_currency_code'   => 0,
-					'wp_listings_archive_posts_num'       => 9,
-					'wp_listings_global_disclaimer'       => '',
-					'wp_listings_slug'                    => 'listings',
-					'wp_listings_gmaps_api_key'           => '',
-					'wp_listings_captcha_site_key'        => '',
-					'wp_listings_captcha_secret_key'      => '',
-					'wp_listings_default_form'            => '',
-					'wp_listings_custom_wrapper'          => 0,
-					'wp_listings_start_wrapper'           => '',
-					'wp_listings_end_wrapper'             => '',
-					'wp_listings_idx_update'              => 'update-all',
-					'wp_listings_idx_sold'                => 'sold-keep'
+					'wp_listings_stylesheet_load'			=> 0,
+					'wp_listings_widgets_stylesheet_load'	=> 0,
+					'wp_listings_default_state'				=> '',
+					'wp_listings_currency_symbol'			=> '',
+					'wp_listings_currency_code'				=> '',
+					'wp_listings_display_currency_code'		=> 0,
+					'wp_listings_archive_posts_num'			=> 9,
+					'wp_listings_global_disclaimer'			=> '',
+					'wp_listings_slug'						=> 'listings',
+					'wp_listings_gmaps_api_key'				=> '',
+					'wp_listings_captcha_site_key'			=> '',
+					'wp_listings_captcha_secret_key'		=> '',
+					'wp_listings_default_form'				=> '',
+					'wp_listings_custom_wrapper'			=> 0,
+					'wp_listings_start_wrapper'				=> '',
+					'wp_listings_end_wrapper'				=> '',
+					'wp_listings_idx_lead_form'				=> 1,
+					'wp_listings_idx_update'				=> 'update-all',
+					'wp_listings_idx_sold'					=> 'sold-keep'
 					);
 
 				foreach($defaults as $name => $value) {
@@ -71,10 +72,10 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 
 					_e('<h3>Include CSS?</h3>', 'wp-listings');
-					_e('<p>Here you can deregister the IMPress Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister IMPress Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
+					_e('<p>Here you can deregister the WP Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister WP Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
 
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister IMPress Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister WP Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
 
 
 					_e("<h3>Default State</h3><p>You can enter a default state that will automatically be output on template pages and widgets that show the state. When you are create a listing and leave the state field empty, the default entered below will be shown. You can override the default on each listing by entering a value into the state field.</p>", 'wp-listings' );
@@ -280,11 +281,13 @@ if( isset($_GET['settings-updated']) ) { ?>
 					_e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p>', 'wp-listings');
 					_e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p><hr>', 'wp-listings');
 
-
 					_e("<h4>Default Form shortcode</h4><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp-listings' );
 					_e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p><hr>', 'wp-listings');
 
-
+					if(class_exists( 'Idx_Broker_Plugin' )) {
+						_e("<h4>Add default form entries to IDX Broker?</h4><p>Check this option to enable form entries to be sent to IDX Broker as a lead.<br/><strong>Note: This only works if using the default contact form.</strong></p>", 'wp-listings' );
+						_e('<p><input name="plugin_wp_listings_settings[wp_listings_idx_lead_form]" id="wp_listings_idx_lead_form" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_idx_lead_form'], 0) . ' /> Enable?</p><hr>', 'wp-listings' );
+					}
 
 					_e("<h3>Custom Wrapper</h3><p>If your theme's content HTML ID's and Classes are different than the included template, you can enter the HTML of your content wrapper beginning and end:</p>", 'wp-listings' );
 					_e('<p><label><input name="plugin_wp_listings_settings[wp_listings_custom_wrapper]" id="wp_listings_custom_wrapper" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_custom_wrapper'], false ) . ' /> Use Custom Wrapper?</p>', 'wp-listings' );
@@ -305,10 +308,11 @@ if( isset($_GET['settings-updated']) ) { ?>
 						_e("<br style=\"clear: both;\"><h2>Sold Listings</h2>", 'wp-listings' );
 						_e('<div class="idx-import-option sold-keep"><label><h4>Keep All</h4> <span class="dashicons dashicons-admin-post"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-keep" class="code" ' . checked('sold-keep', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings published with the status changed to reflect as sold.</p></label></div>', 'wp-listings' );
 						_e('<div class="idx-import-option sold-draft"><label><h4>Keep as Draft</h4> <span class="dashicons dashicons-hidden"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-draft" class="code" ' . checked('sold-draft', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings that have been sold, but they will be changed to draft status in WordPress.</p></label></div>', 'wp-listings' );
-						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div>', 'wp-listings' );
+						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div><hr style="clear: both;">', 'wp-listings' );
 
 					}
 					?>
+
 					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" />
 				</form>
 			</div>
