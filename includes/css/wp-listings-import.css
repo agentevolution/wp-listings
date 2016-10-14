@@ -89,6 +89,11 @@ img.listing {
 	width: 25px;
 	margin-left: -3px;
 }
+#wplistings-idx-listing-import .delete-all {
+	color: red;
+	float: right;
+	margin-right: 40px;
+}
 /* Masonry sizer */
 .grid {
 	width: 100%;
