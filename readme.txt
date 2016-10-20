@@ -5,7 +5,7 @@ Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.1.3
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +205,14 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.2.0 =
+*Released 10-20-16*
+* Added: Option to send default contact form entries to IDX middleware as a lead
+* Added: Delete all option to IDX imported listings
+* Added: Support for selective refresh for widgets in the customizer
+* Fixed: Imported listings - Issue with price field being deleted on update
+* Fixed: PHP warnings with some MLS disclaimers on imported listings
 
 = 2.1.3 =
 *Released 09-13-16*
