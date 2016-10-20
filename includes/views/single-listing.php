@@ -15,13 +15,6 @@ function enqueue_single_listing_scripts() {
 	wp_enqueue_script( 'wp-listings-single', array('jquery, jquery-ui-tabs', 'jquery-validate'), true, true );
 }
 
-/** Set DNS Prefetch to improve performance on single listings templates */
-add_filter('wp_head','wp_listings_dnsprefetch', 0);
-function wp_listings_dnsprefetch() {
-    echo "\n<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />\n"; // Loads FontAwesome
-    echo "<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />\n"; // Loads FitVids
-}
-
 function single_listing_post_content() {
 
 	global $post;
@@ -270,15 +263,19 @@ function single_listing_post_content() {
 
 		<?php
 			if (function_exists('_p2p_init') && function_exists('agent_profiles_init') ) {
-				echo'<div id="listing-agent">
-				<div class="connected-agents">';
-				aeprofiles_connected_agents_markup();
-				echo '</div></div><!-- .listing-agent -->';
+				if(impa_has_listings($post->ID)) {
+					echo'<div id="listing-agent">
+					<div class="connected-agents">';
+					aeprofiles_connected_agents_markup();
+					echo '</div></div><!-- .listing-agent -->';
+				}
 			} elseif (function_exists('_p2p_init') && function_exists('impress_agents_init') ) {
-				echo'<div id="listing-agent">
-				<div class="connected-agents">';
-				impa_connected_agents_markup();
-				echo '</div></div><!-- .listing-agent -->';
+				if(impa_has_listings($post->ID)) {
+					echo'<div id="listing-agent">
+					<div class="connected-agents">';
+					impa_connected_agents_markup();
+					echo '</div></div><!-- .listing-agent -->';
+				}
 			}
 		?>
 
@@ -297,7 +294,8 @@ function single_listing_post_content() {
 			} else {
 
 				echo '<h4>Listing Inquiry</h4>';
-				$nameError = '';
+				$firstNameError = '';
+				$lastNameError = '';
 				$emailError = '';
 				$response = '';
 
@@ -306,17 +304,24 @@ function single_listing_post_content() {
 					$url = get_permalink();
 					$listing = get_the_title();
 
-					if(trim($_POST['contactName']) === '') {
-						$nameError = 'Please enter your name.';
+					if(trim($_POST['firstName']) === '') {
+						$firstNameError = 'Please enter your first name.';
 						$hasError = true;
 					} else {
-						$name = esc_html(trim($_POST['contactName']));
+						$firstName = esc_html(trim($_POST['firstName']));
+					}
+
+					if(trim($_POST['lastName']) === '') {
+						$lastNameError = 'Please enter your last name.';
+						$hasError = true;
+					} else {
+						$lastName = esc_html(trim($_POST['lastName']));
 					}
 
 					if(trim($_POST['email']) === '')  {
 						$emailError = 'Please enter your email address.';
 						$hasError = true;
-					} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", trim($_POST['email']))) {
+					} else if (!is_email(trim($_POST['email']))) {
 						$emailError = 'You entered an invalid email address.';
 						$hasError = true;
 					} else {
@@ -357,23 +362,89 @@ function single_listing_post_content() {
 							if (!isset($emailTo) || ($emailTo == '') ){
 								$emailTo = get_option('admin_email');
 							}
-							$subject = 'Listing Inquiry from '.$name;
-							$body = "Name: $name \n\nEmail: $email \n\nPhone: $phone \n\nListing: $listing \n\nURL: $url \n\nComments: $comments";
-							$headers = 'From: '.$name.' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
+							$subject = 'Listing Inquiry from '. $firstName . ' ' . $lastName;
+							$body = 'Name: ' . $firstName . ' ' . $lastName . "\n\n" .'Email: ' . $email . "\n\n" . 'Phone: ' . $phone . "\n\n" . 'Listing: ' . $listing . "\n\n" . 'URL: ' . $url . "\n\n" .'Comments: ' . $comments;
+							$headers = 'From: '.$firstName . ' ' . $lastName .' <'.$emailTo.'>' . "\r\n" . 'Reply-To: ' . $email;
 
 							wp_mail($emailTo, $subject, $body, $headers);
+
+							// If option is set. PUT or POST contact form data to IDX as a lead or lead note
+							if($options['wp_listings_idx_lead_form'] == 1) {
+								$lead_data = array(
+									'firstName' => $firstName,
+									'lastName'  => $lastName,
+									'email'		=> $email,
+									'phone'		=> (isset($phone)) ? $phone : ''
+								);
+								$api_url = 'https://api.idxbroker.com/leads/lead';
+								$args = array(
+									'method' => 'PUT',
+									'headers' => array(
+										'content-type' => 'application/x-www-form-urlencoded',
+										'accesskey'    => get_option('idx_broker_apikey'),
+										'outputtype'   => 'json'
+									),
+									'sslverify' => false,
+									'body'		=> http_build_query($lead_data)
+								);
+								$response = wp_remote_request($api_url, $args);
+
+								// Check for error then add note
+								if (is_wp_error($response)) {
+									$hasError = true;
+								} else {
+
+									$decoded_response = json_decode($response['body']);
+									$note = array(
+										'note' => (isset($comments) && $comments != '') ? 'I\'m interested in this listing: <a href="' . $url . '">' . $listing . '</a>' . "\n\n" . 'Comments: ' . $comments : 'I\'m interested in this listing: <a href="' . $url . '">' . $listing . '</a>'
+									);
+
+									// Add note if lead already exists
+									if($decoded_response == 'Lead already exists.') {
+										$args = array_replace($args, array('method' => 'GET', 'body' => null));
+
+										// Get leads
+										if ( false === ( $all_leads = get_transient('idx_leads') ) ) {
+											$response = wp_remote_request($api_url, $args);
+											$all_leads = json_decode($response['body'], 1);
+											set_transient('idx_leads', $all_leads, 60*60*1);
+										}
+
+										// Loop through leads to match email address
+										foreach($all_leads as $leads => $lead) {
+											if($lead['email'] == $email) {
+												$api_url = 'https://api.idxbroker.com/leads/note/' . $lead['id'];
+												$args = array_replace($args, array('method' => 'PUT', 'body' => http_build_query($note)));
+												$response = wp_remote_request($api_url, $args);
+												if (is_wp_error($response)) {
+													$hasError = true;
+												}
+											}
+										}
+									} else {
+										// Add note for new lead
+										$lead_id = $decoded_response->newID;
+										$api_url = 'https://api.idxbroker.com/leads/note/' . $lead_id;
+										$args = array_replace($args, array('body' => http_build_query($note)));
+										$response = wp_remote_request($api_url, $args);
+										if (is_wp_error($response)) {
+											$hasError = true;
+										}
+									}
+								}
+							}
 							$emailSent = true;
 						}
 					} else {
 						$emailSent = true; // make spammer think message went through
 					}
-
-				} ?>
+				}
+				?>
 
 			<?php if(isset($emailSent) && $emailSent == true) {	?>
 				<div class="thanks">
 					<a name="redirectTo"></a>
-					<p>Thanks, your email was sent! We'll be in touch shortly.</p>
+					<p>Thanks, your message was sent! We'll be in touch shortly.</p>
 				</div>
 			<?php } else { ?>
 				<?php if(isset($hasError)) { ?>
@@ -383,11 +454,19 @@ function single_listing_post_content() {
 
 				<form action="<?php the_permalink(); ?>#redirectTo" id="inquiry-form" method="post">
 					<ul class="inquiry-form">
-						<li class="contactName">
-							<label for="contactName">Name: <span class="required">*</span></label>
-							<input type="text" name="contactName" id="contactName" value="<?php if(isset($_POST['contactName'])) echo esc_html($_POST['contactName']);?>" class="required requiredField" />
-							<?php if($nameError != '') { ?>
-								<label class="error"><?=$nameError;?></label>
+						<li class="firstName">
+							<label for="firstName">First name: <span class="required">*</span></label>
+							<input type="text" name="firstName" id="firstName" value="<?php if(isset($_POST['firstName'])) echo esc_html($_POST['firstName']);?>" class="required requiredField" />
+							<?php if($firstNameError != '') { ?>
+								<label class="error"><?=$firstNameError;?></label>
+							<?php } ?>
+						</li>
+
+						<li class="lastName">
+							<label for="lastName">Last name: <span class="required">*</span></label>
+							<input type="text" name="lastName" id="lastName" value="<?php if(isset($_POST['lastName'])) echo esc_html($_POST['lastName']);?>" class="required requiredField" />
+							<?php if($lastNameError != '') { ?>
+								<label class="error"><?=$lastNameError;?></label>
 							<?php } ?>
 						</li>
 

@@ -40,6 +40,39 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
+	$(document).on( 'click', '.delete-all', function() {
+		var go_ahead = confirm("This will delete all imported listings and their attached images. Are you sure you want to continue?");
+		var nonce = $(this).data('nonce');
+		var post = $('#selectable').find('.selected');
+		var grid = $('.grid').masonry({
+			columnWidth: '.grid-sizer',
+			itemSelector: '.grid-item'
+		});
+		if ( go_ahead === true ) {
+			$.ajax({
+				type: 'post',
+				url: DeleteAllListingAjax.ajaxurl,
+				data: {
+					action: 'wp_listings_idx_listing_delete_all',
+					nonce: nonce,
+				},
+				success: function( result ) {
+					if( result == 'success' ) {
+						post.fadeOut( function(){
+							post.remove();
+							grid.masonry('layout');
+						});
+					}
+				}
+			});
+			return false;
+		} else {
+			return false;
+		}
+		
+	});
+
+
 
 
 	// make sure labels are drawn in the correct state
@@ -71,71 +104,71 @@ jQuery(document).ready(function($) {
 	/* === Scrollstop event ===*/
 	(function(){
 
-	    var special = jQuery.event.special,
-	        uid1 = 'D' + (+new Date()),
-	        uid2 = 'D' + (+new Date() + 1);
+		var special = jQuery.event.special,
+			uid1 = 'D' + (+new Date()),
+			uid2 = 'D' + (+new Date() + 1);
 
-	    special.scrollstart = {
-	        setup: function() {
+		special.scrollstart = {
+			setup: function() {
 
-	            var timer,
-	                handler =  function(evt) {
+				var timer,
+					handler =  function(evt) {
 
-	                    var _self = this,
-	                        _args = arguments;
+						var _self = this,
+							_args = arguments;
 
-	                    if (timer) {
-	                        clearTimeout(timer);
-	                    } else {
-	                        evt.type = 'scrollstart';
-	                        jQuery.event.handle.apply(_self, _args);
-	                    }
+						if (timer) {
+							clearTimeout(timer);
+						} else {
+							evt.type = 'scrollstart';
+							jQuery.event.handle.apply(_self, _args);
+						}
 
-	                    timer = setTimeout( function(){
-	                        timer = null;
-	                    }, special.scrollstop.latency);
+						timer = setTimeout( function(){
+							timer = null;
+						}, special.scrollstop.latency);
 
-	                };
+					};
 
-	            jQuery(this).bind('scroll', handler).data(uid1, handler);
+				jQuery(this).bind('scroll', handler).data(uid1, handler);
 
-	        },
-	        teardown: function(){
-	            jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
-	        }
-	    };
+			},
+			teardown: function(){
+				jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+			}
+		};
 
-	    special.scrollstop = {
-	        latency: 300,
-	        setup: function() {
+		special.scrollstop = {
+			latency: 300,
+			setup: function() {
 
-	            var timer,
-	                    handler = function(evt) {
+				var timer,
+						handler = function(evt) {
 
-	                    var _self = this,
-	                        _args = arguments;
+						var _self = this,
+							_args = arguments;
 
-	                    if (timer) {
-	                        clearTimeout(timer);
-	                    }
+						if (timer) {
+							clearTimeout(timer);
+						}
 
-	                    timer = setTimeout( function(){
+						timer = setTimeout( function(){
 
-	                        timer = null;
-	                        evt.type = 'scrollstop';
-	                        jQuery.event.handle.apply(_self, _args);
+							timer = null;
+							evt.type = 'scrollstop';
+							jQuery.event.handle.apply(_self, _args);
 
-	                    }, special.scrollstop.latency);
+						}, special.scrollstop.latency);
 
-	                };
+					};
 
-	            jQuery(this).bind('scroll', handler).data(uid2, handler);
+				jQuery(this).bind('scroll', handler).data(uid2, handler);
 
-	        },
-	        teardown: function() {
-	            jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
-	        }
-	    };
+			},
+			teardown: function() {
+				jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
+			}
+		};
 
 	})();
 });

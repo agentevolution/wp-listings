@@ -7,7 +7,7 @@
 	Author URI: http://agentevolution.com
 	Text Domain: wp-listings
 
-	Version: 2.1.3
+	Version: 2.2.0
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -66,7 +66,7 @@ function wp_listings_init() {
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WP_LISTINGS_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '2.1.2' );
+	define( 'WP_LISTINGS_VERSION', '2.2.0' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp-listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -106,7 +106,7 @@ function wp_listings_init() {
 		$options = get_option('plugin_wp_listings_settings');
 
 		/** Register single styles but don't enqueue them **/
-		wp_register_style('wp-listings-single', WP_LISTINGS_URL . '/includes/css/wp-listings-single.css', '', null, 'all');
+		wp_register_style('wp-listings-single', WP_LISTINGS_URL . 'includes/css/wp-listings-single.css', '', null, 'all');
 
 		/** Register Font Awesome icons but don't enqueue them */
 		wp_register_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css', '', null, 'all');
