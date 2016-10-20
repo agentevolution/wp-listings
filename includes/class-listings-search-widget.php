@@ -8,7 +8,7 @@
 class WP_Listings_Search_Widget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp-listings' ) );
+		$widget_ops = array( 'classname' => 'listings-search wp-listings-search', 'description' => __( 'Display listings search dropdown', 'wp-listings' ), 'customize_selective_refresh' => true );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'listings-search' );
 		parent::__construct( 'listings-search', __( 'IMPress Listings - Search', 'wp-listings' ), $widget_ops, $control_ops );
 	}
