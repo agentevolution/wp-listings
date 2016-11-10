@@ -222,7 +222,7 @@ class WPL_Idx_Listing {
 			if( isset($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id']) ) {
 
 				// Update property data
-				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, true );
 
 				if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
@@ -265,7 +265,7 @@ class WPL_Idx_Listing {
 	 * @param  [type] $key [description]
 	 * @return [type]      [description]
 	 */
-	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true) {
+	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true, $sold = false) {
 
 		if (class_exists( 'Equity_Idx_Api' ) && $update == false || class_exists( 'Equity_Idx_Api' ) && $update_image == true) {
 			$imgs = '';
@@ -280,12 +280,16 @@ class WPL_Idx_Listing {
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 		}
 
-		if ($idx_featured_listing_data['propStatus'] == 'A'){
-			$propstatus = 'Active';
-		} elseif($idx_featured_listing_data['propStatus'] == 'S') {
-			$propstatus = 'Sold';
+		if($sold == true) {
+			$propstatus = ucfirst($idx_featured_listing_data['archiveStatus']);
 		} else {
-			$propstatus = $idx_featured_listing_data['propStatus'];
+			if ($idx_featured_listing_data['propStatus'] == 'A'){
+				$propstatus = 'Active';
+			} elseif($idx_featured_listing_data['propStatus'] == 'S') {
+				$propstatus = 'Sold';
+			} else {
+				$propstatus = ucfirst($idx_featured_listing_data['propStatus']);
+			}
 		}
 
 		// Add or reset taxonomies for property-types, locations, and status
