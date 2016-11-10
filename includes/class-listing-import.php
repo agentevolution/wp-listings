@@ -127,6 +127,7 @@ class WPL_Idx_Listing {
 						} elseif($add_post) {
 							$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
 							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
+							update_post_meta($add_post, '_listing_details_url', $properties[$key]['fullDetailsURL']);
 							if(class_exists( 'Equity_Idx_Api' )) {
 								self::wp_listings_idx_insert_post_meta($add_post, $equity_properties);
 							} else {
@@ -446,6 +447,10 @@ add_action('wp_listings_idx_create_post_cron_hook', array('WPL_Idx_Listing', 'wp
 
 add_action( 'admin_enqueue_scripts', 'wp_listings_idx_listing_scripts' );
 function wp_listings_idx_listing_scripts() {
+	$screen = get_current_screen();
+	if($screen->id != 'listing_page_wplistings-idx-listing')
+		return;
+
 	wp_enqueue_script( 'jquery-masonry' );
 	wp_enqueue_script( 'wp_listings_idx_listing_lazyload', WP_LISTINGS_URL . 'includes/js/jquery.lazyload.min.js', array( 'jquery' ), true );
 	wp_enqueue_script( 'wp_listings_idx_listing_delete_script', WP_LISTINGS_URL . 'includes/js/admin-listing-import.js', array( 'jquery' ), true );
