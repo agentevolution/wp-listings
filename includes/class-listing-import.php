@@ -202,11 +202,11 @@ class WPL_Idx_Listing {
 						delete_transient('equity_listing_' . $prop['listingID']);
 					}
 					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
-						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, false );
 					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				} else {
 					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
-						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, false );
 					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				}
 			}
@@ -567,6 +567,11 @@ function wp_listings_idx_listing_setting_page() {
 
 				$_idx_api = new \IDX\Idx_Api();
 				$properties = $_idx_api->client_properties('featured');
+			} elseif(is_wp_error($properties)) {
+				 $error_string = $properties->get_error_message();
+				add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_update', $error_string, 'error');
+				settings_errors('wp_listings_idx_listing_settings_group');
+				return;
 			} else {
 				return;
 			}
