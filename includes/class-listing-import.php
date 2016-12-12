@@ -202,11 +202,11 @@ class WPL_Idx_Listing {
 						delete_transient('equity_listing_' . $prop['listingID']);
 					}
 					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
-						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $equity_properties, true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, false );
 					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				} else {
 					if(!isset($wpl_options['wp_listings_idx_update']) || isset($wpl_options['wp_listings_idx_update']) && $wpl_options['wp_listings_idx_update'] != 'update-none')
-						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+						self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$prop['listingID']]['post_id'], $properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, false );
 					$idx_featured_listing_wp_options[$prop['listingID']]['updated'] = date("m/d/Y h:i:sa");
 				}
 			}
@@ -222,7 +222,7 @@ class WPL_Idx_Listing {
 			if( isset($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id']) ) {
 
 				// Update property data
-				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true );
+				self::wp_listings_idx_insert_post_meta($idx_featured_listing_wp_options[$sold_prop['listingID']]['post_id'], $sold_properties[$key], true, ($wpl_options['wp_listings_idx_update'] == 'update-noimage') ? false : true, true );
 
 				if(isset($wpl_options['wp_listings_idx_sold']) && $wpl_options['wp_listings_idx_sold'] == 'sold-draft') {
 
@@ -265,7 +265,7 @@ class WPL_Idx_Listing {
 	 * @param  [type] $key [description]
 	 * @return [type]      [description]
 	 */
-	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true) {
+	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true, $sold = false) {
 
 		if (class_exists( 'Equity_Idx_Api' ) && $update == false || class_exists( 'Equity_Idx_Api' ) && $update_image == true) {
 			$imgs = '';
@@ -280,12 +280,16 @@ class WPL_Idx_Listing {
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 		}
 
-		if ($idx_featured_listing_data['propStatus'] == 'A'){
-			$propstatus = 'Active';
-		} elseif($idx_featured_listing_data['propStatus'] == 'S') {
-			$propstatus = 'Sold';
+		if($sold == true) {
+			$propstatus = ucfirst($idx_featured_listing_data['archiveStatus']);
 		} else {
-			$propstatus = $idx_featured_listing_data['propStatus'];
+			if ($idx_featured_listing_data['propStatus'] == 'A'){
+				$propstatus = 'Active';
+			} elseif($idx_featured_listing_data['propStatus'] == 'S') {
+				$propstatus = 'Sold';
+			} else {
+				$propstatus = ucfirst($idx_featured_listing_data['propStatus']);
+			}
 		}
 
 		// Add or reset taxonomies for property-types, locations, and status
@@ -563,6 +567,11 @@ function wp_listings_idx_listing_setting_page() {
 
 				$_idx_api = new \IDX\Idx_Api();
 				$properties = $_idx_api->client_properties('featured');
+			} elseif(is_wp_error($properties)) {
+				 $error_string = $properties->get_error_message();
+				add_settings_error('wp_listings_idx_listing_settings_group', 'idx_listing_update', $error_string, 'error');
+				settings_errors('wp_listings_idx_listing_settings_group');
+				return;
 			} else {
 				return;
 			}
