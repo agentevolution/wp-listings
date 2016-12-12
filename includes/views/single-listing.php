@@ -107,6 +107,9 @@ function single_listing_post_content() {
 					echo '<p class="wp-listings-disclaimer">' . $options['wp_listings_global_disclaimer'] . '</p>';
 				}
 
+				if(class_exists('Idx_Broker_Plugin') && $options['wp_listings_display_idx_link'] == true && !empty(get_post_meta($post->ID, '_listing_details_url', true))) {
+					echo '<a href="' . get_post_meta($post->ID, '_listing_details_url', true) . '" title="' . get_post_meta($post->ID, '_listing_mls', true) . '">View full listing details</a>';
+				}
 				?>
 			</div><!-- #listing-description -->
 
