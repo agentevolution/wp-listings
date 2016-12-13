@@ -49,6 +49,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_idx_lead_form'				=> 1,
 					'wp_listings_idx_update'				=> 'update-all',
 					'wp_listings_idx_sold'					=> 'sold-keep',
+					'wp_listings_display_idx_link'			=> 0,
 					'wp_listings_uninstall_delete'			=> 0
 					);
 
@@ -309,7 +310,10 @@ if( isset($_GET['settings-updated']) ) { ?>
 						_e("<br style=\"clear: both;\"><h2>Sold Listings</h2>", 'wp-listings' );
 						_e('<div class="idx-import-option sold-keep"><label><h4>Keep All</h4> <span class="dashicons dashicons-admin-post"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-keep" class="code" ' . checked('sold-keep', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings published with the status changed to reflect as sold.</p></label></div>', 'wp-listings' );
 						_e('<div class="idx-import-option sold-draft"><label><h4>Keep as Draft</h4> <span class="dashicons dashicons-hidden"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-draft" class="code" ' . checked('sold-draft', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings that have been sold, but they will be changed to draft status in WordPress.</p></label></div>', 'wp-listings' );
-						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div><hr style="clear: both;">', 'wp-listings' );
+						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div>', 'wp-listings' );
+
+						_e("<br style=\"clear: both;\"><h2>Additional Options</h2>", 'wp-listings' );
+						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p><hr style="clear: both;">', 'wp-listings' );
 
 					}
 
