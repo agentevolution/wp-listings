@@ -9,9 +9,9 @@
 
 **Requires at least:** 3.7
 
-**Tested up to:** 4.6.1
+**Tested up to:** 4.7
 
-**Stable tag:** 2.2.0
+**Stable tag:** 2.2.1
 
 **License:** GPLv2 or later
 
@@ -191,6 +191,11 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.2.1 ###
+*Released 12-13-16*
+* Added: Option to add link to IDX Broker details page on imported listings
+* Fixed: Imported IDX Broker listings use the proper status for sold listings
 
 ### 2.2.0 ###
 *Released 10-20-16*
