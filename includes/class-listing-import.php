@@ -113,7 +113,8 @@ class WPL_Idx_Listing {
 							'post_content' => $properties[$key]['remarksConcat'],
 							'post_title' => $properties[$key]['address'],
 							'post_status' => 'publish',
-							'post_type' => 'listing'
+							'post_type' => 'listing',
+							'post_author' => (isset($wpl_options['import_author'])) ? $wpl_options['import_author'] : 1
 						);
 
 						// Add the post
