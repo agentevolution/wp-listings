@@ -9,9 +9,9 @@
 
 **Requires at least:** 3.7
 
-**Tested up to:** 4.7
+**Tested up to:** 4.7.1
 
-**Stable tag:** 2.2.1
+**Stable tag:** 2.2.2
 
 **License:** GPLv2 or later
 
@@ -191,6 +191,11 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.2.2 ###
+*Released 01-12-17*
+* Fixed: Fatal error on single listing template
+* Added: Option to select default author for imported listings
 
 ### 2.2.1 ###
 *Released 12-13-16*
