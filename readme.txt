@@ -4,8 +4,8 @@ Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson, idxco
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 2.2.1
+Tested up to: 4.7.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -206,7 +206,12 @@ function custom_default_property_type_terms() {
 
 == Changelog ==
 
-- 2.2.1 =
+= 2.2.2 =
+*Released 01-12-17*
+* Fixed: Fatal error on single listing template
+* Added: Option to select default author for imported listings
+
+= 2.2.1 =
 *Released 12-13-16*
 * Added: Option to add link to IDX Broker details page on imported listings
 * Fixed: Imported IDX Broker listings use the proper status for sold listings
