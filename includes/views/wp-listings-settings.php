@@ -51,6 +51,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_idx_sold'					=> 'sold-keep',
 					'wp_listings_display_idx_link'			=> 0,
 					'wp_listings_import_author'				=> 0,
+					'wp_listings_import_title'				=> '{{address}}',
 					'wp_listings_uninstall_delete'			=> 0
 					);
 
@@ -59,9 +60,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 						$options[$name] = $value;
 					}
 				}
-
 				?>
-
 
 				<?php
 				if ($options['wp_listings_stylesheet_load'] == 1)
@@ -87,15 +86,15 @@ if( isset($_GET['settings-updated']) ) { ?>
 					_e("<h3>Default Currency</h3><p>Select a default currency symbol and optional currency code to display on listings.</p>", 'wp-listings' );
 					_e('<p>Currency Symbol: ', 'wp-listings');
 					echo '<select name="plugin_wp_listings_settings[wp_listings_currency_symbol]" id="wp_listings_currency_symbol">
-							 <option value=" " ' . selected($options['wp_listings_currency_symbol'], ' ', false) . '>None</option>
-							 <option value="&#36;" ' . selected($options['wp_listings_currency_symbol'], '$', false) . '>&#36;</option>
-							 <option value="&#163;" ' . selected($options['wp_listings_currency_symbol'], '£', false) . '>&#163;</option>
-							 <option value="&#8364;" ' . selected($options['wp_listings_currency_symbol'], '€', false) . '>&#8364;</option>
-							 <option value="&#165;" ' . selected($options['wp_listings_currency_symbol'], '¥', false) . '>&#165;</option>
-							 <option value="&#8369;" ' . selected($options['wp_listings_currency_symbol'], '₱', false) . '>&#8369;</option>
-							 <option value="&#8361;" ' . selected($options['wp_listings_currency_symbol'], '₩', false) . '>&#8361;</option>
-							 <option value="&#402;" ' . selected($options['wp_listings_currency_symbol'], 'ƒ', false) . '>&#402;</option>
-							 <option value="&#8358;" ' . selected($options['wp_listings_currency_symbol'], '₦', false) . '>&#8358;</option>
+							 <option value=" " ' . selected( $options['wp_listings_currency_symbol'], ' ', false ) . '>None</option>
+							 <option value="&#36;" ' . selected( $options['wp_listings_currency_symbol'], '$', false ) . '>&#36;</option>
+							 <option value="&#163;" ' . selected( $options['wp_listings_currency_symbol'], '£', false ) . '>&#163;</option>
+							 <option value="&#8364;" ' . selected( $options['wp_listings_currency_symbol'], '€', false ) . '>&#8364;</option>
+							 <option value="&#165;" ' . selected( $options['wp_listings_currency_symbol'], '¥', false ) . '>&#165;</option>
+							 <option value="&#8369;" ' . selected( $options['wp_listings_currency_symbol'], '₱', false ) . '>&#8369;</option>
+							 <option value="&#8361;" ' . selected( $options['wp_listings_currency_symbol'], '₩', false ) . '>&#8361;</option>
+							 <option value="&#402;" ' . selected( $options['wp_listings_currency_symbol'], 'ƒ', false ) . '>&#402;</option>
+							 <option value="&#8358;" ' . selected( $options['wp_listings_currency_symbol'], '₦', false ) . '>&#8358;</option>
 							</select>
 						  </p>';
 					$codes = array (
@@ -315,7 +314,11 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 						_e("<br style=\"clear: both;\"><h2>Additional Options</h2>", 'wp-listings' );
 						_e('<p>Select an author to use when importing listings <br />' . wp_dropdown_users(array('selected' => $options['wp_listings_import_author'], 'name' => 'plugin_wp_listings_settings[wp_listings_import_author]', 'id' => 'wp_listings_import_author', 'echo' => false, 'who' => 'authors' )) . '</p>', 'wp-listings' );
-						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p><hr style="clear: both;">', 'wp-listings' );
+						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p>', 'wp-listings' );
+						_e('<p><label><h2>Import Title</h2>
+							By default, imported listings use the street address as the title and permalink. You can customize that further using these available tags:<br />
+							<strong><code>{{listingid}}</code> <code>{{address}}</code> <code>{{city}}</code> <code>{{state}}</code> <code>{{zipcode}}</code></strong>
+							</p><input name="plugin_wp_listings_settings[wp_listings_import_title]" id="wp_listings_import_title" type="text" value="' . esc_html( $options['wp_listings_import_title'] ) . '" size="80" /></label><hr style="clear: both;">', 'wp-listings' );
 
 
 					}

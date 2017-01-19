@@ -13,7 +13,7 @@ class WPL_Idx_Listing {
 	}
 
 	/**
-	 * Function to get the array key (listingID+mlsID)
+	 * Function to get the array key (listingID+mlsID) 
 	 * @param  [type] $array  [description]
 	 * @param  [type] $key    [description]
 	 * @param  [type] $needle [description]
@@ -108,10 +108,21 @@ class WPL_Idx_Listing {
 							$properties[$key]['remarksConcat'] = $properties[$key]['listingID'];
 						}
 
+						if(empty($wpl_options['wp_listings_import_title'])) {
+							$title_format = $properties[$key]['address'];
+						} else {
+							$title_format = $wpl_options['wp_listings_import_title'];
+							$title_format = str_replace('{{address}}', $properties[$key]['address'], $title_format);
+							$title_format = str_replace('{{city}}', $properties[$key]['cityName'], $title_format);
+							$title_format = str_replace('{{state}}', $properties[$key]['state'], $title_format);
+							$title_format = str_replace('{{zipcode}}', $properties[$key]['zipcode'], $title_format);
+							$title_format = str_replace('{{listingid}}', $properties[$key]['listingID'], $title_format);
+						}
+
 						// Post creation options
 						$opts = array(
 							'post_content' => $properties[$key]['remarksConcat'],
-							'post_title' => $properties[$key]['address'],
+							'post_title' => $title_format,
 							'post_status' => 'publish',
 							'post_type' => 'listing',
 							'post_author' => (isset($wpl_options['import_author'])) ? $wpl_options['import_author'] : 1
