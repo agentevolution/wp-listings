@@ -1,5 +1,4 @@
 <?php
-
 if ( !class_exists( 'Idx_Broker_Plugin' ) ) {
 	echo wp_listings_admin_notice( __( '<strong>Integrate your MLS Listings into WordPress with IDX Broker!</strong> <a href="http://www.idxbroker.com/features/idx-wordpress-plugin">Find out how</a>', 'wp-listings' ), false, 'activate_plugins', 'wpl_notice_idx' );
 }
@@ -26,6 +25,16 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 		<div id="post-body">
 			<div id="post-body-content" class="has-sidebar-content">
+			<!--<script>
+			  jQuery( function() {
+			    jQuery( "#post-body-content" ).tabs();
+			  } );
+			</script>
+			<ul>
+				<li><a href="#tab-defaults">Defaults</a></li>
+				<li><a href="#tab-idx">IDX</a></li>
+				<li><a href="#tab-advanced">Advanced</a></li>
+			</ul>-->
 
 				<?php $options = get_option('plugin_wp_listings_settings');
 
@@ -49,6 +58,8 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_idx_lead_form'				=> 1,
 					'wp_listings_idx_update'				=> 'update-all',
 					'wp_listings_idx_sold'					=> 'sold-keep',
+					'wp_listings_auto_import'				=> 0,
+					'wp_listings_default_template'			=> '',
 					'wp_listings_display_idx_link'			=> 0,
 					'wp_listings_import_author'				=> 0,
 					'wp_listings_uninstall_delete'			=> 0
@@ -64,6 +75,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 
 				<?php
+				echo '<div id="tab-defaults">';
 				if ($options['wp_listings_stylesheet_load'] == 1)
 					echo '<p style="color:red; font-weight: bold;">The plugin\'s main stylesheet (wp-listings.css) has been deregistered<p>';
 				if ($options['wp_listings_widgets_stylesheet_load'] == 1)
@@ -276,13 +288,16 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 					_e("<h3>Default Disclaimer</h3><p>Optionally enter a disclaimer to show on single listings. This can be overridden on individual listings.</p>", 'wp-listings' );
 					_e('<p><textarea name="plugin_wp_listings_settings[wp_listings_global_disclaimer]" id="wp_listings_global_disclaimer" type="text" value="' . esc_html($options['wp_listings_global_disclaimer']) . '" rows="4" style="width: 80%">' . esc_html($options['wp_listings_global_disclaimer']) . '</textarea></p><hr>', 'wp-listings' );
+					echo '</div><!-- #tab-defaults -->';
 
+					echo '<div id="tab-advanced">';
 					_e("<h3>Maps</h3><h4>Google Maps</h4><p>Listings can be automatically mapped if they have a latitude and longitude. You will need a <a href=\"https://developers.google.com/maps/documentation/javascript/get-api-key\">Google Maps API key</a> to use this feature. Enter your API key below.</p>", 'wp-listings' );
 					_e('<p>Browser key: <input name="plugin_wp_listings_settings[wp_listings_gmaps_api_key]" id="wp_listings_gmaps_api_key" type="text" value="' . esc_html($options['wp_listings_gmaps_api_key']) . '" size="40" /></p><hr>', 'wp-listings');
 
 					_e("<h3>Forms</h3><h4>Google Recaptcha (anti-spam)</h4><p>With the default contact form, you can choose to add Google Recaptcha to prevent spam, or use a form shortcode plugin with anti-spam protection. To use Google Recaptcha, you must first <a href=\"https://www.google.com/recaptcha/admin\">sign up for a key</a>, then enter the site and secret key below:</p>", 'wp-listings' );
 					_e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p>', 'wp-listings');
 					_e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p><hr>', 'wp-listings');
+					echo '</div><!-- #tab-advanced -->';
 
 					_e("<h4>Default Form shortcode</h4><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp-listings' );
 					_e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p><hr>', 'wp-listings');
@@ -313,7 +328,21 @@ if( isset($_GET['settings-updated']) ) { ?>
 						_e('<div class="idx-import-option sold-draft"><label><h4>Keep as Draft</h4> <span class="dashicons dashicons-hidden"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-draft" class="code" ' . checked('sold-draft', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings that have been sold, but they will be changed to draft status in WordPress.</p></label></div>', 'wp-listings' );
 						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div>', 'wp-listings' );
 
-						_e("<br style=\"clear: both;\"><h2>Additional Options</h2>", 'wp-listings' );
+						_e("<br style=\"clear: both;\"><h2>Additional Import Options</h2>", 'wp-listings' );
+						_e('<p><input name="plugin_wp_listings_settings[wp_listings_auto_import]" id="wp_listings_auto_import" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_auto_import'], false ) . ' /> Automatically import new listings?</p>', 'wp-listings' );
+
+						_e('<p>Optionally select a default single listing template to use for imported listings.<br />
+							<select name="plugin_wp_listings_settings[wp_listings_default_template]" id="listing_template" class="dropdown">');
+						_e('<option value="">Default</option>', 'wp-listings');
+						$listing_templates = Single_Listing_Template::get_listing_templates();
+						/** Loop through templates, make them options */
+						foreach ( (array) $listing_templates as $template_file => $template_name ) {
+							$selected = ( $template_file == $options['wp_listings_default_template'] ) ? ' selected="selected"' : '';
+							$opt = '<option value="' . esc_attr( $template_file ) . '"' . $selected . '>' . esc_html( $template_name ) . '</option>';
+							echo $opt;
+						}
+						_e('</select>');
+
 						_e('<p>Select an author to use when importing listings <br />' . wp_dropdown_users(array('selected' => $options['wp_listings_import_author'], 'name' => 'plugin_wp_listings_settings[wp_listings_import_author]', 'id' => 'wp_listings_import_author', 'echo' => false, 'who' => 'authors' )) . '</p>', 'wp-listings' );
 						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p><hr style="clear: both;">', 'wp-listings' );
 
