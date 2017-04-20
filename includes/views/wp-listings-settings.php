@@ -25,16 +25,16 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 		<div id="post-body">
 			<div id="post-body-content" class="has-sidebar-content">
-			<!--<script>
+			<script>
 			  jQuery( function() {
 			    jQuery( "#post-body-content" ).tabs();
 			  } );
 			</script>
 			<ul>
-				<li><a href="#tab-defaults">Defaults</a></li>
-				<li><a href="#tab-idx">IDX</a></li>
+				<li><a href="#tab-general">General</a></li>
+				<?php if(class_exists( 'Idx_Broker_Plugin' )) { echo '<li><a href="#tab-idx">IDX</a></li>'; } ?>
 				<li><a href="#tab-advanced">Advanced</a></li>
-			</ul>-->
+			</ul>
 
 				<?php $options = get_option('plugin_wp_listings_settings');
 
@@ -62,7 +62,6 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_default_template'			=> '',
 					'wp_listings_display_idx_link'			=> 0,
 					'wp_listings_import_author'				=> 0,
-					'wp_listings_import_title'				=> '{{address}}',
 					'wp_listings_uninstall_delete'			=> 0
 					);
 
@@ -71,42 +70,30 @@ if( isset($_GET['settings-updated']) ) { ?>
 						$options[$name] = $value;
 					}
 				}
+
 				?>
 
-				<?php
-				echo '<div id="tab-defaults">';
-				if ($options['wp_listings_stylesheet_load'] == 1)
-					echo '<p style="color:red; font-weight: bold;">The plugin\'s main stylesheet (wp-listings.css) has been deregistered<p>';
-				if ($options['wp_listings_widgets_stylesheet_load'] == 1)
-					echo '<p style="color:red; font-weight: bold;">The plugin\'s widget stylesheet (wp-listings-widgets.css) has been deregistered<p>';
-				?>
 				<form action="options.php" method="post" id="wp-listings-settings-options-form">
+					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" style="float: right; margin: -32px 10px 0 0;" />
 					<?php
 					settings_fields('wp_listings_options');
+					echo '<div id="tab-general">';
 
-
-					_e('<h3>Include CSS?</h3>', 'wp-listings');
-					_e('<p>Here you can deregister the WP Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister WP Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
-
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister WP Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
-
-
-					_e("<h3>Default State</h3><p>You can enter a default state that will automatically be output on template pages and widgets that show the state. When you are create a listing and leave the state field empty, the default entered below will be shown. You can override the default on each listing by entering a value into the state field.</p>", 'wp-listings' );
+					_e("<h3>Default State</h3><p>You can enter a default state that will automatically be output on template pages and widgets that show the state. When you create a listing and leave the state field empty, the default below will be shown. You can override the default on each listing by entering a value into the state field.</p>", 'wp-listings' );
 					echo '<p>Default State: <input name="plugin_wp_listings_settings[wp_listings_default_state]" id="wp_listings_default_state" type="text" value="' . $options['wp_listings_default_state'] . '" size="1" /></p><hr>';
 
 					_e("<h3>Default Currency</h3><p>Select a default currency symbol and optional currency code to display on listings.</p>", 'wp-listings' );
 					_e('<p>Currency Symbol: ', 'wp-listings');
 					echo '<select name="plugin_wp_listings_settings[wp_listings_currency_symbol]" id="wp_listings_currency_symbol">
-							 <option value=" " ' . selected( $options['wp_listings_currency_symbol'], ' ', false ) . '>None</option>
-							 <option value="&#36;" ' . selected( $options['wp_listings_currency_symbol'], '$', false ) . '>&#36;</option>
-							 <option value="&#163;" ' . selected( $options['wp_listings_currency_symbol'], '£', false ) . '>&#163;</option>
-							 <option value="&#8364;" ' . selected( $options['wp_listings_currency_symbol'], '€', false ) . '>&#8364;</option>
-							 <option value="&#165;" ' . selected( $options['wp_listings_currency_symbol'], '¥', false ) . '>&#165;</option>
-							 <option value="&#8369;" ' . selected( $options['wp_listings_currency_symbol'], '₱', false ) . '>&#8369;</option>
-							 <option value="&#8361;" ' . selected( $options['wp_listings_currency_symbol'], '₩', false ) . '>&#8361;</option>
-							 <option value="&#402;" ' . selected( $options['wp_listings_currency_symbol'], 'ƒ', false ) . '>&#402;</option>
-							 <option value="&#8358;" ' . selected( $options['wp_listings_currency_symbol'], '₦', false ) . '>&#8358;</option>
+							 <option value=" " ' . selected($options['wp_listings_currency_symbol'], ' ', false) . '>None</option>
+							 <option value="&#36;" ' . selected($options['wp_listings_currency_symbol'], '$', false) . '>&#36;</option>
+							 <option value="&#163;" ' . selected($options['wp_listings_currency_symbol'], '£', false) . '>&#163;</option>
+							 <option value="&#8364;" ' . selected($options['wp_listings_currency_symbol'], '€', false) . '>&#8364;</option>
+							 <option value="&#165;" ' . selected($options['wp_listings_currency_symbol'], '¥', false) . '>&#165;</option>
+							 <option value="&#8369;" ' . selected($options['wp_listings_currency_symbol'], '₱', false) . '>&#8369;</option>
+							 <option value="&#8361;" ' . selected($options['wp_listings_currency_symbol'], '₩', false) . '>&#8361;</option>
+							 <option value="&#402;" ' . selected($options['wp_listings_currency_symbol'], 'ƒ', false) . '>&#402;</option>
+							 <option value="&#8358;" ' . selected($options['wp_listings_currency_symbol'], '₦', false) . '>&#8358;</option>
 							</select>
 						  </p>';
 					$codes = array (
@@ -287,36 +274,51 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 					_e("<h3>Default Disclaimer</h3><p>Optionally enter a disclaimer to show on single listings. This can be overridden on individual listings.</p>", 'wp-listings' );
 					_e('<p><textarea name="plugin_wp_listings_settings[wp_listings_global_disclaimer]" id="wp_listings_global_disclaimer" type="text" value="' . esc_html($options['wp_listings_global_disclaimer']) . '" rows="4" style="width: 80%">' . esc_html($options['wp_listings_global_disclaimer']) . '</textarea></p><hr>', 'wp-listings' );
-					echo '</div><!-- #tab-defaults -->';
+
+					_e('<h3>Listings slug</h3><p>Optionally change the slug of the listing post type<br /><input type="text" name="plugin_wp_listings_settings[wp_listings_slug]" value="' . $options['wp_listings_slug'] . '" /></p>', 'wp-listings' );
+					_e("<em>Don't forget to <a href='../wp-admin/options-permalink.php'>reset your permalinks</a> if you change the slug!</em></p>", 'wp-listings' );
+					echo '</div><!-- #tab-general -->';
 
 					echo '<div id="tab-advanced">';
-					_e("<h3>Maps</h3><h4>Google Maps</h4><p>Listings can be automatically mapped if they have a latitude and longitude. You will need a <a href=\"https://developers.google.com/maps/documentation/javascript/get-api-key\">Google Maps API key</a> to use this feature. Enter your API key below.</p>", 'wp-listings' );
-					_e('<p>Browser key: <input name="plugin_wp_listings_settings[wp_listings_gmaps_api_key]" id="wp_listings_gmaps_api_key" type="text" value="' . esc_html($options['wp_listings_gmaps_api_key']) . '" size="40" /></p><hr>', 'wp-listings');
 
-					_e("<h3>Forms</h3><h4>Google Recaptcha (anti-spam)</h4><p>With the default contact form, you can choose to add Google Recaptcha to prevent spam, or use a form shortcode plugin with anti-spam protection. To use Google Recaptcha, you must first <a href=\"https://www.google.com/recaptcha/admin\">sign up for a key</a>, then enter the site and secret key below:</p>", 'wp-listings' );
+					_e('<h3>Include CSS?</h3>', 'wp-listings');
+					if ($options['wp_listings_stylesheet_load'] == 1)
+						echo '<p style="color:red; font-weight: bold;">The plugin\'s main stylesheet (wp-listings.css) has been deregistered<p>';
+					if ($options['wp_listings_widgets_stylesheet_load'] == 1)
+						echo '<p style="color:red; font-weight: bold;">The plugin\'s widget stylesheet (wp-listings-widgets.css) has been deregistered<p>';
+					_e('<p>Here you can deregister the WP Listings CSS files and move to your theme\'s css file for ease of customization</p>', 'wp-listings');
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_stylesheet_load]" id="wp_listings_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_stylesheet_load'], false ) . ' /> Deregister WP Listings main CSS (wp-listings.css)?</p>', 'wp-listings' );
+
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_widgets_stylesheet_load]" id="wp_listings_widgets_stylesheet_load" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_widgets_stylesheet_load'], false ) . ' /> Deregister WP Listings widgets CSS (wp-listings-widgets.css)?</p><hr>', 'wp-listings' );
+
+					_e('<h3>Forms</h3><h4>Google Recaptcha (anti-spam)</h4><p>With the default contact form, you can choose to add Google Recaptcha to prevent spam, or use a form shortcode plugin with anti-spam protection. To use Google Recaptcha, you must first <a href="https://www.google.com/recaptcha/admin" target="_blank">sign up for a key</a>, then enter the site and secret key below:</p>', 'wp-listings' );
 					_e('<p>Site key: <input name="plugin_wp_listings_settings[wp_listings_captcha_site_key]" id="wp_listings_captcha_site_key" type="text" value="' . esc_html($options['wp_listings_captcha_site_key']) . '" size="40" /></p>', 'wp-listings');
-					_e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p><hr>', 'wp-listings');
-					echo '</div><!-- #tab-advanced -->';
-
+					_e('<p>Secret key: <input name="plugin_wp_listings_settings[wp_listings_captcha_secret_key]" id="wp_listings_captcha_secret_key" type="text" value="' . esc_html($options['wp_listings_captcha_secret_key']) . '" size="40" /></p>', 'wp-listings');
 					_e("<h4>Default Form shortcode</h4><p>If you use a Contact Form plugin, you may enter the form shortcode here to display on all listings. Additionally, each listing can use a custom form. If no shortcode is entered, the template will use a default contact form:</p>", 'wp-listings' );
-					_e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p><hr>', 'wp-listings');
+					_e('<p>Form shortcode: <input name="plugin_wp_listings_settings[wp_listings_default_form]" id="wp_listings_default_form" type="text" value="' . esc_html($options['wp_listings_default_form']) . '" size="40" /></p>', 'wp-listings');
 
 					if(class_exists( 'Idx_Broker_Plugin' )) {
 						_e("<h4>Add default form entries to IDX Broker?</h4><p>Check this option to enable form entries to be sent to IDX Broker as a lead.<br/><strong>Note: This only works if using the default contact form.</strong></p>", 'wp-listings' );
 						_e('<p><input name="plugin_wp_listings_settings[wp_listings_idx_lead_form]" id="wp_listings_idx_lead_form" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_idx_lead_form'], 0) . ' /> Enable?</p><hr>', 'wp-listings' );
 					}
 
+					_e('<h3>Maps</h3><h4>Google Maps</h4><p>Listings can be automatically mapped if they have a latitude and longitude. You will need a <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Google Maps API key</a> to use this feature. Enter your API key below.</p>', 'wp-listings' );
+					_e('<p>Browser key: <input name="plugin_wp_listings_settings[wp_listings_gmaps_api_key]" id="wp_listings_gmaps_api_key" type="text" value="' . esc_html($options['wp_listings_gmaps_api_key']) . '" size="40" /></p><hr>', 'wp-listings');
+
 					_e("<h3>Custom Wrapper</h3><p>If your theme's content HTML ID's and Classes are different than the included template, you can enter the HTML of your content wrapper beginning and end:</p>", 'wp-listings' );
 					_e('<p><label><input name="plugin_wp_listings_settings[wp_listings_custom_wrapper]" id="wp_listings_custom_wrapper" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_custom_wrapper'], false ) . ' /> Use Custom Wrapper?</p>', 'wp-listings' );
 					_e('<p><label>Wrapper Start HTML: </p><input name="plugin_wp_listings_settings[wp_listings_start_wrapper]" id="wp_listings_start_wrapper" type="text" value="' . esc_html($options['wp_listings_start_wrapper']) . '" size="80" /></label>', 'wp-listings' );
 					_e('<p><label>Wrapper End HTML: </p><input name="plugin_wp_listings_settings[wp_listings_end_wrapper]" id="wp_listings_end_wrapper" type="text" value="' . esc_html($options['wp_listings_end_wrapper']) . '" size="80" /></label><hr>', 'wp-listings' );
 
+					_e('<h3>Delete data on uninstall?</h3>', 'wp-listings');
+					_e('<p>Checking this option will delete <strong>all</strong> plugin data when uninstalling the plugin.</p>', 'wp-listings');
+					_e('<p><input name="plugin_wp_listings_settings[wp_listings_uninstall_delete]" id="wp_listings_uninstall_delete" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_uninstall_delete'], false ) . ' /> <strong style="color: red;">Delete plugin data on uninstall</strong></p>', 'wp-listings' );
 
-					_e('<h3>Listings slug</h3><p>Optionally change the slug of the listing post type<br /><input type="text" name="plugin_wp_listings_settings[wp_listings_slug]" value="' . $options['wp_listings_slug'] . '" /></p>', 'wp-listings' );
-					_e("<em>Don't forget to <a href='../wp-admin/options-permalink.php'>reset your permalinks</a> if you change the slug!</em></p>", 'wp-listings' );
+					echo '</div><!-- #tab-advanced -->';
 
 					if(class_exists( 'Idx_Broker_Plugin' )) {
-						_e("<hr style=\"margin: 25px 0;\"><h3>IDX Imported Listings</h3><p>These settings apply to any imported IDX listings. Imported listings are updated via the latest API response twice daily.</p>", 'wp-listings' );
+						echo '<div id="tab-idx">';
+						_e("<h3>IDX Imported Listings</h3><p>These settings apply to any imported IDX listings. Imported listings are updated via the latest API response twice daily.</p>", 'wp-listings' );
 						_e("<h2>Update Listings</h2>", 'wp-listings' );
 						_e('<div class="idx-import-option update-all"><label><h4>Update All</h4> <span class="dashicons dashicons-update"></span><input name="plugin_wp_listings_settings[wp_listings_idx_update]" id="wp_listings_idx_update" type="radio" value="update-all" class="code" ' . checked('update-all', $options['wp_listings_idx_update'], false ) . ' /> <p>Update all imported fields including gallery and featured image. <br /><em>* Excludes Post Title and Post Content</em></p></label></div>', 'wp-listings' );
 						_e('<div class="idx-import-option update-noimage"><label><h4>Update Excluding Images</h4> <span class="dashicons dashicons-update"></span><input name="plugin_wp_listings_settings[wp_listings_idx_update]" id="wp_listings_idx_update" type="radio" value="update-noimage" class="code" ' . checked('update-noimage', $options['wp_listings_idx_update'], false ) . ' /> <p>Update all imported fields, but excluding the gallery and featured image.<br /><em>* Also excludes Post Title and Post Content</em></p></label></div>', 'wp-listings' );
@@ -327,12 +329,13 @@ if( isset($_GET['settings-updated']) ) { ?>
 						_e('<div class="idx-import-option sold-draft"><label><h4>Keep as Draft</h4> <span class="dashicons dashicons-hidden"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-draft" class="code" ' . checked('sold-draft', $options['wp_listings_idx_sold'], false ) . ' /> <p>This will keep all imported listings that have been sold, but they will be changed to draft status in WordPress.</p></label></div>', 'wp-listings' );
 						_e('<div class="idx-import-option sold-delete"><label><h4>Delete Sold</h4> <span class="dashicons dashicons-trash"></span><input name="plugin_wp_listings_settings[wp_listings_idx_sold]" id="wp_listings_idx_sold" type="radio" value="sold-delete" class="code" ' . checked('sold-delete', $options['wp_listings_idx_sold'], false ) . ' /> <p><strong>Not recommended</strong> <br />This will delete all sold listings and attached featured images from your WordPress database and media library.</p></label></div>', 'wp-listings' );
 
-						_e("<br style=\"clear: both;\"><h2>Additional Import Options</h2>", 'wp-listings' );
+						_e("<hr style=\"margin: 25px 0; clear: both;\"><h2>Additional Import Options</h2>", 'wp-listings' );
 						_e('<p><input name="plugin_wp_listings_settings[wp_listings_auto_import]" id="wp_listings_auto_import" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_auto_import'], false ) . ' /> Automatically import new listings?</p>', 'wp-listings' );
 
 						_e('<p>Optionally select a default single listing template to use for imported listings.<br />
 							<select name="plugin_wp_listings_settings[wp_listings_default_template]" id="listing_template" class="dropdown">');
 						_e('<option value="">Default</option>', 'wp-listings');
+						
 						$listing_templates = Single_Listing_Template::get_listing_templates();
 						/** Loop through templates, make them options */
 						foreach ( (array) $listing_templates as $template_file => $template_name ) {
@@ -340,25 +343,18 @@ if( isset($_GET['settings-updated']) ) { ?>
 							$opt = '<option value="' . esc_attr( $template_file ) . '"' . $selected . '>' . esc_html( $template_name ) . '</option>';
 							echo $opt;
 						}
+						
 						_e('</select>');
 
 						_e('<p>Select an author to use when importing listings <br />' . wp_dropdown_users(array('selected' => $options['wp_listings_import_author'], 'name' => 'plugin_wp_listings_settings[wp_listings_import_author]', 'id' => 'wp_listings_import_author', 'echo' => false, 'who' => 'authors' )) . '</p>', 'wp-listings' );
 						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p>', 'wp-listings' );
-						_e('<p><label><h2>Import Title</h2>
-							By default, imported listings use the street address as the title and permalink. You can customize that further using these available tags:<br />
-							<strong><code>{{listingid}}</code> <code>{{address}}</code> <code>{{city}}</code> <code>{{state}}</code> <code>{{zipcode}}</code></strong>
-							</p><input name="plugin_wp_listings_settings[wp_listings_import_title]" id="wp_listings_import_title" type="text" value="' . esc_html( $options['wp_listings_import_title'] ) . '" size="80" /></label><hr style="clear: both;">', 'wp-listings' );
-
+						echo '</div><!-- #idx-tab -->';
 
 					}
 
-					_e('<h3>Delete data on uninstall?</h3>', 'wp-listings');
-					_e('<p>Checking this option will delete <strong>all</strong> plugin data when uninstalling the plugin.</p>', 'wp-listings');
-					_e('<p><input name="plugin_wp_listings_settings[wp_listings_uninstall_delete]" id="wp_listings_uninstall_delete" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_uninstall_delete'], false ) . ' /> <strong style="color: red;">Delete plugin data on uninstall</strong></p><hr>', 'wp-listings' );
-
 					?>
 
-					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" />
+					<input name="submit" class="button-primary" type="submit" value="<?php esc_attr_e('Save Settings'); ?>" style="margin: 0 0 10px 10px;"/>
 				</form>
 			</div>
 		</div>
