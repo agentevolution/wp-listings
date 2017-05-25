@@ -196,6 +196,7 @@ function custom_default_property_type_terms() {
 *Released 05-25-17*
 * Feature: Added option to set title/permalink for imported listings
 * Feature: Added option to automatically import featured listings
+* Feature: All featured listing images are now added to imported listings 
 * Updated: Settings page now uses tabbed sections for better UX
 
 ### 2.2.2 ###
