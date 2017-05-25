@@ -62,6 +62,7 @@ if( isset($_GET['settings-updated']) ) { ?>
 					'wp_listings_default_template'			=> '',
 					'wp_listings_display_idx_link'			=> 0,
 					'wp_listings_import_author'				=> 0,
+					'wp_listings_import_title'				=> '{{address}}',
 					'wp_listings_uninstall_delete'			=> 0
 					);
 
@@ -348,6 +349,11 @@ if( isset($_GET['settings-updated']) ) { ?>
 
 						_e('<p>Select an author to use when importing listings <br />' . wp_dropdown_users(array('selected' => $options['wp_listings_import_author'], 'name' => 'plugin_wp_listings_settings[wp_listings_import_author]', 'id' => 'wp_listings_import_author', 'echo' => false, 'who' => 'authors' )) . '</p>', 'wp-listings' );
 						_e('<p><input name="plugin_wp_listings_settings[wp_listings_display_idx_link]" id="wp_listings_display_idx_link" type="checkbox" value="1" class="code" ' . checked(1, $options['wp_listings_display_idx_link'], false ) . ' /> Display a link to IDX Broker details page?</p>', 'wp-listings' );
+
+						_e('<p><label><h2>Import Title</h2>
+							By default, imported listings use the street address as the title and permalink. You can customize that further using these available tags:<br />
+							<strong><code>{{listingid}}</code> <code>{{address}}</code> <code>{{city}}</code> <code>{{state}}</code> <code>{{zipcode}}</code></strong>
+							</p><input name="plugin_wp_listings_settings[wp_listings_import_title]" id="wp_listings_import_title" type="text" value="' . esc_html( $options['wp_listings_import_title'] ) . '" size="80" /></label><hr style="clear: both;">', 'wp-listings' );
 						echo '</div><!-- #idx-tab -->';
 
 					}
