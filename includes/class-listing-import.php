@@ -13,7 +13,7 @@ class WPL_Idx_Listing {
 	}
 
 	/**
-	 * Function to get the array key (listingID+mlsID)
+	 * Function to get the array key (listingID+mlsID) 
 	 * @param  [type] $array  [description]
 	 * @param  [type] $key    [description]
 	 * @param  [type] $needle [description]
@@ -108,10 +108,21 @@ class WPL_Idx_Listing {
 							$properties[$key]['remarksConcat'] = $properties[$key]['listingID'];
 						}
 
+						if(empty($wpl_options['wp_listings_import_title'])) {
+							$title_format = $properties[$key]['address'];
+						} else {
+							$title_format = $wpl_options['wp_listings_import_title'];
+							$title_format = str_replace('{{address}}', $properties[$key]['address'], $title_format);
+							$title_format = str_replace('{{city}}', $properties[$key]['cityName'], $title_format);
+							$title_format = str_replace('{{state}}', $properties[$key]['state'], $title_format);
+							$title_format = str_replace('{{zipcode}}', $properties[$key]['zipcode'], $title_format);
+							$title_format = str_replace('{{listingid}}', $properties[$key]['listingID'], $title_format);
+						}
+
 						// Post creation options
 						$opts = array(
 							'post_content' => $properties[$key]['remarksConcat'],
-							'post_title' => $properties[$key]['address'],
+							'post_title' => $title_format,
 							'post_status' => 'publish',
 							'post_type' => 'listing',
 							'post_author' => (isset($wpl_options['import_author'])) ? $wpl_options['import_author'] : 1
@@ -129,6 +140,10 @@ class WPL_Idx_Listing {
 							$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
 							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 							update_post_meta($add_post, '_listing_details_url', $properties[$key]['fullDetailsURL']);
+							// Use custom default template if set
+							if(isset($wpl_options['wp_listings_default_template']) && $wpl_options['wp_listings_default_template'] != '') {
+								update_post_meta($add_post, '_wp_post_template', $wpl_options['wp_listings_default_template']);
+							}
 							if(class_exists( 'Equity_Idx_Api' )) {
 								self::wp_listings_idx_insert_post_meta($add_post, $equity_properties);
 							} else {
@@ -268,7 +283,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true, $sold = false) {
 
-		if (class_exists( 'Equity_Idx_Api' ) && $update == false || class_exists( 'Equity_Idx_Api' ) && $update_image == true) {
+		if ($update == false || $update_image == true) {
 			$imgs = '';
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 
@@ -277,8 +292,7 @@ class WPL_Idx_Listing {
 				$img_markup = sprintf('<img src="%s" alt="%s" />', $img['url'], $idx_featured_listing_data['address']);
 				$imgs .= apply_filters( 'wp_listings_imported_image_markup', $img_markup, $img, $idx_featured_listing_data );
 			}
-		} else {
-			$featured_image = $idx_featured_listing_data['image']['0']['url'];
+			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $imgs));
 		}
 
 		if($sold == true) {
@@ -313,15 +327,8 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_bathrooms', $idx_featured_listing_data['totalBaths']);
 		update_post_meta($id, '_listing_half_bath', $idx_featured_listing_data['partialBaths']);
 
-		if ($update == false || $update_image == true) {
-			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
-		}
-
 		// Add post meta for Equity API fields
 		if (class_exists( 'Equity_Idx_Api' )) {
-			if ($update == false || $update_image == true) {
-				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_imported_gallery', $imgs));
-			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
 				if ($update == true && $metakey != 'price') {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
@@ -422,7 +429,6 @@ class WPL_Idx_Listing {
 		return true;
 
 	}
-
 }
 
 
@@ -629,11 +635,18 @@ function wp_listings_idx_listing_setting_page() {
 
 /**
  * Check if update is scheduled - if not, schedule it to run twice daily.
+ * Schedule auto import if option checked
  * Only add if IDX plugin is installed
  * @since 2.0
  */
 if( class_exists( 'IDX_Broker_Plugin') ) {
 	add_action( 'admin_init', 'wp_listings_idx_update_schedule' );
+
+	$wpl_options = get_option('plugin_wp_listings_settings');
+
+	if ( isset($wpl_options['wp_listings_auto_import']) && $wpl_options['wp_listings_auto_import'] == true ) {
+		add_action( 'admin_init', 'wp_listings_idx_auto_import_schedule' );
+	}
 }
 function wp_listings_idx_update_schedule() {
 	if ( ! wp_next_scheduled( 'wp_listings_idx_update' ) ) {
@@ -641,8 +654,32 @@ function wp_listings_idx_update_schedule() {
 	}
 }
 /**
- * On the scheduled update event, run wp_listings_update_post with activation status
- *
- * @since 2.0
+ * On the scheduled update event, run wp_listings_update_post
  */
 add_action( 'wp_listings_idx_update', array('WPL_Idx_Listing', 'wp_listings_update_post') );
+
+/**
+ * Schedule auto import task
+ */
+function wp_listings_idx_auto_import_schedule() {
+	if ( ! wp_next_scheduled( 'wp_listings_idx_auto_import' ) ) {
+		wp_schedule_event( time(), 'twicedaily', 'wp_listings_idx_auto_import');
+	}
+}
+add_action( 'wp_listings_idx_auto_import', 'wp_listings_idx_auto_import_task' );
+/**
+ * Get listingIDs and pass to create post cron job
+ * @return void
+ */
+function wp_listings_idx_auto_import_task() {
+	if(class_exists( 'IDX_Broker_Plugin')) {
+		require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
+		$_idx_api = new \IDX\Idx_Api();
+		$properties = $_idx_api->client_properties('featured');
+
+		foreach($properties as $prop) {
+			$listingIDs[] = $prop['listingID'];
+		}
+	}
+	wp_listings_idx_create_post_cron($listingIDs);
+}

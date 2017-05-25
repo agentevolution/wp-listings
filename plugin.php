@@ -7,7 +7,7 @@
 	Author URI: http://agentevolution.com
 	Text Domain: wp-listings
 
-	Version: 2.2.2
+	Version: 2.3.0
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -66,7 +66,7 @@ function wp_listings_init() {
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WP_LISTINGS_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '2.2.2' );
+	define( 'WP_LISTINGS_VERSION', '2.3.0' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp-listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
@@ -151,6 +151,12 @@ function wp_listings_init() {
 
     /** Add admin scripts and styles */
     function wp_listings_admin_scripts_styles() {
+    	$screen_id = get_current_screen();
+		if($screen_id->id === 'listing_page_wp-listings-settings') {
+			wp_enqueue_script( 'jquery-ui-tabs' );
+			wp_enqueue_style( 'jquery-ui-css', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' );
+		}
+
         wp_enqueue_style( 'wp_listings_admin_css', WP_LISTINGS_URL . 'includes/css/wp-listings-admin.css' );
 
         /** Enqueue Font Awesome in the Admin if IDX Broker is not installed */

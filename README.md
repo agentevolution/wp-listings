@@ -3,15 +3,15 @@
 
 **Author URL:** http://www.agentevolution.com/
 
-**Contributors:** agentevolution, davebonds, chadajohnson, idxco
+**Contributors:** agentevolution, davebonds, chadajohnson
 
 **Tags:** real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 
 **Requires at least:** 3.7
 
-**Tested up to:** 4.7.1
+**Tested up to:** 4.7.5
 
-**Stable tag:** 2.2.2
+**Stable tag:** 2.3.0
 
 **License:** GPLv2 or later
 
@@ -192,21 +192,28 @@ function custom_default_property_type_terms() {
 
 ## Changelog ##
 
+### 2.3.0 ### 
+*Released 05-25-17*
+* Feature: Added option to set title/permalink for imported listings
+* Feature: Added option to automatically import featured listings
+* Feature: All featured listing images are now added to imported listings 
+* Updated: Settings page now uses tabbed sections for better UX
+
 ### 2.2.2 ###
 *Released 01-12-17*
 * Fixed: Fatal error on single listing template
-* Added: Option to select default author for imported listings
+* Feature: Option to select default author for imported listings
 
 ### 2.2.1 ###
 *Released 12-13-16*
-* Added: Option to add link to IDX Broker details page on imported listings
+* Feature: Option to add link to IDX Broker details page on imported listings
 * Fixed: Imported IDX Broker listings use the proper status for sold listings
 
 ### 2.2.0 ###
 *Released 10-20-16*
-* Added: Option to send default contact form entries to IDX middleware as a lead
-* Added: Delete all option to IDX imported listings
-* Added: Support for selective refresh for widgets in the customizer
+* Feature: Option to send default contact form entries to IDX middleware as a lead
+* Feature: Delete all option to IDX imported listings
+* Feature: Support for selective refresh for widgets in the customizer
 * Fixed: Imported listings - Issue with price field being deleted on update
 * Fixed: PHP warnings with some MLS disclaimers on imported listings
 
