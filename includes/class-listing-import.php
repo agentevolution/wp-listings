@@ -140,6 +140,10 @@ class WPL_Idx_Listing {
 							$idx_featured_listing_wp_options[$prop['listingID']]['post_id'] = $add_post;
 							$idx_featured_listing_wp_options[$prop['listingID']]['status'] = 'publish';
 							update_post_meta($add_post, '_listing_details_url', $properties[$key]['fullDetailsURL']);
+							// Use custom default template if set
+							if(isset($wpl_options['wp_listings_default_template']) && $wpl_options['wp_listings_default_template'] != '') {
+								update_post_meta($add_post, '_wp_post_template', $wpl_options['wp_listings_default_template']);
+							}
 							if(class_exists( 'Equity_Idx_Api' )) {
 								self::wp_listings_idx_insert_post_meta($add_post, $equity_properties);
 							} else {
@@ -433,7 +437,6 @@ class WPL_Idx_Listing {
 		return true;
 
 	}
-
 }
 
 
@@ -640,11 +643,18 @@ function wp_listings_idx_listing_setting_page() {
 
 /**
  * Check if update is scheduled - if not, schedule it to run twice daily.
+ * Schedule auto import if option checked
  * Only add if IDX plugin is installed
  * @since 2.0
  */
 if( class_exists( 'IDX_Broker_Plugin') ) {
 	add_action( 'admin_init', 'wp_listings_idx_update_schedule' );
+
+	$wpl_options = get_option('plugin_wp_listings_settings');
+
+	if ( isset($wpl_options['wp_listings_auto_import']) && $wpl_options['wp_listings_auto_import'] == true ) {
+		add_action( 'admin_init', 'wp_listings_idx_auto_import_schedule' );
+	}
 }
 function wp_listings_idx_update_schedule() {
 	if ( ! wp_next_scheduled( 'wp_listings_idx_update' ) ) {
@@ -652,8 +662,32 @@ function wp_listings_idx_update_schedule() {
 	}
 }
 /**
- * On the scheduled update event, run wp_listings_update_post with activation status
- *
- * @since 2.0
+ * On the scheduled update event, run wp_listings_update_post
  */
 add_action( 'wp_listings_idx_update', array('WPL_Idx_Listing', 'wp_listings_update_post') );
+
+/**
+ * Schedule auto import task
+ */
+function wp_listings_idx_auto_import_schedule() {
+	if ( ! wp_next_scheduled( 'wp_listings_idx_auto_import' ) ) {
+		wp_schedule_event( time(), 'twicedaily', 'wp_listings_idx_auto_import');
+	}
+}
+add_action( 'wp_listings_idx_auto_import', 'wp_listings_idx_auto_import_task' );
+/**
+ * Get listingIDs and pass to create post cron job
+ * @return void
+ */
+function wp_listings_idx_auto_import_task() {
+	if(class_exists( 'IDX_Broker_Plugin')) {
+		require_once(ABSPATH . 'wp-content/plugins/idx-broker-platinum/idx/idx-api.php');
+		$_idx_api = new \IDX\Idx_Api();
+		$properties = $_idx_api->client_properties('featured');
+
+		foreach($properties as $prop) {
+			$listingIDs[] = $prop['listingID'];
+		}
+	}
+	wp_listings_idx_create_post_cron($listingIDs);
+}
