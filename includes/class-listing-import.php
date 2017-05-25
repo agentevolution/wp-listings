@@ -283,7 +283,7 @@ class WPL_Idx_Listing {
 	 */
 	public static function wp_listings_idx_insert_post_meta($id, $idx_featured_listing_data, $update = false, $update_image = true, $sold = false) {
 
-		if (class_exists( 'Equity_Idx_Api' ) && $update == false || class_exists( 'Equity_Idx_Api' ) && $update_image == true) {
+		if ($update == false || $update_image == true) {
 			$imgs = '';
 			$featured_image = $idx_featured_listing_data['image']['0']['url'];
 
@@ -292,8 +292,7 @@ class WPL_Idx_Listing {
 				$img_markup = sprintf('<img src="%s" alt="%s" />', $img['url'], $idx_featured_listing_data['address']);
 				$imgs .= apply_filters( 'wp_listings_imported_image_markup', $img_markup, $img, $idx_featured_listing_data );
 			}
-		} else {
-			$featured_image = $idx_featured_listing_data['image']['0']['url'];
+			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $imgs));
 		}
 
 		if($sold == true) {
@@ -328,15 +327,8 @@ class WPL_Idx_Listing {
 		update_post_meta($id, '_listing_bathrooms', $idx_featured_listing_data['totalBaths']);
 		update_post_meta($id, '_listing_half_bath', $idx_featured_listing_data['partialBaths']);
 
-		if ($update == false || $update_image == true) {
-			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $gallery = '<img src="' . $featured_image . '" alt="' . $idx_featured_listing_data['address'] . '" />'));
-		}
-
 		// Add post meta for Equity API fields
 		if (class_exists( 'Equity_Idx_Api' )) {
-			if ($update == false || $update_image == true) {
-				update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_equity_imported_gallery', $imgs));
-			}
 			foreach ($idx_featured_listing_data as $metakey => $metavalue) {
 				if ($update == true && $metakey != 'price') {
 					delete_post_meta($id, '_listing_' . strtolower($metakey));
