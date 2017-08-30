@@ -7,10 +7,13 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	jQuery('.grid').masonry({
-		columnWidth: '.grid-sizer',
-		itemSelector: '.grid-item'
-	});
+	setTimeout(function() {
+		var grid = $('.grid').masonry({
+			columnWidth: '.grid-sizer',
+			itemSelector: '.grid-item'
+		});
+		grid.masonry('layout');
+	}, 1000);
 
 	$(document).on( 'click', '.delete-post', function() {
 		var id = $(this).data('id');
