@@ -295,16 +295,12 @@ class WPL_Idx_Listing {
 			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $imgs));
 		}
 
-		if($sold == true) {
-			$propstatus = ucfirst($idx_featured_listing_data['archiveStatus']);
+		if ($idx_featured_listing_data['propStatus'] == 'A'){
+			$propstatus = 'Active';
+		} elseif($idx_featured_listing_data['propStatus'] == 'S') {
+			$propstatus = 'Sold';
 		} else {
-			if ($idx_featured_listing_data['propStatus'] == 'A'){
-				$propstatus = 'Active';
-			} elseif($idx_featured_listing_data['propStatus'] == 'S') {
-				$propstatus = 'Sold';
-			} else {
-				$propstatus = ucfirst($idx_featured_listing_data['propStatus']);
-			}
+			$propstatus = ucfirst($idx_featured_listing_data['propStatus']);
 		}
 
 		// Add or reset taxonomies for property-types, locations, and status
