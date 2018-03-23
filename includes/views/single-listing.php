@@ -67,6 +67,10 @@ function single_listing_post_content() {
 			$listing_meta .= sprintf( '<li class="listing-lot-sqft"><span class="label">Lot Sq Ft: </span>%s</li>', get_post_meta( $post->ID, '_listing_lot_sqft', true ) );
 		}
 
+		if ( '' != get_post_meta( $post->ID, '_listing_acres', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-acres"><span class="label">Acres: </span>%s</li>', get_post_meta( $post->ID, '_listing_acres', true ) );
+		}
+
 		$listing_meta .= sprintf( '</ul>');
 
 		echo $listing_meta;

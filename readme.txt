@@ -4,8 +4,9 @@ Author URL: http://www.agentevolution.com/
 Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
-Tested up to: 4.7.5
-Stable tag: 2.3.0
+Tested up to: 4.9.4
+Stable tag: 2.3.1
+Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -205,6 +206,14 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.3.1 =
+*Released 03-25-17*
+* Fix: Change font awesome handle to prevent collision with other loaded versions
+* Fix: Change sold listings to use propStatus instead of archiveStatus
+* Fix: Change listing importer to not append to status taxonomy when updating, only replace
+* Fix: Added delay to masonry script on listing importer page to allow everything to load before initializing
+* Fix: Added acres field in lieu of lot sq ft. Listing importer now respects this field.
 
 = 2.3.0 = 
 *Released 05-25-17*
