@@ -295,25 +295,22 @@ class WPL_Idx_Listing {
 			update_post_meta($id, '_listing_gallery', apply_filters('wp_listings_imported_gallery', $imgs));
 		}
 
-		if($sold == true) {
-			$propstatus = ucfirst($idx_featured_listing_data['archiveStatus']);
+		if ( $idx_featured_listing_data['propStatus'] == 'A' ) {
+			$propstatus = 'Active';
+		} elseif( $idx_featured_listing_data['propStatus'] == 'S' ) {
+			$propstatus = 'Sold';
 		} else {
-			if ($idx_featured_listing_data['propStatus'] == 'A'){
-				$propstatus = 'Active';
-			} elseif($idx_featured_listing_data['propStatus'] == 'S') {
-				$propstatus = 'Sold';
-			} else {
-				$propstatus = ucfirst($idx_featured_listing_data['propStatus']);
-			}
+			$propstatus = ucfirst( $idx_featured_listing_data['propStatus'] );
 		}
 
 		// Add or reset taxonomies for property-types, locations, and status
 		wp_set_object_terms($id, $idx_featured_listing_data['idxPropType'], 'property-types', true);
 		wp_set_object_terms($id, $idx_featured_listing_data['cityName'], 'locations', true);
-		wp_set_object_terms($id, $propstatus, 'status', true);
+		wp_set_object_terms($id, $propstatus, 'status', false);
 
 		// Add post meta for existing WPL fields
-		update_post_meta($id, '_listing_lot_sqft', $idx_featured_listing_data['acres'].' acres');
+		update_post_meta($id, '_listing_lot_sqft', isset($idx_featured_listing_data['lotSqFt']) ? $idx_featured_listing_data['lotSqFt'] : $idx_featured_listing_data['acres'].' acres');
+		update_post_meta($id, '_listing_acres', $idx_featured_listing_data['acres']);
 		update_post_meta($id, '_listing_price', $idx_featured_listing_data['listingPrice']);
 		update_post_meta($id, '_listing_address', $idx_featured_listing_data['address']);
 		update_post_meta($id, '_listing_city', $idx_featured_listing_data['cityName']);

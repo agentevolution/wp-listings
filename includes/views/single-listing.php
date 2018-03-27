@@ -9,7 +9,7 @@
 add_action('wp_enqueue_scripts', 'enqueue_single_listing_scripts');
 function enqueue_single_listing_scripts() {
 	wp_enqueue_style( 'wp-listings-single' );
-	wp_enqueue_style( 'font-awesome' );
+	wp_enqueue_style( 'font-awesome-4.7.0' );
 	wp_enqueue_script( 'jquery-validate', array('jquery'), true, true );
 	wp_enqueue_script( 'fitvids', array('jquery'), true, true );
 	wp_enqueue_script( 'wp-listings-single', array('jquery, jquery-ui-tabs', 'jquery-validate'), true, true );
@@ -65,6 +65,10 @@ function single_listing_post_content() {
 
 		if ( '' != get_post_meta( $post->ID, '_listing_lot_sqft', true ) ) {
 			$listing_meta .= sprintf( '<li class="listing-lot-sqft"><span class="label">Lot Sq Ft: </span>%s</li>', get_post_meta( $post->ID, '_listing_lot_sqft', true ) );
+		}
+
+		if ( '' != get_post_meta( $post->ID, '_listing_acres', true ) ) {
+			$listing_meta .= sprintf( '<li class="listing-acres"><span class="label">Acres: </span>%s</li>', get_post_meta( $post->ID, '_listing_acres', true ) );
 		}
 
 		$listing_meta .= sprintf( '</ul>');

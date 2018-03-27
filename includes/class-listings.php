@@ -44,6 +44,7 @@ class WP_Listings {
 			    __( 'Year Built:', 'wp-listings' ) 				=> '_listing_year_built',
 			    __( 'Floors:', 'wp-listings' ) 					=> '_listing_floors',
 			    __( 'Square Feet:', 'wp-listings' )				=> '_listing_sqft',
+			    __( 'Acres:', 'wp-listings' )					=> '_listing_acres',
 				__( 'Lot Square Feet:', 'wp-listings' )			=> '_listing_lot_sqft',
 			    __( 'Bedrooms:', 'wp-listings' )				=> '_listing_bedrooms',
 			    __( 'Bathrooms:', 'wp-listings' )				=> '_listing_bathrooms',
