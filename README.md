@@ -11,7 +11,7 @@
 
 **Tested up to:** 4.9.4
 
-**Stable tag:** 2.3.1
+**Stable tag:** 2.3.2
 
 **Requires PHP:** 5.4
 
@@ -193,6 +193,10 @@ function custom_default_property_type_terms() {
 }`
 
 ## Changelog ##
+
+### 2.3.2 ###
+*Release 08-28-2018*
+* Fix: Changed Status taxonomy REST base to listing-status to prevent collision with post status.
 
 ### 2.3.1 ###
 *Released 03-25-17*
