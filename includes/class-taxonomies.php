@@ -276,7 +276,7 @@ class WP_Listings_Taxonomies {
 				'rewrite'  => array( __( 'status', 'wp-listings' ), 'with_front' => false ),
 				'editable' => 0,
 				'show_in_rest'  => true,
-				'rest_base'     => 'status',
+				'rest_base'     => 'listing-status',
 				'rest_controller_class' => 'WP_REST_Terms_Controller'
 			)
 		);

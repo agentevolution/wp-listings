@@ -5,7 +5,7 @@ Contributors: agentevolution, davebonds, chadajohnson
 Tags: real estate, listings, property, properties, listing search, idx, idx broker, mls, agentpress
 Requires at least: 4.0
 Tested up to: 4.9.4
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -206,6 +206,10 @@ function custom_default_property_type_terms() {
 10. IDX Listing import page
 
 == Changelog ==
+
+= 2.3.2 =
+*Release 08-28-2018*
+* Fix: Changed Status taxonomy REST base to listing-status to prevent collision with post status.
 
 = 2.3.1 =
 *Released 03-25-17*

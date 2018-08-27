@@ -7,7 +7,7 @@
 	Author URI: http://agentevolution.com
 	Text Domain: wp-listings
 
-	Version: 2.3.1
+	Version: 2.3.2
 
 	License: GNU General Public License v2.0 (or later)
 	License URI: http://www.opensource.org/licenses/gpl-license.php
@@ -66,7 +66,7 @@ function wp_listings_init() {
 
 	define( 'WP_LISTINGS_URL', plugin_dir_url( __FILE__ ) );
 	define( 'WP_LISTINGS_DIR', plugin_dir_path( __FILE__ ) );
-	define( 'WP_LISTINGS_VERSION', '2.3.1' );
+	define( 'WP_LISTINGS_VERSION', '2.3.2' );
 
 	/** Load textdomain for translation */
 	load_plugin_textdomain( 'wp-listings', false, basename( dirname( __FILE__ ) ) . '/languages/' );
